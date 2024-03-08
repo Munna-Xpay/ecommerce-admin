@@ -1,22 +1,66 @@
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { Box, Button, Divider, FilledInput, FormControl, FormHelperText, Grid, IconButton, InputAdornment, InputLabel, Stack, TextField, Typography } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+import { adminLogin } from '../redux/userSlice';
+import toast, { Toaster } from 'react-hot-toast';
+import { adminInputValidation } from '../validations/AdminValidation';
+import { useNavigate } from 'react-router-dom';
 
 
 function Login() {
+  const dispatch=useDispatch()
+  const navigate=useNavigate()
+  const [errors,setErrors]=useState(false)
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const handleClickShowPassword = (field) => {
     if (field === 'password') {
       setShowPassword(!showPassword);
-    } else if (field === 'confirmPass') {
-      setShowConfirmPassword(!showConfirmPassword);
     }
   };
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
- 
+
+
+ const [adminData,setAdminData]=useState({
+  email: "",
+  password: ""
+ })
+//console.log(adminData);
+
+ const setInputs = (e) => {
+  const { value, name } = e.target
+  setAdminData({ ...adminData, [name]: value })
+}
+
+//login func
+const handleLogin=(e)=>{
+  e.preventDefault()
+  const {email,password}=adminData
+  if(!email || !password){
+    setErrors(adminInputValidation(adminData))
+     } 
+     if(email&&password){
+      const data={email,password}
+      dispatch(adminLogin(data,navigate))
+     }
+}
+
+//error
+const error=useSelector(state=>state.userReducer.error)
+useEffect(()=>{
+  if(error){
+    toast.error(error)
+  }
+},[error])
+
+//login success
+const admin=useSelector(state=>state.userReducer.admin)
+if(admin){
+  navigate('/')
+}
   return (
     <>
           <Stack style={{ background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)),url(https://www.goalcast.com/wp-content/uploads/2022/07/Goalcast-44-1-1100x610.png)', backgroundRepeat: 'no-repeat', backgroundSize: 'cover' }} justifyContent={'center'} alignItems={'center'} sx={{ width: '100%', minHeight: '85vh', marginBottom: '40px' }}>
@@ -28,8 +72,8 @@ function Login() {
               bgcolor: 'white'
             }} spacing={3} borderRadius={5} padding={4} mt={5} boxShadow={15}>
               <Box>
-                <TextField  name='email' InputProps={{ disableUnderline: true, style: { borderRadius: '7px' } }} sx={{ width: { xs: 300, md: 350 } }} label="Email Address" variant="filled" />
-                <FormHelperText sx={{ color: 'red' }}></FormHelperText>
+                <TextField onChange={(e)=>setInputs(e)} value={adminData.email} name='email' InputProps={{ disableUnderline: true, style: { borderRadius: '7px' } }} sx={{ width: { xs: 300, md: 350 } }} label="Email Address" variant="filled" />
+                <FormHelperText sx={{ color: 'red' }}>{errors.email}</FormHelperText>
 
               </Box>
               <FormControl sx={{ width: '25ch' }} variant="filled">
@@ -43,6 +87,8 @@ function Login() {
                       md: 350
                     }
                   }}
+                  onChange={(e)=>setInputs(e)}
+                  value={adminData.password}
                   name='password'
                   id="filled-adornment-password"
                   type={showPassword ? 'text' : 'password'}
@@ -59,13 +105,14 @@ function Login() {
                     </InputAdornment>
                   }
                 />
-                <FormHelperText sx={{ color: 'red', marginX: '0px' }}></FormHelperText>
+                <FormHelperText sx={{ color: 'red', marginX: '0px' }}>{errors.password}</FormHelperText>
               </FormControl>
 
               <Box textAlign={'end'}>
                   <Typography fontSize={14}>Forgot Password?</Typography>
               </Box>
               <Button
+              onClick={(e)=>handleLogin(e)}
                 sx={{
                   padding: "10px",
                   borderRadius: "10px",
@@ -91,6 +138,16 @@ function Login() {
                 </Button>
               </Stack>
             </Stack>
+            <Toaster position="top-center"
+        reverseOrder={false}
+        containerStyle={{
+          padding: '10px',
+          fontSize: '17px',
+          fontFamily: 'sans-serif',
+
+
+        }}
+      />
             </Stack>
     </>
   )

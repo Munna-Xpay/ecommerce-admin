@@ -26,7 +26,8 @@ import AddSeller from './pages/AddSeller';
 function App() {
   return (
     <>
-      <Header />
+      {/* <Header /> */}
+      
       <Routes>
         <Route path='/login' element={<Login />} />
         <Route path='/' element={<SalesAnalytics />} />
@@ -49,7 +50,7 @@ function App() {
         <Route path='/add-seller' element={<AddSeller />} />
         <Route path='*' element={<PageNotFound />} />
       </Routes>
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 }
