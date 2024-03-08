@@ -22,34 +22,38 @@ import SellersTable from './pages/SellersTable';
 import Transactions from './pages/Transactions';
 import PageNotFound from './pages/PageNotFound';
 import AddSeller from './pages/AddSeller';
+import { Container } from '@mui/material';
 
 function App() {
   return (
     <>
-      <Header />
-      <Routes>
-        <Route path='/login' element={<Login />} />
-        <Route path='/' element={<SalesAnalytics />} />
-        <Route path='/top-product' element={<TopProducts />} />
-        <Route path='/product-grid' element={<ProductGrid />} />
-        <Route path='/add-product' element={<AddProduct />} />
-        <Route path='/admin-profile' element={<AdminProfile />} />
-        <Route path='/banners' element={<Banners />} />
-        <Route path='/customers' element={<Customers />} />
-        <Route path='/edit-product' element={<EditProducts />} />
-        <Route path='/orders' element={<Orders />} />
-        <Route path='/product-management' element={<ProductManagement />} />
-        <Route path='/revenew-by-period' element={<RevenewByPeriod />} />
-        <Route path='/reviews' element={<Reviews />} />
-        <Route path='/seller-grid' element={<SellersGrid />} />
-        <Route path='/seller-list' element={<SellersList />} />
-        <Route path='/seller-profile' element={<SellersProfile />} />
-        <Route path='/seller-table' element={<SellersTable />} />
-        <Route path='/transactions' element={<Transactions />} />
-        <Route path='/add-seller' element={<AddSeller />} />
-        <Route path='*' element={<PageNotFound />} />
-      </Routes>
-      <Footer />
+      <Container maxWidth> 
+        <Header />
+        <Routes>
+          <Route path='/login' element={<Login />} />
+          <Route path='/' element={<SalesAnalytics />} />
+          <Route path='/top-product' element={<TopProducts />} />
+          <Route path='/product-grid' element={<ProductGrid />} />
+          <Route path='/add-product' element={<AddProduct />} />
+          <Route path='/admin-profile' element={<AdminProfile />} />
+          <Route path='/banners' element={<Banners />} />
+          <Route path='/customers' element={<Customers />} />
+          <Route path='/edit-product' element={<EditProducts />} />
+          <Route path='/orders' element={<Orders />} />
+          <Route path='/product-management' element={<ProductManagement />} />
+          <Route path='/revenew-by-period' element={<RevenewByPeriod />} />
+          <Route path='/reviews' element={<Reviews />} />
+          <Route path='/seller-grid' element={<SellersGrid />} />
+          <Route path='/seller-list' element={<SellersList />} />
+          <Route path='/seller-profile' element={<SellersProfile />} />
+          <Route path='/seller-table' element={<SellersTable />} />
+          <Route path='/transactions' element={<Transactions />} />
+          <Route path='/add-seller' element={<AddSeller />} />
+          <Route path='*' element={<PageNotFound />} />
+        </Routes>
+        <Footer />
+      </Container>
+
     </>
   );
 }
