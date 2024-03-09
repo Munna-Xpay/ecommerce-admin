@@ -25,10 +25,6 @@ function TopProducts() {
 
   return (
     <>
-      <Stack boxShadow={5}  border={1} borderColor={'#F9F9F9'} p={2} mt={10} direction={'row'} justifyContent={'space-between'} >
-        <Typography fontSize={35} fontWeight={'bold'}>Top Products</Typography><Typography display={'flex'} mt={2} fontWeight={'bold'} fontSize={15}>Data refresh <Box marginLeft={1}><CachedIcon /></Box>
-          <Box sx={{ backgroundColor: '#d2d6d5' }}  marginTop={-1} borderRadius={2} marginLeft={2}><Typography p={1} fontWeight={'bold'}>{currentDateTime.toLocaleString()}</Typography></Box></Typography>
-      </Stack>
       <TopProductsCategory />
 
       <Grid container mt={4}>
