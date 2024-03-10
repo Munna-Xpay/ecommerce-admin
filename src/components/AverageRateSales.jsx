@@ -45,7 +45,7 @@ const AverageRateSales = () => {
                                                 <DiamondIcon fontSize='large' />
                                             </Avatar>
                                             <Stack>
-                                                <Typography variant='h5' sx={{ opacity: '.9', fontWeight: 'bold' }}>₹ <CountUp end={income} duration={1} /></Typography>
+                                                <Typography variant='h5' sx={{ opacity: '.9', fontWeight: 'bold' }}>₹ <CountUp end={income} /></Typography>
 
                                                 <Typography gutterBottom sx={{ opacity: '.8', fontWeight: 'bold' }}>Income</Typography>
                                                 <Stack direction={'row'} alignItems={'center'} sx={{ color: 'green' }}>
@@ -76,7 +76,7 @@ const AverageRateSales = () => {
                                                 <QrCodeScannerIcon fontSize='large' />
                                             </Avatar>
                                             <Stack>
-                                                <Typography variant='h5' sx={{ opacity: '.9', fontWeight: 'bold' }}><CountUp end={orders} duration={1} /></Typography>
+                                                <Typography variant='h5' sx={{ opacity: '.9', fontWeight: 'bold' }}><CountUp end={orders} /></Typography>
                                                 <Typography gutterBottom sx={{ opacity: '.8', fontWeight: 'bold' }}>New Orders</Typography>
                                                 <Stack direction={'row'} alignItems={'center'} sx={{ color: 'green' }}>
                                                     <ArrowDropUpIcon />

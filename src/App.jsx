@@ -27,7 +27,7 @@ import { Container } from '@mui/material';
 function App() {
   return (
     <>
-      <Container maxWidth> 
+      <Container maxWidth>
         <Header />
         <Routes>
           <Route path='/login' element={<Login />} />
@@ -45,7 +45,7 @@ function App() {
           <Route path='/reviews' element={<Reviews />} />
           <Route path='/seller-grid' element={<SellersGrid />} />
           <Route path='/seller-list' element={<SellersList />} />
-          <Route path='/seller-profile' element={<SellersProfile />} />
+          <Route path='/seller-profile/:id' element={<SellersProfile />} />
           <Route path='/seller-table' element={<SellersTable />} />
           <Route path='/transactions' element={<Transactions />} />
           <Route path='/add-seller' element={<AddSeller />} />

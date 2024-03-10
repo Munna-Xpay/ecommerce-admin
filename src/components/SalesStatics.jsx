@@ -53,7 +53,7 @@ const SalesStatics = () => {
                         <YAxis tickFormatter={formatINR} axisLine={false} domain={[1000, 1000]} tickCount={5} />
                         <Tooltip />
                         <Legend />
-                        <Bar dataKey="amount" fill="#000000" barSize={20} radius={[20, 20, 20, 20]} />
+                        <Bar dataKey="amount" fill="#000000" barSize={15} radius={[20, 20, 0, 0]} />
                         {/* Add more <Bar /> components for additional bars */}
                     </BarChart>
                 </ResponsiveContainer>
