@@ -7,11 +7,8 @@ export const getProducts=createAsyncThunk(
     "products",
     async (query,{rejectWithValue})=>{
         const token=localStorage.getItem('token')
-        const queryString = Object.keys(query)
-        .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(query[key])}`)
-        .join('&');
-        console.log(queryString);
-        return await axios.get(`${BASE_URL}/api/admin/products-grid?${queryString}`,{
+        return await axios.get(`${BASE_URL}/api/admin/products-grid`,{
+            params:query,
             headers: {
                 "Content-Type": "application/json",
                 user_token: `Bearer ${token}`,
