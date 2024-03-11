@@ -54,6 +54,7 @@ const SalesStatics = () => {
                         <Tooltip />
                         <Legend />
                         <Bar dataKey="amount" fill="#000000" barSize={15} radius={[20, 20, 0, 0]} />
+                        <Bar dataKey="amount" fill="rgb(59 130 246 / .5)" barSize={15} radius={[20, 20, 0, 0]} />
                         {/* Add more <Bar /> components for additional bars */}
                     </BarChart>
                 </ResponsiveContainer>
