@@ -7,9 +7,17 @@ import TopProductsElectronics from '../components/TopProductsElectronics';
 import TopProductsFashion from '../components/TopProductsFashion';
 import TopProductsGroceries from '../components/TopProductsGroceries';
 import RestaurantIcon from '@mui/icons-material/Restaurant';
+import { useDispatch } from 'react-redux';
+import { getPriceByCategory, getProductsByCategory, getSellerProductsByCategory } from '../redux/categorySlice';
+
 
 function TopProducts() {
-
+const dispatch=useDispatch()
+useEffect(()=>{
+  dispatch(getPriceByCategory())
+  dispatch(getProductsByCategory())
+  dispatch(getSellerProductsByCategory())
+})
   return (
     <>
       <TopProductsCategory />
@@ -35,7 +43,7 @@ function TopProducts() {
           }
         }} xs={12} md={5.5}>
           <Stack direction={'row'} spacing={1}><RestaurantIcon sx={{ backgroundColor: 'black', color: 'white', padding: '5px', borderRadius: '3px', height: '20px', width: '20px' }} /> <Typography fontSize={20} fontWeight={'bold'} >Groceries</Typography></Stack>
-          <TopProductsGroceries />
+          {/* <TopProductsGroceries /> */}
         </Grid>
       </Grid>
     </>
