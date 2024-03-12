@@ -1,0 +1,77 @@
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import axios from 'axios';
+import { BASE_URL } from './baseUrl';
+import toast, { Toaster } from 'react-hot-toast';
+
+
+export const fetchAllSellers = createAsyncThunk('/fetch/all/sellers', async (args, { rejectWithValue }) => {
+    // const token = localStorage.getItem('token')
+    return await axios.get(`${BASE_URL}/api/admin/get-seller`, {
+        headers: {
+            "Content-Type": "application/json",
+            "user_token": `Bearer {token}`
+        }
+    })
+        .then(res => {
+            console.log(res)
+            return res.data
+        })
+        .catch((err) => rejectWithValue("Something went wrong ! network error"))
+})
+
+export const fetchAllSellersWithSalesDetails = createAsyncThunk('/fetch/all/sellers-with-sales', async (query, { rejectWithValue }) => {
+    // const token = localStorage.getItem('token')
+    // console.log(query)
+    return await axios.get(`${BASE_URL}/api/admin/get-seller-with-product?${query}=true`, {
+        headers: {
+            "Content-Type": "application/json",
+            "user_token": `Bearer {token}`
+        }
+    })
+        .then(res => {
+            console.log(res)
+            return res.data
+        })
+        .catch((err) => rejectWithValue("Something went wrong ! network error"))
+})
+
+const initialState = {
+    allSellers: [],
+    sallerSalesStat: [],
+    error: "",
+    loading: false
+}
+
+const sellerSlice = createSlice({
+    name: "seller",
+    initialState,
+    extraReducers: builder => {
+        builder.addCase(fetchAllSellers.pending, (state) => {
+            return { ...state, loading: true }
+        })
+
+        builder.addCase(fetchAllSellers.fulfilled, (state, action) => {
+            return { ...state, allSellers: action.payload, loading: false }
+        })
+
+        builder.addCase(fetchAllSellers.rejected, (state, action) => {
+            return { ...state, error: action.payload, loading: false }
+        })
+
+
+
+        builder.addCase(fetchAllSellersWithSalesDetails.pending, (state) => {
+            return { ...state, loading: true }
+        })
+
+        builder.addCase(fetchAllSellersWithSalesDetails.fulfilled, (state, action) => {
+            return { ...state, sallerSalesStat: action.payload, loading: false }
+        })
+
+        builder.addCase(fetchAllSellersWithSalesDetails.rejected, (state, action) => {
+            return { ...state, error: action.payload, loading: false }
+        })
+    }
+})
+
+export default sellerSlice.reducer;
