@@ -70,6 +70,7 @@ const SellersProfile = () => {
           </Stack>
         </Grid>
       </Grid>
+      
     </>
   )
 }
