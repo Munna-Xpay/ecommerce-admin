@@ -5,7 +5,7 @@ import CountUp from 'react-countup';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
 import QrCodeScannerIcon from '@mui/icons-material/QrCodeScanner';
 
-const ProfileAvgRate = () => {
+const ProfileAvgRate = ({ sellerProfile }) => {
     return (
         <Stack direction={{ xs: 'column', md: 'row' }} justifyContent={'space-between'} spacing={2}>
             <Paper sx={{ flex: '1' }}>
@@ -14,7 +14,7 @@ const ProfileAvgRate = () => {
                         <DiamondIcon fontSize='large' />
                     </Avatar>
                     <Stack>
-                        <Typography variant='h5' sx={{ opacity: '.9', fontWeight: 'bold' }}>₹ <CountUp end={10000} /></Typography>
+                        <Typography variant='h6' sx={{ opacity: '.9', fontWeight: 'bold' }}>₹ <CountUp end={sellerProfile?.total_income} /></Typography>
                         <Typography gutterBottom sx={{ opacity: '.8', fontWeight: 'bold' }}>Income</Typography>
                     </Stack>
                 </Stack>
@@ -25,7 +25,7 @@ const ProfileAvgRate = () => {
                         <QrCodeScannerIcon fontSize='large' />
                     </Avatar>
                     <Stack>
-                        <Typography variant='h5' sx={{ opacity: '.9', fontWeight: 'bold' }}>156</Typography>
+                        <Typography variant='h6' sx={{ opacity: '.9', fontWeight: 'bold' }}><CountUp end={sellerProfile?.total_orders} /></Typography>
                         <Typography gutterBottom sx={{ opacity: '.8', fontWeight: 'bold' }}>Orders</Typography>
                     </Stack>
                 </Stack>
@@ -36,7 +36,7 @@ const ProfileAvgRate = () => {
                         <BusinessCenterIcon fontSize='large' />
                     </Avatar>
                     <Stack>
-                        <Typography variant='h5' sx={{ opacity: '.9', fontWeight: 'bold' }}>₹ <CountUp end={1400} /></Typography>
+                        <Typography variant='h6' sx={{ opacity: '.9', fontWeight: 'bold' }}>₹ <CountUp end={1400} /></Typography>
                         <Typography gutterBottom sx={{ opacity: '.8', fontWeight: 'bold' }}>Expense</Typography>
                     </Stack>
                 </Stack>

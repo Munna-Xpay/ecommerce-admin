@@ -9,7 +9,7 @@ import { fetchAllSellers, fetchAllSellersWithSalesDetails } from '../redux/selle
 const SellersGrid = () => {
 
   const dispatch = useDispatch()
-  const sellers = useSelector(state => state.sellerReducer.sallerSalesStat)
+  const sellers = useSelector(state => state.sellerReducer.allSellers)
   console.log(sellers)
   const [sort, setSort] = useState('bestSelling');
   const [itemsPerPage, setItemsPerPage] = useState(24);

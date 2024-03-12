@@ -4,9 +4,9 @@ import { BASE_URL } from './baseUrl';
 import toast, { Toaster } from 'react-hot-toast';
 
 
-export const fetchAllSellers = createAsyncThunk('/fetch/all/sellers', async (args, { rejectWithValue }) => {
+export const fetchAllSellersStat = createAsyncThunk('/fetch/all/sellers', async (args, { rejectWithValue }) => {
     // const token = localStorage.getItem('token')
-    return await axios.get(`${BASE_URL}/api/admin/get-seller`, {
+    return await axios.get(`${BASE_URL}/api/admin/get-sales-activity`, {
         headers: {
             "Content-Type": "application/json",
             "user_token": `Bearer {token}`
@@ -22,7 +22,7 @@ export const fetchAllSellers = createAsyncThunk('/fetch/all/sellers', async (arg
 export const fetchAllSellersWithSalesDetails = createAsyncThunk('/fetch/all/sellers-with-sales', async (query, { rejectWithValue }) => {
     // const token = localStorage.getItem('token')
     // console.log(query)
-    return await axios.get(`${BASE_URL}/api/admin/get-seller-with-product?${query}=true`, {
+    return await axios.get(`${BASE_URL}/api/admin/get-income-seller?${query}=true`, {
         headers: {
             "Content-Type": "application/json",
             "user_token": `Bearer {token}`
@@ -46,15 +46,15 @@ const sellerSlice = createSlice({
     name: "seller",
     initialState,
     extraReducers: builder => {
-        builder.addCase(fetchAllSellers.pending, (state) => {
+        builder.addCase(fetchAllSellersStat.pending, (state) => {
             return { ...state, loading: true }
         })
 
-        builder.addCase(fetchAllSellers.fulfilled, (state, action) => {
-            return { ...state, allSellers: action.payload, loading: false }
+        builder.addCase(fetchAllSellersStat.fulfilled, (state, action) => {
+            return { ...state, sallerSalesStat: action.payload, loading: false }
         })
 
-        builder.addCase(fetchAllSellers.rejected, (state, action) => {
+        builder.addCase(fetchAllSellersStat.rejected, (state, action) => {
             return { ...state, error: action.payload, loading: false }
         })
 
@@ -65,7 +65,7 @@ const sellerSlice = createSlice({
         })
 
         builder.addCase(fetchAllSellersWithSalesDetails.fulfilled, (state, action) => {
-            return { ...state, sallerSalesStat: action.payload, loading: false }
+            return { ...state, allSellers: action.payload, loading: false }
         })
 
         builder.addCase(fetchAllSellersWithSalesDetails.rejected, (state, action) => {
