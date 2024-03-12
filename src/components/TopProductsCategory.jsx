@@ -17,7 +17,7 @@ function TopProductsCategory() {
    console.log(sellerCategory);
     return (
         
-        <Grid container mt={3}>
+        <Grid container mt={2}>
             <Grid item p={2} boxShadow={4} borderRadius={2} md={3.5} xs={12}>
                 <Stack spacing={2} >
                 <Typography fontSize={20} fontWeight={'bold'}>Top Sales By Category</Typography>

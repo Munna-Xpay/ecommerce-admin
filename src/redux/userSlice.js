@@ -21,6 +21,20 @@ export const adminLogin = createAsyncThunk(
   }
 );
 
+//get user by id
+export const adminById = createAsyncThunk(
+  "user/byId",
+  async (id, { rejectWithValue }) => {
+    console.log(id)
+    return await axios.get(`${BASE_URL}/api/auth/user/${id}`)
+      .then((res) => {
+        console.log(res)
+        return res.data
+      })
+      .catch((err) => rejectWithValue(err.response.data));
+  }
+);
+
 const initialState = {
   admin: null,
   token: null,
@@ -47,6 +61,18 @@ const userSlice = createSlice({
       };
     });
     builder.addCase(adminLogin.rejected, (state, action) => {
+      return { ...state, error: action.payload, loading: false };
+    });
+
+    //adminbyid
+    builder.addCase(adminById.pending, (state) => {
+      return { ...state, loading: true };
+    });
+    builder.addCase(adminById.fulfilled, (state, action) => {
+      // console.log(action.payload);
+      return { ...state, admin: action.payload, loading: false };
+    });
+    builder.addCase(adminById.rejected, (state, action) => {
       return { ...state, error: action.payload, loading: false };
     });
   },

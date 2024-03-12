@@ -4,8 +4,10 @@ import LaptopMacIcon from '@mui/icons-material/LaptopMac';
 import CreateIcon from '@mui/icons-material/Create';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProducts } from '../redux/productSlice';
+import PageHead from '../components/PageHead'
 
 function ProductGrid() {
+
   const dispatch = useDispatch()
   const [sortData, setSortData] = useState({
     categoryFilter: "Electronics",
@@ -38,7 +40,8 @@ function ProductGrid() {
 
   return (
     <>
-      <Box sx={{ display: { xs: 'block', md: 'flex' } }} justifyContent={'space-between'}>
+    <PageHead heading={'Products Grid'}/>
+      <Box marginTop={2} sx={{ display: { xs: 'block', md: 'flex' } }} justifyContent={'space-between'}>
         <Stack sx={{ width: { xs: 365, md: 170 } }} direction={'row'} spacing={1} boxShadow={4} p={2} borderRadius={2} >
           <LaptopMacIcon sx={{ backgroundColor: 'blue', color: 'white', padding: '5px', borderRadius: '3px', height: '20px', width: '20px' }} />
           {products.slice(0, 1).map((i) => (<Typography fontSize={20} fontWeight={'bold'} >{i.category}</Typography>))}

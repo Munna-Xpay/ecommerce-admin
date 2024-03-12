@@ -9,6 +9,7 @@ import TopProductsGroceries from '../components/TopProductsGroceries';
 import RestaurantIcon from '@mui/icons-material/Restaurant';
 import { useDispatch } from 'react-redux';
 import { getPriceByCategory, getProductsByCategory, getSellerProductsByCategory } from '../redux/categorySlice';
+import PageHead from '../components/PageHead'
 
 
 function TopProducts() {
@@ -20,6 +21,7 @@ useEffect(()=>{
 })
   return (
     <>
+     <PageHead heading={'Top Products'}/>
       <TopProductsCategory />
       <Grid container mt={4}>
 
