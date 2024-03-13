@@ -51,7 +51,7 @@ function App() {
           <Route path='/add-seller' element={<AddSeller />} />
           <Route path='*' element={<PageNotFound />} />
         </Routes>
-        <Footer />
+        {/* <Footer /> */}
       </Container>
     </>
   );

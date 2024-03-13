@@ -59,7 +59,6 @@ function Sidebar() {
             <Link to={'/revenew-by-period'} style={{textDecoration:'none'}}><ListItemText sx={{color:'black'}}>Revenew By Period</ListItemText></Link> 
             </Stack>
           </ListItemButton>
-          
         </List>
       </Collapse>
       <ListItemButton onClick={handleProductClick}>

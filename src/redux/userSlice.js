@@ -25,10 +25,10 @@ export const adminLogin = createAsyncThunk(
 export const adminById = createAsyncThunk(
   "user/byId",
   async (id, { rejectWithValue }) => {
-    console.log(id)
+    //console.log(id)
     return await axios.get(`${BASE_URL}/api/auth/user/${id}`)
       .then((res) => {
-        console.log(res)
+        //console.log(res)
         return res.data
       })
       .catch((err) => rejectWithValue(err.response.data));

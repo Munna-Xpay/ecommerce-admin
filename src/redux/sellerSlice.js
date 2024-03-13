@@ -29,7 +29,7 @@ export const fetchAllSellersWithSalesDetails = createAsyncThunk('/fetch/all/sell
         }
     })
         .then(res => {
-            console.log(res)
+           // console.log(res)
             return res.data
         })
         .catch((err) => rejectWithValue("Something went wrong ! network error"))
