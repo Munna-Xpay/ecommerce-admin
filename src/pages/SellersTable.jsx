@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import PageHead from '../components/PageHead'
-import { Box, FormControl, Grid, InputLabel, MenuItem, Pagination, Paper, Rating, Select, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography } from '@mui/material'
+import { Box, FormControl, Grid, IconButton, InputLabel, MenuItem, Pagination, Paper, Rating, Select, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchAllSellersWithSalesDetails } from '../redux/sellerSlice'
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import { formatNumberToK } from '../formatPriceToK'
+import EditNoteIcon from '@mui/icons-material/EditNote';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 
 const SellersTable = () => {
@@ -83,7 +85,12 @@ const SellersTable = () => {
             }
           </Stack>
         </TableCell>
-        <TableCell align="center">Something</TableCell>
+        <TableCell align="center">
+          <Stack direction={'row'} justifyContent={'flex-end'}>
+            <IconButton color='primary'><EditNoteIcon /></IconButton>
+            <IconButton color='primary'><MoreVertIcon /></IconButton>
+          </Stack>
+        </TableCell>
       </TableRow>
     )
   })

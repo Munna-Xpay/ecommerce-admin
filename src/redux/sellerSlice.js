@@ -5,11 +5,11 @@ import toast, { Toaster } from 'react-hot-toast';
 
 
 export const fetchAllSellersStat = createAsyncThunk('/fetch/all/sellers', async (args, { rejectWithValue }) => {
-    // const token = localStorage.getItem('token')
+    const token = localStorage.getItem('token')
     return await axios.get(`${BASE_URL}/api/admin/get-sales-activity`, {
         headers: {
             "Content-Type": "application/json",
-            "user_token": `Bearer {token}`
+            "user_token": `Bearer ${token}`
         }
     })
         .then(res => {
@@ -20,12 +20,12 @@ export const fetchAllSellersStat = createAsyncThunk('/fetch/all/sellers', async 
 })
 
 export const fetchAllSellersWithSalesDetails = createAsyncThunk('/fetch/all/sellers-with-sales', async (query, { rejectWithValue }) => {
-    // const token = localStorage.getItem('token')
+    const token = localStorage.getItem('token')
     // console.log(query)
     return await axios.get(`${BASE_URL}/api/admin/get-income-seller?${query}=true`, {
         headers: {
             "Content-Type": "application/json",
-            "user_token": `Bearer {token}`
+            "user_token": `Bearer ${token}`
         }
     })
         .then(res => {
@@ -36,11 +36,11 @@ export const fetchAllSellersWithSalesDetails = createAsyncThunk('/fetch/all/sell
 })
 
 export const fetchAllSellersWithDailySalesDetails = createAsyncThunk('/fetch/all/daily-sellers-with-sales', async (args, { rejectWithValue }) => {
-    // const token = localStorage.getItem('token')
+    const token = localStorage.getItem('token')
     return await axios.get(`${BASE_URL}/api/admin/get-period-sales-revenue`, {
         headers: {
             "Content-Type": "application/json",
-            "user_token": `Bearer {token}`
+            "user_token": `Bearer ${token}`
         }
     })
         .then(res => {

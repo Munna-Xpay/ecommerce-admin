@@ -5,11 +5,11 @@ import toast, { Toaster } from 'react-hot-toast';
 
 
 export const fetchOrderStat = createAsyncThunk('/fetch/all/orders', async (args, { rejectWithValue }) => {
-    // const token = localStorage.getItem('token')
+    const token = localStorage.getItem('token')
     return await axios.get(`${BASE_URL}/api/admin/get-orders-by-month`, {
         headers: {
             "Content-Type": "application/json",
-            "user_token": `Bearer {token}`
+            "user_token": `Bearer ${token}`
         }
     })
         .then(res => {
