@@ -27,8 +27,8 @@ import { Container } from '@mui/material';
 function App() {
   return (
     <>
+      <Header />
       <Container maxWidth>
-        <Header />
         <Routes>
           <Route path='/login' element={<Login />} />
           <Route path='/' element={<SalesAnalytics />} />
@@ -53,9 +53,10 @@ function App() {
         </Routes>
         <Footer />
       </Container>
-
     </>
   );
 }
 
 export default App;
+
+
