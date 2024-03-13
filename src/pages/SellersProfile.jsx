@@ -10,7 +10,7 @@ import SalesProfitByCategory from '../components/SalesProfitByCategory';
 import ProfileAvgRate from '../components/ProfileAvgRate';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchAllSellersStat, fetchAllSellersWithSalesDetails } from '../redux/sellerSlice';
+import { fetchAllSellersStat, fetchAllSellersWithDailySalesDetails, fetchAllSellersWithSalesDetails } from '../redux/sellerSlice';
 
 const SellersProfile = () => {
 
@@ -18,12 +18,14 @@ const SellersProfile = () => {
   const dispatch = useDispatch()
   const sellerProfile = useSelector(state => state.sellerReducer.allSellers.find((item) => item._id == id))
   const sellerStat = useSelector(state => state.sellerReducer.sallerSalesStat.find((item) => item._id == id))
-  console.log(sellerStat)
+  const dailysellerSalesStat = useSelector(state => state.sellerReducer.dailySellerSalesStat.find((item) => item._id == id))
+  console.log(dailysellerSalesStat)
 
 
   useEffect(() => {
     dispatch(fetchAllSellersWithSalesDetails(''))
     dispatch(fetchAllSellersStat())
+    dispatch(fetchAllSellersWithDailySalesDetails())
   }, [])
 
   return (
@@ -63,7 +65,7 @@ const SellersProfile = () => {
           <ProfileExpenseProfitBox />
         </Grid>
         <Grid item xs={12} md={6}>
-          <PeriodSaleRevenue />
+          <PeriodSaleRevenue dailyStat={dailysellerSalesStat} />
         </Grid>
         <Grid item xs={12} md={6}>
           <Stack height={'100%'} spacing={2}>

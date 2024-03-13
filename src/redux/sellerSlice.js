@@ -13,7 +13,7 @@ export const fetchAllSellersStat = createAsyncThunk('/fetch/all/sellers', async 
         }
     })
         .then(res => {
-            console.log(res)
+            // console.log(res)
             return res.data
         })
         .catch((err) => rejectWithValue("Something went wrong ! network error"))
@@ -29,6 +29,21 @@ export const fetchAllSellersWithSalesDetails = createAsyncThunk('/fetch/all/sell
         }
     })
         .then(res => {
+            // console.log(res)
+            return res.data
+        })
+        .catch((err) => rejectWithValue("Something went wrong ! network error"))
+})
+
+export const fetchAllSellersWithDailySalesDetails = createAsyncThunk('/fetch/all/daily-sellers-with-sales', async (args, { rejectWithValue }) => {
+    // const token = localStorage.getItem('token')
+    return await axios.get(`${BASE_URL}/api/admin/get-period-sales-revenue`, {
+        headers: {
+            "Content-Type": "application/json",
+            "user_token": `Bearer {token}`
+        }
+    })
+        .then(res => {
             console.log(res)
             return res.data
         })
@@ -38,6 +53,7 @@ export const fetchAllSellersWithSalesDetails = createAsyncThunk('/fetch/all/sell
 const initialState = {
     allSellers: [],
     sallerSalesStat: [],
+    dailySellerSalesStat: [],
     error: "",
     loading: false
 }
@@ -69,6 +85,20 @@ const sellerSlice = createSlice({
         })
 
         builder.addCase(fetchAllSellersWithSalesDetails.rejected, (state, action) => {
+            return { ...state, error: action.payload, loading: false }
+        })
+
+
+
+        builder.addCase(fetchAllSellersWithDailySalesDetails.pending, (state) => {
+            return { ...state, loading: true }
+        })
+
+        builder.addCase(fetchAllSellersWithDailySalesDetails.fulfilled, (state, action) => {
+            return { ...state, dailySellerSalesStat: action.payload, loading: false }
+        })
+
+        builder.addCase(fetchAllSellersWithDailySalesDetails.rejected, (state, action) => {
             return { ...state, error: action.payload, loading: false }
         })
     }
