@@ -22,6 +22,26 @@ export const getProducts=createAsyncThunk(
     }
 )  
 
+//add product
+export const addProduct=createAsyncThunk(
+    "add/product",async(formData,{rejectWithValue})=>{
+        const token=localStorage.getItem('token')
+        return await axios.post(`${BASE_URL}/api/product/add`,formData,{
+            headers:{
+                "Content-Type": "multipart/form-data",
+                "user_token": `Bearer ${token}`
+            }
+        })
+        .then((res)=>{
+            console.log(res.data);
+            return res.data
+        })
+        .catch((err)=>
+        rejectWithValue(err.response.data)
+        )
+    }
+)
+
 const initialState={
     products:[],
     loading:false,
@@ -37,10 +57,22 @@ const productSlice = createSlice({
             return {...state,loading:true}
         })
         builder.addCase(getProducts.fulfilled, (state,action)=>{
-            console.log(action.payload);
+            // console.log(action.payload);
             return {...state,products:action.payload,loading:false}
         })
         builder.addCase(getProducts.rejected, (state,action)=>{
+            return {...state,error:action.payload,loading:false}
+        })
+
+          //add products
+          builder.addCase(addProduct.pending, (state)=>{
+            return {...state,loading:true}
+        })
+        builder.addCase(addProduct.fulfilled, (state,action)=>{
+           // console.log(action.payload);
+            return {...state,products:action.payload,loading:false}
+        })
+        builder.addCase(addProduct.rejected, (state,action)=>{
             return {...state,error:action.payload,loading:false}
         })
     }
