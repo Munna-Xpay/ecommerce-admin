@@ -6,13 +6,16 @@ import { fetchAllSellersWithSalesDetails } from '../redux/sellerSlice';
 import { addProduct } from '../redux/productSlice';
 import JoditEditor from 'jodit-react';
 import { productValidationSchema } from '../validations/ProductValidation';
+import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 
 function AddProduct() {
+  
   const data = useSelector(state => state.sellerReducer.sallerSalesStat)
   //console.log(data);
   const dispatch = useDispatch()
-
+  const navigate=useNavigate()
   const [errors, setErrors] = useState(false)
 
   const [productData, setProductData] = useState({
@@ -31,10 +34,10 @@ function AddProduct() {
   const setImage = (e) => {
     const selectedImages = e.target.files;
     if (selectedImages.length > 0) {
-      const newImageNames = Array.from(selectedImages).map(image => image.name);
+      const selectedImageNames = Array.from(selectedImages).map(image => image.name);
       setProductData({
         ...productData,
-        images: [...productData.images, ...newImageNames]
+        images: [...productData.images, ...selectedImageNames]
       });
     }
   }
@@ -62,30 +65,31 @@ function AddProduct() {
   //add funct
   const handleAdd = async (e) => {
     e.preventDefault();
+    const { title, about, stock, stockQuantity, discounted_price, original_price, memory, colors,
+      category, manufacturer, ships_from, description, seller, thumbnail, images } = productData
+    const formData = new FormData()
+    formData.append("title", title)
+    formData.append("about", about)
+    formData.append("stock", stock)
+    formData.append("stockQuantity", stockQuantity)
+    formData.append("discounted_price", discounted_price)
+    formData.append("original_price", original_price)
+    formData.append("memory", memory)
+    formData.append("colors", colors)
+    formData.append("category", category)
+    formData.append("manufacturer", manufacturer)
+    formData.append("ships_from", ships_from)
+    formData.append("description", description)
+    formData.append("seller", seller)
+    formData.append("thumbnail", thumbnail)
+    formData.append("images", images)
+    dispatch(addProduct(formData))
+    setErrors(false);
+
     try {
       // Validate productData
       await productValidationSchema.validate(productData, { abortEarly: false });
-      const { title, about, stock, stockQuantity, discounted_price, original_price, memory, colors,
-        category, manufacturer, ships_from, description, seller, thumbnail, images } = productData
-
-      const formData = new FormData()
-      formData.append("title", title)
-      formData.append("about", about)
-      formData.append("stock", stock)
-      formData.append("stockQuantity", stockQuantity)
-      formData.append("discounted_price", discounted_price)
-      formData.append("original_price", original_price)
-      formData.append("memory", memory)
-      formData.append("colors", colors)
-      formData.append("category", category)
-      formData.append("manufacturer", manufacturer)
-      formData.append("ships_from", ships_from)
-      formData.append("description", description)
-      formData.append("seller", seller)
-      formData.append("thumbnail", thumbnail)
-      formData.append("images", images)
-      dispatch(addProduct(formData))
-      setErrors(false);
+      
     } catch (err) {
       if (err.name === 'ValidationError') {
         const newErrors = {};

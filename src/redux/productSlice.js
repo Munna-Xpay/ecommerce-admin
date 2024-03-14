@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
 import { BASE_URL } from './baseUrl'
 
+
 //get products
 export const getProducts=createAsyncThunk(
     "products",
