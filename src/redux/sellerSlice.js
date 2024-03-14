@@ -50,6 +50,22 @@ export const fetchAllSellersWithDailySalesDetails = createAsyncThunk('/fetch/all
         .catch((err) => rejectWithValue("Something went wrong ! network error"))
 })
 
+export const addSeller = createAsyncThunk('/add/seller', async (data, { rejectWithValue }) => {
+    const token = localStorage.getItem('token')
+    console.log(data)
+    return await axios.post(`${BASE_URL}/api/admin/add-seller`, data, {
+        headers: {
+            "Content-Type": "multipart/form-data",
+            "user_token": `Bearer ${token}`
+        }
+    })
+        .then(res => {
+            console.log(res)
+            return res.data
+        })
+        .catch((err) => rejectWithValue("Something went wrong ! network error"))
+})
+
 const initialState = {
     allSellers: [],
     sallerSalesStat: [],
@@ -85,6 +101,20 @@ const sellerSlice = createSlice({
         })
 
         builder.addCase(fetchAllSellersWithSalesDetails.rejected, (state, action) => {
+            return { ...state, error: action.payload, loading: false }
+        })
+
+
+
+        builder.addCase(addSeller.pending, (state) => {
+            return { ...state, loading: true }
+        })
+
+        builder.addCase(addSeller.fulfilled, (state, action) => {
+            return { ...state, allSellers: action.payload, loading: false }
+        })
+
+        builder.addCase(addSeller.rejected, (state, action) => {
             return { ...state, error: action.payload, loading: false }
         })
 

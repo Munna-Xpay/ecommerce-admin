@@ -10,7 +10,7 @@ const SellerProfileBox = ({sellerProfile}) => {
                 <Box
                     component={'img'}
                     alt='company icon'
-                    src={sellerProfile?.seller?.company_icon}
+                    src={`http://localhost:4000/uploadedFiles/${sellerProfile?.seller?.company_icon}`}
                     sx={{ objectFit: 'contain', width: { xs: '90%', md: '140px' }, height: { xs: '100px', md: '100%' }, padding: '20px' }}
                 />
                 <Stack spacing={1}>

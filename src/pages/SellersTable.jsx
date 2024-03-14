@@ -37,7 +37,7 @@ const SellersTable = () => {
             <Box
               component={'img'}
               alt='company icon'
-              src={item?.seller?.company_icon}
+              src={`http://localhost:4000/uploadedFiles/${item?.seller?.company_icon}`}
               sx={{ width: '80px', height: '80px', objectFit: 'contain', padding: '10px', borderRadius: '10px', border: '2px solid #f2f2f2' }}
             />
             <Stack>

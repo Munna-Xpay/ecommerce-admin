@@ -21,7 +21,7 @@ const SellerGridCard = ({ seller }) => {
                     <Box
                         component={'img'}
                         alt='company log'
-                        src={seller?.seller?.company_icon}
+                        src={`http://localhost:4000/uploadedFiles/${seller?.seller?.company_icon}`}
                         sx={{ width: '120px', height: '120px', objectFit: 'contain' }}
                     />
                 </Stack>

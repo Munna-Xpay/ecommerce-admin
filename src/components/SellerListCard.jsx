@@ -16,7 +16,7 @@ const SellerListCard = ({ sellerDetails }) => {
                         <Box
                             component={'img'}
                             alt='company icon'
-                            src={sellerDetails?.seller?.company_icon}
+                            src={`http://localhost:4000/uploadedFiles/${sellerDetails?.seller?.company_icon}`}
                             sx={{ width: '100%', height: '170px', objectFit: 'contain' }}
                         />
                         <Link to={'/seller-profile/' + sellerDetails._id}><Button sx={{ width: '100%' }} size='small' variant='contained' color='primary'>Profile</Button></Link>
