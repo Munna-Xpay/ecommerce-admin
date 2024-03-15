@@ -1,9 +1,9 @@
-import { Box, Button, Container, FormControl, Grid, InputLabel, MenuItem, Pagination, Select, Stack, Typography } from '@mui/material'
+import { Box, Button, FormControl, Grid, MenuItem, Pagination, Select, Stack, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import LaptopMacIcon from '@mui/icons-material/LaptopMac';
 import CreateIcon from '@mui/icons-material/Create';
 import { useDispatch, useSelector } from 'react-redux';
-import { getProducts } from '../redux/productSlice';
+import { deleteProduct, getProducts } from '../redux/productSlice';
 import PageHead from '../components/PageHead'
 
 function ProductGrid() {
@@ -13,18 +13,7 @@ function ProductGrid() {
     categoryFilter: "Electronics",
     sort_option: "Best_selling"
   })
-  const handleCategoryChange = (event) => {
-    setSortData({
-      ...sortData,
-      categoryFilter: event.target.value
-    })
-  };
-  const handleOptionChange = (event) => {
-    setSortData({
-      ...sortData,
-      sort_option: event.target.value
-    })
-  };
+
   //console.log(sortData)
   const products = useSelector(state => state.productReducer.products)
   console.log(products);
@@ -38,6 +27,10 @@ function ProductGrid() {
     dispatch(getProducts(sortData))
   }, [sortData])
 
+  //handle delete func
+  const handleDelete=async(id)=>{
+    dispatch(deleteProduct(id))
+       }
   return (
     <>
     <PageHead heading={'Products Grid'}/>
@@ -51,7 +44,7 @@ function ProductGrid() {
           <FormControl sx={{ width: '200px' }}>
             <Select
               value={sortData.categoryFilter}
-              onChange={handleCategoryChange}
+              onChange={(e)=>setSortData({...sortData,["categoryFilter"]:e.target.value})}
             >
               <MenuItem value={'Electronics'}>Electronics</MenuItem>
               <MenuItem value={'Fashion'}>Fashion</MenuItem>
@@ -61,7 +54,7 @@ function ProductGrid() {
           <FormControl sx={{ width: '200px' }}>
             <Select
               value={sortData.sort_option}
-              onChange={handleOptionChange}
+              onChange={(e)=>setSortData({...sortData,["sort_option"]:e.target.value})}
             >
               <MenuItem selected value={'Best_selling'}>Best seling</MenuItem>
               <MenuItem value={'Availability'}>Availability</MenuItem>
@@ -85,7 +78,7 @@ function ProductGrid() {
               <Typography fontWeight={'bold'} fontSize={15} color={'gray'}>Sale price :<span>${product.discounted_price}</span></Typography>
               <Stack direction={'row'} marginTop={3}>
                 <Button sx={{ borderRadius: '20px', fontWeight: 'bold', width: { xs: 200 } }} variant='outlined'><CreateIcon sx={{ width: '15px' }} />Edit</Button>
-                <Button sx={{ marginLeft: '5px', borderRadius: '20px', fontWeight: 'bold', width: { xs: 200 } }} color='error' variant='outlined'>Delete</Button>
+                <Button onClick={()=>handleDelete(product._id)}  sx={{ marginLeft: '5px', borderRadius: '20px', fontWeight: 'bold', width: { xs: 200 } }} color='error' variant='outlined'>Delete</Button>
               </Stack>
             </Stack>
           </Grid>

@@ -6,9 +6,8 @@ import { fetchAllSellersWithSalesDetails } from '../redux/sellerSlice';
 import { addProduct } from '../redux/productSlice';
 import JoditEditor from 'jodit-react';
 import { productValidationSchema } from '../validations/ProductValidation';
-import toast from 'react-hot-toast';
+import toast, { Toaster } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
-
 
 function AddProduct() {
   
@@ -19,7 +18,7 @@ function AddProduct() {
   const [errors, setErrors] = useState(false)
 
   const [productData, setProductData] = useState({
-    title: '', about: '', stock: '', stockQuantity: '', discounted_price: '', original_price: '', memory: [], colors: [],
+    title: '', about: '', stock: '', stockQuantity: '',product_type:'', discounted_price: '', original_price: '', memory: [], colors: [],
     category: '', manufacturer: '', ships_from: '', description: '', seller: '', thumbnail: '', images: []
   })
 
@@ -50,58 +49,45 @@ function AddProduct() {
     });
   }
 
-  //dropdown
-  const handleCategoryChange = (e) => {
-    setProductData({ ...productData, category: e.target.value })
-  };
-  const handleSellerChange = (e) => {
-    setProductData({ ...productData, seller: e.target.value })
-  };
-  const handleStockChange = (e) => {
-    setProductData({ ...productData, stock: e.target.value })
-  };
-
 
   //add funct
   const handleAdd = async (e) => {
     e.preventDefault();
-    const { title, about, stock, stockQuantity, discounted_price, original_price, memory, colors,
-      category, manufacturer, ships_from, description, seller, thumbnail, images } = productData
-    const formData = new FormData()
-    formData.append("title", title)
-    formData.append("about", about)
-    formData.append("stock", stock)
-    formData.append("stockQuantity", stockQuantity)
-    formData.append("discounted_price", discounted_price)
-    formData.append("original_price", original_price)
-    formData.append("memory", memory)
-    formData.append("colors", colors)
-    formData.append("category", category)
-    formData.append("manufacturer", manufacturer)
-    formData.append("ships_from", ships_from)
-    formData.append("description", description)
-    formData.append("seller", seller)
-    formData.append("thumbnail", thumbnail)
-    formData.append("images", images)
-    dispatch(addProduct(formData))
-    setErrors(false);
-
-    try {
       // Validate productData
-      await productValidationSchema.validate(productData, { abortEarly: false });
-      
-    } catch (err) {
-      if (err.name === 'ValidationError') {
+      await productValidationSchema.validate(productData, { abortEarly: false })
+      .then(value=>{
+        const { title, about, stock, stockQuantity,product_type, discounted_price, original_price, memory, colors,
+          category, manufacturer, ships_from, description, seller, thumbnail, images } = productData
+        const formData = new FormData()
+        formData.append("title", title)
+        formData.append("about", about)
+        formData.append("stock", stock)
+        formData.append("stockQuantity", stockQuantity)
+        formData.append("product_type", product_type)
+        formData.append("discounted_price", discounted_price)
+        formData.append("original_price", original_price)
+        formData.append("memory", memory)
+        formData.append("colors", colors)
+        formData.append("category", category)
+        formData.append("manufacturer", manufacturer)
+        formData.append("ships_from", ships_from)
+        formData.append("description", description)
+        formData.append("seller", seller)
+        formData.append("thumbnail", thumbnail)
+        formData.append("images", images)
+
+        dispatch(addProduct({data:formData,navigate}))
+      })
+      .catch(err=>{
         const newErrors = {};
         err.inner.map((validationError) => {
           newErrors[validationError.path] = validationError.message;
         });
         setErrors(newErrors);
-      }
-    }
-  };
-
-
+      })
+  }
+ 
+  
   useEffect(() => {
     dispatch(fetchAllSellersWithSalesDetails())
   }, [])
@@ -204,7 +190,7 @@ function AddProduct() {
                   id="demo-simple-select"
                   name='category'
                   value={productData.category}
-                  onChange={(e) => handleCategoryChange(e)}
+                  onChange={(e) => setProductData({...productData,["category"]:e.target.value})}
                   InputProps={{ style: { borderRadius: '7px' } }}
                 >
                   <MenuItem value={'Electronics'}>Electronics</MenuItem>
@@ -247,14 +233,14 @@ function AddProduct() {
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
                   value={productData.stock}
-                  onChange={(e) => handleStockChange(e)}
+                  onChange={(e) => setProductData({...productData,["stock"]:e.target.value})}
                   InputProps={{ style: { borderRadius: '7px' } }}
                 >
-                  <MenuItem value={'in_stock'}>In stock</MenuItem>
-                  <MenuItem value={'low_inventory'}>Low Inventory</MenuItem>
-                  <MenuItem value={'out_of_stock'}>Out of Stock</MenuItem>
-                  <MenuItem value={'on_demand'}>On Demand</MenuItem>
-                  <MenuItem value={'temporarily_unavailable'}>Temporarily Unavailable</MenuItem>
+                  <MenuItem value={'In stock'}>In stock</MenuItem>
+                  <MenuItem value={'Low inventory'}>Low Inventory</MenuItem>
+                  <MenuItem value={'Out of stock'}>Out of Stock</MenuItem>
+                  <MenuItem value={'On demand'}>On Demand</MenuItem>
+                  <MenuItem value={'Temporarily unavailable'}>Temporarily Unavailable</MenuItem>
                 </Select>
                 <FormHelperText sx={{ color: 'red', marginX: '0px' }}>{errors.stock}</FormHelperText>
 
@@ -272,8 +258,7 @@ function AddProduct() {
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
                   value={productData.seller}
-                  onChange={(e) => handleSellerChange(e)}
-                  InputProps={{ style: { borderRadius: '7px' } }}
+                  onChange={(e) => setProductData({...productData,["seller"]:e.target.value})}                  InputProps={{ style: { borderRadius: '7px' } }}
                 >{sellers.map((i) => (
                   <MenuItem value={i._id}>{i.fullName}</MenuItem>
                 ))}
@@ -290,21 +275,41 @@ function AddProduct() {
             </Box>
           </Stack>
           <Stack direction={{ xs: 'column', md: 'row' }} spacing={1} mt={2}>
+          <Box>
+              <Typography fontSize={12} color={'gray'} fontWeight={'bold'}>Product Type</Typography>
+              <FormControl sx={{ width: '399px' }}>
+                <Select
+
+                  name='product_type'
+                  sx={{ height: '50px' }}
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={productData.product_type}
+                  onChange={(e) => setProductData({...productData,["product_type"]:e.target.value})}                  InputProps={{ style: { borderRadius: '7px' } }}
+                >
+                  <MenuItem value={'Simple Product'}>Simple Product</MenuItem>
+                  <MenuItem value={'Variable Product'}>Variable Product</MenuItem>
+                  <MenuItem value={'Grouped Product'}>Grouped Product</MenuItem>
+
+                </Select>
+                <FormHelperText sx={{ color: 'red', marginX: '0px' }}>{errors.seller}</FormHelperText>
+
+              </FormControl>
+            </Box>
             <Box>
               <Typography fontSize={12} color={'gray'} fontWeight={'bold'}>Memory</Typography>
               <TextField onChange={(e) => setInput(e)} name='memory' InputProps={{ style: { borderRadius: '7px', height: '50px' } }} type='text' sx={{ width: '399px' }} label="" id="fullWidth" />
             </Box>
-            <Box>
+          </Stack>
+          <Stack direction={{ xs: 'column', md: 'row' }} spacing={1} mt={2}>
+          <Box>
               <Typography fontSize={12} color={'gray'} fontWeight={'bold'}>Colour</Typography>
               <TextField onChange={(e) => setInput(e)} name='colors' InputProps={{ style: { borderRadius: '7px', height: '50px' } }} type='text' sx={{ width: '399px' }} label="" id="fullWidth" />
             </Box>
-          </Stack>
-          <Stack direction={{ xs: 'column', md: 'row' }} spacing={1} mt={2}>
             <Box>
               <Typography fontSize={12} color={'gray'} fontWeight={'bold'}>Ships From</Typography>
               <TextField onChange={(e) => setInput(e)} name='ships_from' InputProps={{ style: { borderRadius: '7px', height: '50px' } }} type='text' sx={{ width: '399px' }} label="" id="fullWidth" />
               <FormHelperText sx={{ color: 'red' }}>{errors.ships_from}</FormHelperText>
-
             </Box>
           </Stack>
           <Stack direction={{ xs: 'column', md: 'row' }} textAlign={'center'} spacing={1} mt={2}>
@@ -321,6 +326,14 @@ function AddProduct() {
           </Stack>
         </Grid>
       </Grid>
+      <Toaster position="top-center"
+        reverseOrder={false}
+        containerStyle={{
+          padding: '10px',
+          fontSize: '17px',
+          fontFamily: 'sans-serif',
+        }}
+      />
     </Box>
   )
 }
