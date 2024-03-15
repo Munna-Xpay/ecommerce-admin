@@ -27,19 +27,33 @@ function ProductManagement() {
   const [currentPage, setCurrentPage] = useState(1);
   //handle apply filter
   const handleApply = () => {
-    dispatch(getProductInProductsManagement(filter))
+    dispatch(getProductInProductsManagement({ query: filter, searchData }))
   }
   //handle clear
   const handleClear = () => {
-    setFilter("")
+    setFilter({
+      categoryFilter: '',
+      stockFilter: '',
+      productTypeFilter: '',
+      additionalOption: ''
+    });
+    dispatch(getProductInProductsManagement({ query: {}, searchData: '' }));
+  }
+
+  //handle search
+  const handleSearch = (e) => {
+    const { value } = e.target;
+    setSearchData(value);
   }
 
   const lastIndexOfItemInAPage = itemsPerPage * currentPage;
   const firstIndexOfItemInAPage = lastIndexOfItemInAPage - itemsPerPage;
 
   useEffect(() => {
-    dispatch(getProductInProductsManagement(filter))
-  }, [])
+    dispatch(getProductInProductsManagement({ query: filter, searchData }))
+  }, [searchData])
+
+
 
   return (
     <>
@@ -53,7 +67,7 @@ function ProductManagement() {
           sx={{ display: 'flex', alignItems: 'center', width: 300 }}
         >
           <InputBase
-            onChange={(e) => setSearchData({ ...searchData, ["searchData"]: e.target.value })}
+            onChange={(e) => handleSearch(e)}
             sx={{ ml: 1, flex: 1 }}
             placeholder="Search Product"
 
@@ -67,7 +81,7 @@ function ProductManagement() {
       <Stack direction={'row'} mt={2}>
         <Typography fontSize={14} fontWeight={'bold'}>Products : All <span style={{ fontWeight: 'normal' }}>{products.length}</span></Typography>
         <Divider sx={{ height: 17, m: 0.5 }} orientation="vertical" />
-        <Typography fontSize={14} fontWeight={'bold'}>Trash : <span style={{ fontWeight: 'normal' }}>{products.filter(product => !product.isActive).length}</span></Typography>
+        <Link style={{ textDecoration: 'none' }}> <Typography fontSize={14} fontWeight={'bold'}>Trash : <span style={{ fontWeight: 'normal' }}>{products.filter(product => !product.isActive).length}</span></Typography></Link>
       </Stack>
       <Stack direction={{ xs: 'column', md: 'row' }} justifyContent={'space-evenly'} spacing={2} mt={2} mb={2}>
         <FormControl sx={{ width: { xs: 379, md: 200 } }}>
@@ -157,7 +171,6 @@ function ProductManagement() {
               <TableCell sx={{ fontSize: '17px', color: '#035ECF' }} >Rating</TableCell>
               <TableCell sx={{ fontSize: '17px', color: '#035ECF' }} >Last modified</TableCell>
               <TableCell sx={{ fontSize: '17px', color: '#035ECF' }} >Actions</TableCell>
-
             </TableRow>
           </TableHead>
           <TableBody>
@@ -170,14 +183,13 @@ function ProductManagement() {
                 <TableCell sx={{ fontWeight: 'bold' }} component="th" scope="row">
                   {i.title}
                 </TableCell>
-                <TableCell sx={{ fontWeight: 'bold' }} >{i.stock}({i.stockQuantity})</TableCell>
+                <TableCell sx={{ fontWeight: 'bold', color: (i.stock === 'Low inventory' || i.stock === 'Out of stock') ? 'red' : 'black' }} >{i.stock}<span style={{ fontSize: '11px' }}>({i.stockQuantity})</span> </TableCell>
                 <TableCell sx={{ fontWeight: 'bold' }} >{i.discounted_price}</TableCell>
                 <TableCell sx={{ fontWeight: 'bold' }} >{i.category}</TableCell>
                 <TableCell sx={{ fontWeight: 'bold' }} >{i.manufacturer}</TableCell>
                 <TableCell sx={{ fontWeight: 'bold' }} ><StarIcon />({i.review_star})</TableCell>
                 <TableCell sx={{ fontWeight: 'bold' }} >{new Date(i.updatedAt).toLocaleDateString('en-US')}</TableCell>
                 <TableCell sx={{ fontWeight: 'bold' }} ><EditIcon /></TableCell>
-
               </TableRow>
             ))}
           </TableBody>
