@@ -50,7 +50,7 @@ export const fetchAllSellersWithDailySalesDetails = createAsyncThunk('/fetch/all
         .catch((err) => rejectWithValue("Something went wrong ! network error"))
 })
 
-export const addSeller = createAsyncThunk('/add/seller', async (data, { rejectWithValue }) => {
+export const addSeller = createAsyncThunk('/add/seller', async ({ data, navigate }, { rejectWithValue }) => {
     const token = localStorage.getItem('token')
     console.log(data)
     return await axios.post(`${BASE_URL}/api/admin/add-seller`, data, {
@@ -61,9 +61,14 @@ export const addSeller = createAsyncThunk('/add/seller', async (data, { rejectWi
     })
         .then(res => {
             console.log(res)
+            toast.success("Seller added successfully")
+            navigate("/seller-grid")
             return res.data
         })
-        .catch((err) => rejectWithValue("Something went wrong ! network error"))
+        .catch((err) => {
+            toast.error("Something went wrong !")
+            return rejectWithValue("Something went wrong ! network error")
+        })
 })
 
 const initialState = {

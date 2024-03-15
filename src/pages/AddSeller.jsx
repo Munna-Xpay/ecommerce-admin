@@ -5,9 +5,14 @@ import { Box } from '@mui/system'
 import { countries } from '../countryDatas'
 import { useDispatch } from 'react-redux'
 import { addSeller } from '../redux/sellerSlice'
+import { sellerSchema } from '../formValidation/addSellerValidation'
+import toast, { Toaster } from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom'
+
 
 const AddSeller = () => {
 
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const [sellerDetails, setSellerDetails] = useState({
         email: "",
@@ -18,6 +23,7 @@ const AddSeller = () => {
         company_name: "",
         website: ""
     })
+    const [errors, setErrors] = useState({})
     const [file, setFile] = useState(null)
     const [company_icon, setCompany_icon] = useState("")
     console.log(file)
@@ -26,19 +32,31 @@ const AddSeller = () => {
         file && setCompany_icon(URL.createObjectURL(file))
     }, [file])
 
-    const handleAddSeller = () => {
-        const { email, password, phoneNum, address, country, company_name, website } = sellerDetails;
-        const formData = new FormData();
-        formData.append("email", email)
-        formData.append("password", password)
-        formData.append("phoneNum", phoneNum)
-        formData.append("address", address)
-        formData.append("country", country)
-        formData.append("company_name", company_name)
-        formData.append("website", website)
-        formData.append("company_icon", file)
+    const handleAddSeller = async () => {
+        sellerSchema.validate({ ...sellerDetails, company_icon: file }, { abortEarly: false })
+            .then(value => {
+                const { email, password, phoneNum, address, country, company_name, website } = sellerDetails;
+                const formData = new FormData();
+                formData.append("email", email)
+                formData.append("password", password)
+                formData.append("phoneNum", phoneNum)
+                formData.append("address", address)
+                formData.append("country", country)
+                formData.append("company_name", company_name)
+                formData.append("website", website)
+                formData.append("company_icon", file)
+                dispatch(addSeller({ data: formData, navigate }))
+            })
+            .catch(err => {
+                // console.log(err.inner)
+                const validateErrors = {}
+                err.inner.forEach(error => {
+                    validateErrors[error.path] = error.message
+                })
+                setErrors(validateErrors)
+                console.log(validateErrors)
+            })
 
-        dispatch(addSeller(formData))
     }
 
     return (
@@ -48,12 +66,12 @@ const AddSeller = () => {
                 <Grid container spacing={4} p={3}>
                     <Grid item xs={12} md={4}>
                         <Stack spacing={3}>
-                            <TextField onChange={(e) => setSellerDetails({ ...sellerDetails, email: e.target.value })} value={sellerDetails.email} label="Email" type='email' variant='filled' color="secondary" />
-                            <TextField onChange={(e) => setSellerDetails({ ...sellerDetails, password: e.target.value })} value={sellerDetails.password} label="Password" type='password' variant='filled' color="secondary" />
-                            <TextField onChange={(e) => setSellerDetails({ ...sellerDetails, phoneNum: e.target.value })} value={sellerDetails.phoneNum} label="Mobile Number" type='number' variant='filled' color="secondary" />
-                            <TextField onChange={(e) => setSellerDetails({ ...sellerDetails, address: e.target.value })} value={sellerDetails.address} label="Address" color="secondary" variant='filled' />
-                            <TextField onChange={(e) => setSellerDetails({ ...sellerDetails, company_name: e.target.value })} value={sellerDetails.company_name} label="Company name" variant='filled' color="secondary" fullWidth />
-                            <TextField onChange={(e) => setSellerDetails({ ...sellerDetails, website: e.target.value })} value={sellerDetails.website} label="Website" variant='filled' color="secondary" fullWidth />
+                            <TextField error={errors.email} helperText={errors.email} onChange={(e) => setSellerDetails({ ...sellerDetails, email: e.target.value })} value={sellerDetails.email} label="Email" type='email' variant='filled' color="secondary" />
+                            <TextField error={errors.password} helperText={errors.password} onChange={(e) => setSellerDetails({ ...sellerDetails, password: e.target.value })} value={sellerDetails.password} label="Password" type='password' variant='filled' color="secondary" />
+                            <TextField error={errors.phoneNum} helperText={errors.phoneNum} onChange={(e) => setSellerDetails({ ...sellerDetails, phoneNum: e.target.value })} value={sellerDetails.phoneNum} label="Mobile Number" type='number' variant='filled' color="secondary" />
+                            <TextField error={errors.address} helperText={errors.address} onChange={(e) => setSellerDetails({ ...sellerDetails, address: e.target.value })} value={sellerDetails.address} label="Address" color="secondary" variant='filled' />
+                            <TextField error={errors.company_name} helperText={errors.company_name} onChange={(e) => setSellerDetails({ ...sellerDetails, company_name: e.target.value })} value={sellerDetails.company_name} label="Company name" variant='filled' color="secondary" fullWidth />
+                            <TextField error={errors.website} helperText={errors.website} onChange={(e) => setSellerDetails({ ...sellerDetails, website: e.target.value })} value={sellerDetails.website} label="Website" variant='filled' color="secondary" fullWidth />
                         </Stack>
                     </Grid>
                     <Grid item xs={12} md={4} >
@@ -82,7 +100,8 @@ const AddSeller = () => {
                                 renderInput={(params) => (
                                     <TextField
                                         fullWidth
-                                        // error={errors.country}
+                                        error={errors.country}
+                                        helperText={errors.country}
                                         value={sellerDetails.country}
                                         {...params}
                                         label="Country"
@@ -93,11 +112,14 @@ const AddSeller = () => {
                                     />
                                 )}
                             />
-                            <Box
-                                component={'img'}
-                                src={company_icon ? company_icon : 'https://th.bing.com/th/id/OIP.y757S8hQiezX3CSo1AI5vgAAAA?rs=1&pid=ImgDetMain'}
-                                sx={{ width: '220px', height: '220px', objectFit: 'cover' }}
-                            />
+                            <Stack>
+                                <Box
+                                    component={'img'}
+                                    src={company_icon ? company_icon : 'https://th.bing.com/th/id/OIP.y757S8hQiezX3CSo1AI5vgAAAA?rs=1&pid=ImgDetMain'}
+                                    sx={{ width: '220px', height: '220px', objectFit: 'contain' }}
+                                />
+                                {errors.company_icon && <Typography color={'error'}>{errors.company_icon}</Typography>}
+                            </Stack>
                             <Button
                                 variant="outlined"
                                 component="label"
@@ -114,6 +136,8 @@ const AddSeller = () => {
                     </Grid>
                 </Grid>
             </Paper>
+
+            <Toaster />
         </>
     )
 }
