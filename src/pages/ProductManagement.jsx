@@ -58,13 +58,13 @@ function ProductManagement() {
   return (
     <>
       <PageHead heading={'Products Management'} />
-      <Stack direction={'row'} justifyContent={'space-between'} mt={2}>
-        <Link to={'/add-product'}> <Button sx={{ marginTop: '15px', backgroundColor: 'green', color: 'white', '&:hover': { backgroundColor: 'green' }, width: '300px', borderRadius: '20px', padding: '10px' }}>
+      <Stack direction={{xs:'column',md:'row'}} justifyContent={'space-between'} mt={2} spacing={{xs:2,md:0}}>
+        <Link to={'/add-product'}> <Button sx={{ marginTop: '15px', backgroundColor: 'green', color: 'white', '&:hover': { backgroundColor: 'green' }, width: {xs:380,md:200}, borderRadius: '20px', padding: '10px' }}>
           Add new product
         </Button>   </Link>
         <Paper
           component="form"
-          sx={{ display: 'flex', alignItems: 'center', width: 300 }}
+          sx={{ display: 'flex', alignItems: 'center', width: {xs:380,md:300} }}
         >
           <InputBase
             onChange={(e) => handleSearch(e)}
