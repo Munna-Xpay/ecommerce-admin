@@ -76,7 +76,7 @@ const SellerListCard = ({ sellerDetails }) => {
                                             <Typography variant='body1' sx={{ fontWeight: 'bold', opacity: '.8' }}>{item.category}</Typography>
                                             <Typography variant='body1' sx={{ fontWeight: 'bold' }}>₹ {formatNumberToK(item.total_income)}</Typography>
                                         </Stack>
-                                        <LinearProgress sx={{ height: '10px', borderRadius: '50px', opacity: '.7' }} variant="determinate" color={item.category == 'Electronics' ? 'primary' : (item.category == 'Fashion' && 'error')} value={item.total_income.toString().length} />
+                                        <LinearProgress sx={{ height: '10px', borderRadius: '50px', opacity: '.7' }} variant="determinate" value={item.total_income.toString().length} />
                                     </Stack>
                                 ))
                                 :

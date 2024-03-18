@@ -37,6 +37,12 @@ const AdminProfileBox = () => {
         }
     }
 
+    const handleLogout = () => {
+        localStorage.removeItem("token")
+        localStorage.removeItem("adminId")
+        window.location.reload()
+    }
+
 
     return (
         <Stack spacing={2}>
@@ -65,7 +71,7 @@ const AdminProfileBox = () => {
                     <Typography variant='h5' sx={{ fontWeight: 'bold' }}>{admin && admin.fullName}</Typography>
                     <Chip label='Admin' color='error' sx={{ padding: '0px 20px', fontWeight: 'bold' }} />
                     <Typography sx={{ fontWeight: 'bold' }} color={'primary'}>Last visit at {new Date().toLocaleDateString()}</Typography>
-                    <Button fullWidth variant='contained'>Log out</Button>
+                    <Button fullWidth onClick={handleLogout} variant='contained'>Log out</Button>
                 </Stack>
             </Paper>
             {/* <Paper sx={{ width: '100%' }}>

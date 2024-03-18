@@ -35,6 +35,26 @@ export const adminById = createAsyncThunk(
   }
 );
 
+//get user by id
+export const fetchUsersStat = createAsyncThunk(
+  "fetch/user/stat",
+  async (args, { rejectWithValue }) => {
+    const id = localStorage.getItem("adminId");
+    const token = localStorage.getItem("token");
+    return await axios.get(`${BASE_URL}/api/auth/all-users-with-stat`, {
+      headers: {
+        "Content-Type": "application/json",
+        user_token: `Bearer ${token}`,
+      }
+    })
+      .then((res) => {
+        console.log(res)
+        return res.data
+      })
+      .catch((err) => rejectWithValue(err.response.data));
+  }
+);
+
 //profile edit
 export const profileEdit = createAsyncThunk(
   "user/profile",
@@ -88,6 +108,7 @@ export const updateProfilePic = createAsyncThunk(
 const initialState = {
   admin: null,
   token: null,
+  userStat: {},
   loading: false,
   error: "",
 };
@@ -147,6 +168,17 @@ const userSlice = createSlice({
       return { ...state, admin: action.payload, loading: false };
     });
     builder.addCase(updateProfilePic.rejected, (state, action) => {
+      return { ...state, error: action.payload, loading: false };
+    });
+
+
+    builder.addCase(fetchUsersStat.pending, (state) => {
+      return { ...state, loading: true };
+    });
+    builder.addCase(fetchUsersStat.fulfilled, (state, action) => {
+      return { ...state, userStat: action.payload, loading: false };
+    });
+    builder.addCase(fetchUsersStat.rejected, (state, action) => {
       return { ...state, error: action.payload, loading: false };
     });
 

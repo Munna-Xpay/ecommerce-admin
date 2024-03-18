@@ -13,7 +13,7 @@ export const fetchAllSellersStat = createAsyncThunk('/fetch/all/sellers', async 
         }
     })
         .then(res => {
-            // console.log(res)
+            console.log(res)
             return res.data
         })
         .catch((err) => rejectWithValue("Something went wrong ! network error"))
@@ -29,7 +29,7 @@ export const fetchAllSellersWithSalesDetails = createAsyncThunk('/fetch/all/sell
         }
     })
         .then(res => {
-            // console.log(res)
+            console.log(res)
             return res.data
         })
         .catch((err) => rejectWithValue("Something went wrong ! network error"))
@@ -60,7 +60,7 @@ export const addSeller = createAsyncThunk('/add/seller', async ({ data, navigate
         }
     })
         .then(res => {
-            console.log(res)
+            // console.log(res)
             toast.success("Seller added successfully")
             navigate("/seller-grid")
             return res.data
