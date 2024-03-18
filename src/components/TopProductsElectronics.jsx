@@ -35,7 +35,7 @@ function TopProductsElectronics() {
         <Box border={1} borderColor={'#f1f1f1'} marginBottom={2}> <img width={150} height={130} src={product.thumbnail} alt="" /></Box> 
             <Typography fontWeight={'bold'} fontSize={15} textAlign={'center'}>{product.title}</Typography>
            <Box textAlign={'center'}><Rating name="read-only" value={product.review_star} readOnly /></Box> 
-            <Typography textAlign={'center'} fontWeight={'bold'} fontSize={15} color={'#0dd1b0'}>Available :<span>{product.inStock-product.product_sold}</span></Typography>
+            <Typography textAlign={'center'} fontWeight={'bold'} fontSize={15} color={'#0dd1b0'}>Available :<span>{product.stockQuantity}</span></Typography>
            <Typography textAlign={'center'} fontWeight={'bold'} fontSize={15} color={'darkblue'}>Already sold :<span>{product.product_sold}</span></Typography>
          
         </Box>

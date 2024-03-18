@@ -8,7 +8,7 @@ import { getProductInProductsManagement } from '../redux/productSlice';
 import PageHead from '../components/PageHead'
 import StarIcon from '@mui/icons-material/Star';
 import EditIcon from '@mui/icons-material/Edit';
-import CollectionsIcon from '@mui/icons-material/Collections';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 function ProductManagement() {
 
@@ -23,7 +23,7 @@ function ProductManagement() {
   })
   console.log(filter);
   const [searchData, setSearchData] = useState('')
-  const [itemsPerPage, setItemsPerPage] = useState(24);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
   //handle apply filter
   const handleApply = () => {
@@ -58,13 +58,13 @@ function ProductManagement() {
   return (
     <>
       <PageHead heading={'Products Management'} />
-      <Stack direction={{xs:'column',md:'row'}} justifyContent={'space-between'} mt={2} spacing={{xs:2,md:0}}>
-        <Link to={'/add-product'}> <Button sx={{ marginTop: '15px', backgroundColor: 'green', color: 'white', '&:hover': { backgroundColor: 'green' }, width: {xs:380,md:200}, borderRadius: '20px', padding: '10px' }}>
+      <Stack direction={{ xs: 'column', md: 'row' }} justifyContent={'space-between'} mt={2} spacing={{ xs: 2, md: 0 }}>
+        <Link to={'/add-product'}> <Button sx={{ marginTop: '15px', backgroundColor: 'green', color: 'white', '&:hover': { backgroundColor: 'green' }, width: { xs: 380, md: 200 }, borderRadius: '20px', padding: '10px' }}>
           Add new product
         </Button>   </Link>
         <Paper
           component="form"
-          sx={{ display: 'flex', alignItems: 'center', width: {xs:380,md:300} }}
+          sx={{ display: 'flex', alignItems: 'center', width: { xs: 380, md: 300 } }}
         >
           <InputBase
             onChange={(e) => handleSearch(e)}
@@ -84,7 +84,7 @@ function ProductManagement() {
         <Link style={{ textDecoration: 'none' }}> <Typography fontSize={14} fontWeight={'bold'}>Trash : <span style={{ fontWeight: 'normal' }}>{products.filter(product => !product.isActive).length}</span></Typography></Link>
       </Stack>
       <Stack direction={{ xs: 'column', md: 'row' }} justifyContent={'space-evenly'} spacing={2} mt={2} mb={2}>
-        <FormControl sx={{ width: { xs: 379, md: 200 } }}>
+        <FormControl size='small' sx={{ width: { xs: 379, md: 200 } }}>
           <InputLabel id="demo-simple-select-label">Stock</InputLabel>
           <Select
             value={filter.stockFilter}
@@ -102,7 +102,7 @@ function ProductManagement() {
           </Select>
         </FormControl>
 
-        <FormControl sx={{ width: { xs: 379, md: 200 } }}>
+        <FormControl size='small' sx={{ width: { xs: 379, md: 200 } }}>
           <InputLabel id="demo-simple-select-label">Product Category</InputLabel>
           <Select
             value={filter.categoryFilter}
@@ -116,7 +116,7 @@ function ProductManagement() {
           </Select>
         </FormControl>
 
-        <FormControl sx={{ width: { xs: 379, md: 200 } }}>
+        <FormControl size='small' sx={{ width: { xs: 379, md: 200 } }}>
           <InputLabel id="demo-simple-select-label">Product Type</InputLabel>
 
           <Select
@@ -189,7 +189,9 @@ function ProductManagement() {
                 <TableCell sx={{ fontWeight: 'bold' }} >{i.manufacturer}</TableCell>
                 <TableCell sx={{ fontWeight: 'bold' }} ><StarIcon />({i.review_star})</TableCell>
                 <TableCell sx={{ fontWeight: 'bold' }} >{new Date(i.updatedAt).toLocaleDateString('en-US')}</TableCell>
-                <TableCell sx={{ fontWeight: 'bold' }} ><EditIcon /></TableCell>
+                <TableCell sx={{ fontWeight: 'bold' }}> <Stack direction={'row'}> <IconButton><EditIcon sx={{ color: 'black' }} /></IconButton>  <IconButton> <MoreVertIcon sx={{ color: 'black' }} />
+                </IconButton></Stack>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
