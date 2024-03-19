@@ -19,6 +19,7 @@ import { Button, Drawer, Stack } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { adminById } from '../redux/userSlice';
 import { Link, useNavigate } from 'react-router-dom';
+import Notifications from './Notifications';
 
 
 
@@ -33,6 +34,11 @@ export default function PrimarySearchAppBar() {
 
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+    const [open, setOpen] = useState(false);
+
+    const toggleDrawer = (isOpen) => () => {
+        setOpen(isOpen);
+    };
 
 
 
@@ -108,8 +114,9 @@ export default function PrimarySearchAppBar() {
                 </IconButton>
                 <p>Messages</p>
             </MenuItem>
-            <MenuItem>
+            <MenuItem onClick={toggleDrawer(true)}>
                 <IconButton
+
                     size="large"
                     aria-label="show 17 new notifications"
                     color="inherit"
@@ -167,6 +174,7 @@ export default function PrimarySearchAppBar() {
                                     </Badge>
                                 </IconButton>
                                 <IconButton
+                                    onClick={toggleDrawer(true)}
                                     size="large"
                                     aria-label="show 17 new notifications"
                                     color="inherit"
@@ -213,6 +221,15 @@ export default function PrimarySearchAppBar() {
                 onClose={() => setDrawer(false)}
             >
                 <Sidebar setDrawer={setDrawer} />
+            </Drawer>
+
+
+            <Drawer
+                anchor='right'
+                open={open}
+                onClose={toggleDrawer(false)}
+            >
+                <Notifications />
             </Drawer>
         </Box>
     );
