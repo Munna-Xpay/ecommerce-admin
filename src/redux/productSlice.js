@@ -69,6 +69,7 @@ export const getProductInProductsManagement = createAsyncThunk(
   }
 );
 
+//delete product
 export const deleteProduct = createAsyncThunk(
   "delete/product",
   async (id, { rejectWithValue }) => {
@@ -85,9 +86,27 @@ export const deleteProduct = createAsyncThunk(
   }
 );
 
+//product by id
+export const productById = createAsyncThunk(
+  "product/byId",
+  async (id, { rejectWithValue }) => {
+    const token = localStorage.getItem("token");
+    return await axios
+      .get(`${BASE_URL}/api/product/get-one/${id}`, {
+        headers: {
+          "Content-Type": "application/json",
+          user_token: `Bearer ${token}`,
+        },
+      })
+      .then((res) => res.data)
+      .catch((err) => rejectWithValue(err.response.data));
+  }
+);
+
 const initialState = {
   products: [],
   productsManagement: [],
+  ProductById: [],
   loading: false,
   error: "",
 };
@@ -149,6 +168,18 @@ const productSlice = createSlice({
         return { ...state, error: action.payload, loading: false };
       }
     );
+
+    //product by id
+    builder.addCase(productById.pending, (state) => {
+      return { ...state, loading: true };
+    });
+    builder.addCase(productById.fulfilled, (state, action) => {
+      // console.log(action.payload);
+      return { ...state, ProductById: action.payload, loading: false };
+    });
+    builder.addCase(productById.rejected, (state, action) => {
+      return { ...state, error: action.payload, loading: false };
+    });
   },
 });
 

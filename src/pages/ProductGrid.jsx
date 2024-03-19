@@ -3,11 +3,13 @@ import React, { useEffect, useState } from 'react'
 import LaptopMacIcon from '@mui/icons-material/LaptopMac';
 import CreateIcon from '@mui/icons-material/Create';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteProduct, getProducts } from '../redux/productSlice';
+import { deleteProduct, getProducts, productById } from '../redux/productSlice';
 import PageHead from '../components/PageHead'
+import { useNavigate } from 'react-router-dom';
 
 function ProductGrid() {
 
+const navigate=useNavigate()
   const dispatch = useDispatch()
   const [sortData, setSortData] = useState({
     categoryFilter: "Electronics",
@@ -28,9 +30,16 @@ function ProductGrid() {
   }, [sortData])
 
   //handle delete func
-  const handleDelete = async (id) => {
+  const handleDelete =  (id) => {
     dispatch(deleteProduct(id))
   }
+
+  //handle edit
+  const handleEdit=(id)=>{
+    dispatch(productById(id))
+    navigate('/edit-product')
+  }
+
   return (
     <>
       <PageHead heading={'Products Grid'} />
@@ -77,7 +86,7 @@ function ProductGrid() {
               <Typography fontWeight={'bold'} fontSize={15} color={'gray'}>Regular price :<span>${product.original_price}</span></Typography>
               <Typography fontWeight={'bold'} fontSize={15} color={'gray'}>Sale price :<span>${product.discounted_price}</span></Typography>
               <Stack direction={'row'} marginTop={3}>
-                <Button sx={{ borderRadius: '20px', fontWeight: 'bold', width: { xs: 200 } }} variant='outlined'><CreateIcon sx={{ width: '15px' }} />Edit</Button>
+                <Button onClick={()=>handleEdit(product._id)} sx={{ borderRadius: '20px', fontWeight: 'bold', width: { xs: 200 } }} variant='outlined'><CreateIcon sx={{ width: '15px' }} />Edit</Button>
                 <Button onClick={() => handleDelete(product._id)} sx={{ marginLeft: '5px', borderRadius: '20px', fontWeight: 'bold', width: { xs: 200 } }} color='error' variant='outlined'>Delete</Button>
               </Stack>
             </Stack>
