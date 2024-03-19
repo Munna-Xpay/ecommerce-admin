@@ -10,18 +10,22 @@ import SalesProfitByCategory from '../components/SalesProfitByCategory';
 import ProfileAvgRate from '../components/ProfileAvgRate';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchAllSellersWithSalesDetails } from '../redux/sellerSlice';
+import { fetchAllSellersStat, fetchAllSellersWithDailySalesDetails, fetchAllSellersWithSalesDetails } from '../redux/sellerSlice';
 
 const SellersProfile = () => {
 
   const { id } = useParams();
   const dispatch = useDispatch()
-  const sellerProfile = useSelector(state => state.sellerReducer.sallerSalesStat.find((item) => item._id == id))
-  console.log(sellerProfile)
+  const sellerProfile = useSelector(state => state.sellerReducer.allSellers.find((item) => item._id == id))
+  const sellerStat = useSelector(state => state.sellerReducer.sallerSalesStat.find((item) => item._id == id))
+  const dailysellerSalesStat = useSelector(state => state.sellerReducer.dailySellerSalesStat.find((item) => item._id == id))
+  console.log(dailysellerSalesStat)
 
 
   useEffect(() => {
     dispatch(fetchAllSellersWithSalesDetails(''))
+    dispatch(fetchAllSellersStat())
+    dispatch(fetchAllSellersWithDailySalesDetails())
   }, [])
 
   return (
@@ -52,25 +56,25 @@ const SellersProfile = () => {
           <SellerProfileBox sellerProfile={sellerProfile} />
         </Grid>
         <Grid item xs={12} md={4}>
-          <ProfileTransactionBox />
+          <ProfileTransactionBox sellerProfile={sellerProfile} />
         </Grid>
         <Grid item xs={12} md={6}>
-          <ProfileSalesActivity />
+          <ProfileSalesActivity sellerStat={sellerStat} />
         </Grid>
         <Grid item xs={12} md={6}>
           <ProfileExpenseProfitBox />
         </Grid>
         <Grid item xs={12} md={6}>
-          <PeriodSaleRevenue />
+          <PeriodSaleRevenue dailyStat={dailysellerSalesStat} />
         </Grid>
         <Grid item xs={12} md={6}>
           <Stack height={'100%'} spacing={2}>
-            <SalesProfitByCategory />
-            <ProfileAvgRate />
+            <SalesProfitByCategory sellerProfile={sellerProfile} />
+            <ProfileAvgRate sellerProfile={sellerProfile} />
           </Stack>
         </Grid>
       </Grid>
-      
+
     </>
   )
 }
