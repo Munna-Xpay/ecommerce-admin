@@ -1,10 +1,11 @@
 import { Avatar, Paper, Stack, Typography } from '@mui/material'
-import React from 'react'
+import React, { useEffect } from 'react'
 import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
+import { formatNumberToK } from '../formatPriceToK';
 
 
-const ProfileTransactionBox = () => {
+const ProfileTransactionBox = ({ sellerProfile }) => {
     return (
         <Paper sx={{ height: '100%' }}>
             <Stack p={3} spacing={1} height={'90%'} justifyContent={'center'}>
@@ -14,7 +15,7 @@ const ProfileTransactionBox = () => {
                     <ArrowDropUpIcon />
                     <Typography sx={{ opacity: '.8', fontWeight: 'bold' }}>+ 45.10%</Typography>
                 </Stack>
-                <Typography variant='h4' sx={{ fontWeight: 'bold' }}>₹ 179k</Typography>
+                <Typography variant='h4' sx={{ fontWeight: 'bold' }}>₹ {sellerProfile?.total_income && formatNumberToK(sellerProfile?.total_income)}</Typography>
             </Stack>
         </Paper>
     )
