@@ -38,7 +38,7 @@ function App() {
           <Route path='/admin-profile' element={<AdminProfile />} />
           <Route path='/banners' element={<Banners />} />
           <Route path='/customers' element={<Customers />} />
-          <Route path='/edit-product' element={<EditProducts />} />
+          <Route path='/edit-product/:id' element={<EditProducts />} />
           <Route path='/orders' element={<Orders />} />
           <Route path='/product-management' element={<ProductManagement />} />
           <Route path='/revenew-by-period' element={<RevenewByPeriod />} />

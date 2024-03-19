@@ -86,27 +86,35 @@ export const deleteProduct = createAsyncThunk(
   }
 );
 
-//product by id
-export const productById = createAsyncThunk(
-  "product/byId",
-  async (id, { rejectWithValue }) => {
+//product edit
+export const editProduct = createAsyncThunk(
+  "edit/product",
+  async ({ data,id }, { rejectWithValue }) => {
     const token = localStorage.getItem("token");
     return await axios
-      .get(`${BASE_URL}/api/product/get-one/${id}`, {
+      .put(`${BASE_URL}/api/product/update/${id}`, data, {
         headers: {
           "Content-Type": "application/json",
           user_token: `Bearer ${token}`,
         },
       })
-      .then((res) => res.data)
-      .catch((err) => rejectWithValue(err.response.data));
+      .then((res) => {
+       // console.log(res.data);
+        toast.success("Product updated");
+        return res.data;
+      })
+      .catch((err) => {
+        // console.log(err.response.data);
+        toast.error("Somethin went wrong!");
+        return rejectWithValue(err.response.data);
+      });
   }
 );
+
 
 const initialState = {
   products: [],
   productsManagement: [],
-  ProductById: [],
   loading: false,
   error: "",
 };
@@ -169,17 +177,18 @@ const productSlice = createSlice({
       }
     );
 
-    //product by id
-    builder.addCase(productById.pending, (state) => {
+    //product edit
+    builder.addCase(editProduct.pending, (state) => {
       return { ...state, loading: true };
     });
-    builder.addCase(productById.fulfilled, (state, action) => {
+    builder.addCase(editProduct.fulfilled, (state, action) => {
       // console.log(action.payload);
-      return { ...state, ProductById: action.payload, loading: false };
+      return { ...state, products: action.payload, loading: false };
     });
-    builder.addCase(productById.rejected, (state, action) => {
+    builder.addCase(editProduct.rejected, (state, action) => {
       return { ...state, error: action.payload, loading: false };
     });
+
   },
 });
 

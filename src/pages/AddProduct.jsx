@@ -11,8 +11,8 @@ import { useNavigate } from 'react-router-dom';
 
 function AddProduct() {
 
-  const data = useSelector(state => state.sellerReducer.sallerSalesStat)
-  //console.log(data);
+ const sellerData=useSelector(state=>state.sellerReducer.allSellers)
+  console.log(sellerData);
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const [errors, setErrors] = useState(false)
@@ -71,11 +71,11 @@ function AddProduct() {
         formData.append("ships_from", ships_from)
         formData.append("description", description)
         formData.append("seller", seller)
-        formData.append("thumbnail", thumbnail.name)
-        formData.append("images", image1.name)
-        formData.append("images", image2.name)
-        formData.append("images", image3.name)
-        formData.append("images", image4.name)
+        formData.append("thumbnail", thumbnail)
+        formData.append("images", image1)
+        formData.append("images", image2)
+        formData.append("images", image3)
+        formData.append("images", image4)
         dispatch(addProduct({ data: formData, navigate }))
       })
       .catch(err => {
@@ -115,8 +115,8 @@ function AddProduct() {
   useEffect(() => {
     dispatch(fetchAllSellersWithSalesDetails())
   }, [])
-  const sellers = data.map((i) => i.seller)
-  //console.log(sellers);
+const sellers=sellerData.map((i)=>i.seller)
+//console.log(sellers);
 
   return (
     <Box mt={2} marginLeft={{ xs: 0, md: 7 }}>
@@ -187,7 +187,7 @@ function AddProduct() {
 
             <label htmlFor='thumbnailInput'  >
               <Stack bgcolor={'#dedede'} sx={{ width: { xs: 378, md: 200 }, height: '235px' }} borderRadius={1}>
-                <input onChange={(e) => setProductData({ ...productData, ["thumbnail"]: e.target.files[0] })} name='thumbnail' id='thumbnailInput' style={{ display: 'none' }} type="file" />
+                <input onChange={(e) => setProductData({ ...productData,["thumbnail"]: e.target.files[0]})} name='thumbnail' id='thumbnailInput' style={{ display: 'none' }} type="file" />
                 <Box textAlign={'center'} display="flex" flexDirection="column" justifyContent="center" alignItems="center" height="100%">
                   {thumbnailPreview ? (
                     <img width={200} height={235} src={thumbnailPreview} alt="" />) :

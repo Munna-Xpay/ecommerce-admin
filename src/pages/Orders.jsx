@@ -9,6 +9,7 @@ import { getAllOrders, orderByCategory } from '../redux/orderSlice';
 import EditIcon from '@mui/icons-material/Edit';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import PageHead from '../components/PageHead'
+import { BASE_URL } from '../redux/baseUrl';
 
 function Orders() {
 
@@ -137,7 +138,7 @@ function Orders() {
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
                 <TableCell component="th" scope="row">
-                  <Stack direction={'row'}><img width={70} height={55} src={order.products.product.thumbnail} alt="" /> <Stack marginLeft={1}>
+                  <Stack direction={'row'}><img width={70} height={55} src={`${BASE_URL}/uploadedFiles/${order?.products.product.thumbnail}`} alt="" /> <Stack marginLeft={1}>
                     <Typography fontWeight={'bold'}>{order.products.product.title}</Typography>
                     <Typography fontSize={13} color={'gray'}>Regular Price: {order.products.product.original_price}</Typography>
                     <Typography fontSize={13} color={'gray'}>Sale Price{order.products.product.discounted_price}</Typography>

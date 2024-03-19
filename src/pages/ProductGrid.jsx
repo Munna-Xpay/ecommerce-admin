@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { deleteProduct, getProducts, productById } from '../redux/productSlice';
 import PageHead from '../components/PageHead'
 import { useNavigate } from 'react-router-dom';
+import { BASE_URL } from '../redux/baseUrl';
 
 function ProductGrid() {
 
@@ -36,8 +37,8 @@ const navigate=useNavigate()
 
   //handle edit
   const handleEdit=(id)=>{
-    dispatch(productById(id))
-    navigate('/edit-product')
+    
+    navigate(`/edit-product/${id}`)
   }
 
   return (
@@ -79,7 +80,7 @@ const navigate=useNavigate()
         {products.slice(firstIndexOfItemInAPage, lastIndexOfItemInAPage).map((product) => (
           <Grid item xs={12} md={2}>
             <Stack spacing={1} boxShadow={4} borderRadius={2} padding={3} sx={{ width: { xs: 350, md: 190 } }}>
-              <Box border={1} borderColor={'#f1f1f1'} marginBottom={2} textAlign={'center'}> <img width={170} height={130} src={product.thumbnail} alt="" /></Box>
+              <Box border={1} borderColor={'#f1f1f1'} marginBottom={2} textAlign={'center'}> <img width={170} height={130}  src={`${BASE_URL}/uploadedFiles/${product?.thumbnail}`} alt="" /></Box>
               <Typography fontWeight={'bold'} fontSize={16} >{product.title}</Typography>
               <Typography fontWeight={'bold'} fontSize={15} color={'#0dd1b0'}>Available :<span>{product.stockQuantity}</span></Typography>
               <Typography fontWeight={'bold'} fontSize={15} color={'darkblue'}>Already sold :<span>{product.product_sold}</span></Typography>
