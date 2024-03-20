@@ -5,7 +5,7 @@ import { Grid } from '@mui/material'
 import CustomerRateChart from '../components/CustomerRateChart'
 import CustomerSegmentaion from '../components/CustomerSegmentaion'
 import { useDispatch } from 'react-redux'
-import { fetchUsersStat } from '../redux/userSlice'
+import { fetchUserConversionRate, fetchUsersStat } from '../redux/userSlice'
 
 const Customers = () => {
 
@@ -13,6 +13,7 @@ const Customers = () => {
 
   useEffect(() => {
     dispatch(fetchUsersStat())
+    dispatch(fetchUserConversionRate())
   }, [])
 
   return (

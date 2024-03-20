@@ -35,13 +35,50 @@ export const adminById = createAsyncThunk(
   }
 );
 
-//get user by id
+//get user with stat
 export const fetchUsersStat = createAsyncThunk(
   "fetch/user/stat",
   async (args, { rejectWithValue }) => {
-    const id = localStorage.getItem("adminId");
     const token = localStorage.getItem("token");
     return await axios.get(`${BASE_URL}/api/auth/all-users-with-stat`, {
+      headers: {
+        "Content-Type": "application/json",
+        user_token: `Bearer ${token}`,
+      }
+    })
+      .then((res) => {
+        console.log(res)
+        return res.data
+      })
+      .catch((err) => rejectWithValue(err.response.data));
+  }
+);
+
+//get user conversion rate
+export const fetchUserConversionRate = createAsyncThunk(
+  "fetch/user/conversion/rate",
+  async (args, { rejectWithValue }) => {
+    const token = localStorage.getItem("token");
+    return await axios.get(`${BASE_URL}/api/auth/users-conversion-rate`, {
+      headers: {
+        "Content-Type": "application/json",
+        user_token: `Bearer ${token}`,
+      }
+    })
+      .then((res) => {
+        console.log(res)
+        return res.data
+      })
+      .catch((err) => rejectWithValue(err.response.data));
+  }
+);
+
+//get all users
+export const fetchAllUsers = createAsyncThunk(
+  "fetch/all/user",
+  async (sort, { rejectWithValue }) => {
+    const token = localStorage.getItem("token");
+    return await axios.get(`${BASE_URL}/api/auth/all-users?${sort}=true`, {
       headers: {
         "Content-Type": "application/json",
         user_token: `Bearer ${token}`,
@@ -109,6 +146,8 @@ const initialState = {
   admin: null,
   token: null,
   userStat: {},
+  allUsers: [],
+  userConversionRate: [],
   loading: false,
   error: "",
 };
@@ -179,6 +218,28 @@ const userSlice = createSlice({
       return { ...state, userStat: action.payload, loading: false };
     });
     builder.addCase(fetchUsersStat.rejected, (state, action) => {
+      return { ...state, error: action.payload, loading: false };
+    });
+
+
+    builder.addCase(fetchAllUsers.pending, (state) => {
+      return { ...state, loading: true };
+    });
+    builder.addCase(fetchAllUsers.fulfilled, (state, action) => {
+      return { ...state, allUsers: action.payload, loading: false };
+    });
+    builder.addCase(fetchAllUsers.rejected, (state, action) => {
+      return { ...state, error: action.payload, loading: false };
+    });
+
+
+    builder.addCase(fetchUserConversionRate.pending, (state) => {
+      return { ...state, loading: true };
+    });
+    builder.addCase(fetchUserConversionRate.fulfilled, (state, action) => {
+      return { ...state, userConversionRate: action.payload, loading: false };
+    });
+    builder.addCase(fetchUserConversionRate.rejected, (state, action) => {
       return { ...state, error: action.payload, loading: false };
     });
 

@@ -23,6 +23,7 @@ import Transactions from './pages/Transactions';
 import PageNotFound from './pages/PageNotFound';
 import AddSeller from './pages/AddSeller';
 import { Container } from '@mui/material';
+import CustomersTable from './pages/CustomersTable';
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
           <Route path='/admin-profile' element={<AdminProfile />} />
           <Route path='/banners' element={<Banners />} />
           <Route path='/customers' element={<Customers />} />
+          <Route path='/customers-table' element={<CustomersTable />} />
           <Route path='/edit-product' element={<EditProducts />} />
           <Route path='/orders' element={<Orders />} />
           <Route path='/product-management' element={<ProductManagement />} />

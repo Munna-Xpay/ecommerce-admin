@@ -6,22 +6,38 @@ import StarIcon from '@mui/icons-material/Star';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import React from 'react'
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 const CustomerDetails = () => {
 
     const userStat = useSelector(state => state.userReducer.userStat)
-    // console.log(userStat)
+    const userConverRate = useSelector(state => state.userReducer.userConversionRate)
+    console.log(userConverRate)
+
+    const showUserConversionRate = userConverRate.map((item, index) => {
+        return (
+            <TableRow
+                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+            >
+                <TableCell sx={{ fontWeight: 'bold' }} align="right">{item._id}</TableCell>
+                <TableCell sx={{ fontWeight: 'bold' }} align="center">{item.total_count}</TableCell>
+                <TableCell sx={{ fontWeight: 'bold' }} align="center">{item.total_orders}</TableCell>
+            </TableRow>
+        )
+    })
 
     return (
         <Grid container spacing={2} mt={1}>
             <Grid item xs={12} md={2}>
-                <Paper>
-                    <Stack p={2} spacing={1} height={'170px'} justifyContent={'center'} alignItems={'center'}>
-                        <Avatar sx={{ bgcolor: '#00ba9d' }} variant='rounded'><Diversity3Icon /></Avatar>
-                        <Typography variant='h4' sx={{ fontWeight: 'bold' }} >{userStat?.allUsers?.length}</Typography>
-                        <Typography variant='h6' sx={{ fontWeight: 'bold' }} >All</Typography>
-                    </Stack>
-                </Paper>
+                <Link to={'/customers-table'} style={{ textDecoration: 'none', color: 'inherit' }}>
+                    <Paper>
+                        <Stack p={2} spacing={1} height={'170px'} justifyContent={'center'} alignItems={'center'}>
+                            <Avatar sx={{ bgcolor: '#00ba9d' }} variant='rounded'><Diversity3Icon /></Avatar>
+                            <Typography variant='h4' sx={{ fontWeight: 'bold' }} >{userStat?.allUsers?.length}</Typography>
+                            <Typography variant='h6' sx={{ fontWeight: 'bold' }} >All</Typography>
+                        </Stack>
+                    </Paper>
+                </Link>
             </Grid>
             <Grid item xs={12} md={2}>
                 <Paper>
@@ -53,27 +69,11 @@ const CustomerDetails = () => {
                                             <TableRow>
                                                 <TableCell align="right">Year</TableCell>
                                                 <TableCell align="right">Customer</TableCell>
-                                                <TableCell align="right">Trend</TableCell>
-                                                <TableCell align="right">Revenue</TableCell>
+                                                <TableCell align="right">Orders</TableCell>
                                             </TableRow>
                                         </TableHead>
                                         <TableBody>
-                                            <TableRow
-                                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                                            >
-                                                <TableCell sx={{ fontWeight: 'bold' }} align="right">2023</TableCell>
-                                                <TableCell sx={{ fontWeight: 'bold' }} align="right">16</TableCell>
-                                                <TableCell sx={{ fontWeight: 'bold' }} align="right">8</TableCell>
-                                                <TableCell sx={{ fontWeight: 'bold' }} align="right">$54</TableCell>
-                                            </TableRow>
-                                            <TableRow
-                                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                                            >
-                                                <TableCell sx={{ fontWeight: 'bold' }} align="right">2023</TableCell>
-                                                <TableCell sx={{ fontWeight: 'bold' }} align="right">16</TableCell>
-                                                <TableCell sx={{ fontWeight: 'bold' }} align="right">8</TableCell>
-                                                <TableCell sx={{ fontWeight: 'bold' }} align="right">$54</TableCell>
-                                            </TableRow>
+                                            {showUserConversionRate}
                                         </TableBody>
                                     </Table>
                                 </TableContainer>
@@ -81,7 +81,7 @@ const CustomerDetails = () => {
                             <Grid item xs={12} md={6}>
                                 <Stack direction={'row'} spacing={3} justifyContent={{ xs: 'flex-start', md: 'center' }}>
                                     <Stack spacing={1}>
-                                        <Typography variant='h4' sx={{ fontWeight: 'bold' }} >5680</Typography>
+                                        <Typography variant='h4' sx={{ fontWeight: 'bold' }} >{userConverRate[0]?.total_count}</Typography>
                                         <Typography sx={{ fontWeight: 'bold', opacity: '.7' }} >Regular</Typography>
                                         <Stack direction={'row'} alignItems={'center'} sx={{ color: 'green' }}>
                                             <ArrowDropUpIcon />
@@ -89,7 +89,7 @@ const CustomerDetails = () => {
                                         </Stack>
                                     </Stack>
                                     <Stack spacing={1}>
-                                        <Typography variant='h4' sx={{ fontWeight: 'bold' }} >+880</Typography>
+                                        <Typography variant='h4' sx={{ fontWeight: 'bold' }} >+{userConverRate[0]?.total_count - userConverRate[1]?.total_count}</Typography>
                                         <Typography sx={{ fontWeight: 'bold', opacity: '.7' }} >New</Typography>
                                         <Stack direction={'row'} alignItems={'center'} sx={{ color: 'green' }}>
                                             <ArrowDropUpIcon />
