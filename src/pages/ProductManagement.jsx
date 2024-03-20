@@ -1,7 +1,7 @@
 import { Box, Paper, InputBase, IconButton, Divider, Button, Stack, Typography, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, MenuItem, FormControl, InputLabel, Pagination } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import SearchIcon from '@mui/icons-material/Search';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProductInProductsManagement } from '../redux/productSlice';
@@ -11,10 +11,11 @@ import EditIcon from '@mui/icons-material/Edit';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 function ProductManagement() {
-
+  
   const products = useSelector(state => state.productReducer.productsManagement)
   console.log(products);
   const dispatch = useDispatch()
+  const navigate=useNavigate()
   const [filter, setFilter] = useState({
     categoryFilter: '',
     stockFilter: '',
@@ -45,6 +46,11 @@ function ProductManagement() {
     const { value } = e.target;
     setSearchData(value);
   }
+
+    //handle edit
+    const handleEdit=(id)=>{
+      navigate(`/edit-product/${id}`)
+    }
 
   const lastIndexOfItemInAPage = itemsPerPage * currentPage;
   const firstIndexOfItemInAPage = lastIndexOfItemInAPage - itemsPerPage;
@@ -80,8 +86,8 @@ function ProductManagement() {
       </Stack>
       <Stack direction={'row'} mt={2}>
         <Typography fontSize={14} fontWeight={'bold'}>Products : All <span style={{ fontWeight: 'normal' }}>{products.length}</span></Typography>
-        <Divider sx={{ height: 17, m: 0.5 }} orientation="vertical" />
-        <Link style={{ textDecoration: 'none' }}> <Typography fontSize={14} fontWeight={'bold'}>Trash : <span style={{ fontWeight: 'normal' }}>{products.filter(product => !product.isActive).length}</span></Typography></Link>
+        <Divider sx={{ height: 17, m: 0.5, backgroundColor:'black'}} orientation="vertical" />
+         <Typography fontSize={14} fontWeight={'bold'}>Trash : <span style={{ fontWeight: 'normal' }}>{products.filter(product => !product.isActive).length}</span></Typography>
       </Stack>
       <Stack direction={{ xs: 'column', md: 'row' }} justifyContent={'space-evenly'} spacing={2} mt={2} mb={2}>
         <FormControl size='small' sx={{ width: { xs: 379, md: 200 } }}>
@@ -163,14 +169,14 @@ function ProductManagement() {
           <TableHead>
             <TableRow>
               {/* <TableCell><CollectionsIcon/></TableCell> */}
-              <TableCell sx={{ fontSize: '17px', color: '#035ECF' }}>Product Name</TableCell>
-              <TableCell sx={{ fontSize: '17px', color: '#035ECF' }} >Stock</TableCell>
-              <TableCell sx={{ fontSize: '17px', color: '#035ECF' }} >Price</TableCell>
-              <TableCell sx={{ fontSize: '17px', color: '#035ECF' }}>Category</TableCell>
-              <TableCell sx={{ fontSize: '17px', color: '#035ECF' }} >Brand</TableCell>
-              <TableCell sx={{ fontSize: '17px', color: '#035ECF' }} >Rating</TableCell>
-              <TableCell sx={{ fontSize: '17px', color: '#035ECF' }} >Last modified</TableCell>
-              <TableCell sx={{ fontSize: '17px', color: '#035ECF' }} >Actions</TableCell>
+              <TableCell sx={{ fontSize: '14px', color: '#035ECF' }}>PRODUCT NAME</TableCell>
+              <TableCell sx={{ fontSize: '14px', color: '#035ECF' }} >STOCK</TableCell>
+              <TableCell sx={{ fontSize: '14px', color: '#035ECF' }} >PRICE</TableCell>
+              <TableCell sx={{ fontSize: '14px', color: '#035ECF' }}>CATEGORY</TableCell>
+              <TableCell sx={{ fontSize: '14px', color: '#035ECF' }} >BRAND</TableCell>
+              <TableCell sx={{ fontSize: '14px', color: '#035ECF' }} >RATING</TableCell>
+              <TableCell sx={{ fontSize: '14px', color: '#035ECF' }} >LAST MODIFIED</TableCell>
+              <TableCell sx={{ fontSize: '14px', color: '#035ECF' }} >ACTIONS</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -180,17 +186,17 @@ function ProductManagement() {
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
                 {/* <TableCell align="right">{i.thumbnail}</TableCell> */}
-                <TableCell sx={{ fontWeight: 'bold' }} component="th" scope="row">
+                <TableCell sx={{ fontWeight: 'bold',color:(i.isActive===false?'red':'black')}} component="th" scope="row">
                   {i.title}
                 </TableCell>
-                <TableCell sx={{ fontWeight: 'bold', color: (i.stock === 'Low inventory' || i.stock === 'Out of stock') ? 'red' : 'black' }} >{i.stock}<span style={{ fontSize: '11px' }}>({i.stockQuantity})</span> </TableCell>
-                <TableCell sx={{ fontWeight: 'bold' }} >{i.discounted_price}</TableCell>
-                <TableCell sx={{ fontWeight: 'bold' }} >{i.category}</TableCell>
-                <TableCell sx={{ fontWeight: 'bold' }} >{i.manufacturer}</TableCell>
-                <TableCell sx={{ fontWeight: 'bold' }} ><StarIcon />({i.review_star})</TableCell>
-                <TableCell sx={{ fontWeight: 'bold' }} >{new Date(i.updatedAt).toLocaleDateString('en-US')}</TableCell>
-                <TableCell sx={{ fontWeight: 'bold' }}> <Stack direction={'row'}> <IconButton><EditIcon sx={{ color: 'black' }} /></IconButton>  <IconButton> <MoreVertIcon sx={{ color: 'black' }} />
-                </IconButton></Stack>
+                <TableCell  sx={{ fontWeight: 'bold', color: (i.stock === 'Low inventory' || i.stock === 'Out of stock') ? 'red' : (i.isActive ? 'black' : 'red') }} >{i.stock}<span style={{ fontSize: '11px' }}>({i.stockQuantity})</span> </TableCell>
+                <TableCell sx={{ fontWeight: 'bold',color:(i.isActive===false?'red':'black')}} >{i.discounted_price}</TableCell>
+                <TableCell sx={{ fontWeight: 'bold',color:(i.isActive===false?'red':'black')}} >{i.category}</TableCell>
+                <TableCell sx={{ fontWeight: 'bold',color:(i.isActive===false?'red':'black')}} >{i.manufacturer}</TableCell>
+                <TableCell sx={{ fontWeight: 'bold',color:(i.isActive===false?'red':'black')}} ><StarIcon />({i.review_star})</TableCell>
+                <TableCell sx={{ fontWeight: 'bold',color:(i.isActive===false?'red':'black')}} >{new Date(i.updatedAt).toLocaleDateString('en-US')}</TableCell>
+                <TableCell sx={{ fontWeight: 'bold',color:(i.isActive===false?'red':'black')}}> <Stack direction={'row'}> <IconButton onClick={()=>handleEdit(i._id)}><EditIcon sx={{ color: 'black' }} /></IconButton>
+                </Stack>
                 </TableCell>
               </TableRow>
             ))}

@@ -30,8 +30,8 @@ function App() {
       <Header />
       <Container maxWidth>
         <Routes>
-          <Route path='/login' element={<Login />} />
-          <Route path='/' element={<SalesAnalytics />} />
+          <Route path='/' element={<Login />} />
+          <Route path='/sales-analytics' element={<SalesAnalytics />} />
           <Route path='/top-product' element={<TopProducts />} />
           <Route path='/product-grid' element={<ProductGrid />} />
           <Route path='/add-product' element={<AddProduct />} />

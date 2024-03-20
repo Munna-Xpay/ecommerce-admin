@@ -52,8 +52,8 @@ function AddProduct() {
   const handleAdd = async (e) => {
     e.preventDefault();
     // Validate productData
+    try {
     await productValidationSchema.validate(productData, { abortEarly: false })
-      .then(value => {
         const { title, about, stock, stockQuantity, product_type, discounted_price, original_price, memory, colors,
           category, manufacturer, ships_from, description, seller, thumbnail } = productData
         const formData = new FormData()
@@ -77,14 +77,16 @@ function AddProduct() {
         formData.append("images", image3)
         formData.append("images", image4)
         dispatch(addProduct({ data: formData, navigate }))
-      })
-      .catch(err => {
+        setErrors({})
+      }
+      catch(err) {
+        console.log(err);
         const newErrors = {};
         err.inner.map((validationError) => {
           newErrors[validationError.path] = validationError.message;
         });
         setErrors(newErrors);
-      })
+      }
   }
 
   //thumbnail preview
@@ -345,13 +347,13 @@ const sellers=sellerData.map((i)=>i.seller)
             </Box>
             <Box>
               <Typography fontSize={12} color={'gray'} fontWeight={'bold'}>Memory</Typography>
-              <TextField onChange={(e) => setInput(e)} name='memory' InputProps={{ style: { borderRadius: '7px', height: '50px' } }} type='text' sx={{ width: '399px' }} label="" id="fullWidth" />
+              <TextField onChange={(e) => setProductData({...productData,["memory"]:e.target.value.split(",")})} placeholder='256 GB,128 GB...' name='memory' InputProps={{ style: { borderRadius: '7px', height: '50px' } }} type='text' sx={{ width: '399px' }} label="" id="fullWidth" />
             </Box>
           </Stack>
           <Stack direction={{ xs: 'column', md: 'row' }} spacing={1} mt={2}>
             <Box>
               <Typography fontSize={12} color={'gray'} fontWeight={'bold'}>Colour</Typography>
-              <TextField onChange={(e) => setInput(e)} name='colors' InputProps={{ style: { borderRadius: '7px', height: '50px' } }} type='text' sx={{ width: '399px' }} label="" id="fullWidth" />
+              <TextField onChange={(e) => setProductData({...productData,["colors"]:e.target.value.split(",")})} placeholder='Blue,Black...' name='colors' InputProps={{ style: { borderRadius: '7px', height: '50px' } }} type='text' sx={{ width: '399px' }} label="" id="fullWidth" />
             </Box>
             <Box>
               <Typography fontSize={12} color={'gray'} fontWeight={'bold'}>Ships From</Typography>
