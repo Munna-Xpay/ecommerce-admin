@@ -45,7 +45,7 @@ useEffect(()=>{
           }
         }} xs={12} md={5.5}>
           <Stack direction={'row'} spacing={1}><RestaurantIcon sx={{ backgroundColor: 'black', color: 'white', padding: '5px', borderRadius: '3px', height: '20px', width: '20px' }} /> <Typography fontSize={20} fontWeight={'bold'} >Groceries</Typography></Stack>
-          {/* <TopProductsGroceries /> */}
+          <TopProductsGroceries />
         </Grid>
       </Grid>
     </>

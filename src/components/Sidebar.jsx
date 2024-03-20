@@ -59,7 +59,6 @@ function Sidebar() {
             <Link to={'/revenew-by-period'} style={{textDecoration:'none'}}><ListItemText sx={{color:'black'}}>Revenew By Period</ListItemText></Link> 
             </Stack>
           </ListItemButton>
-          
         </List>
       </Collapse>
       <ListItemButton onClick={handleProductClick}>
@@ -76,7 +75,7 @@ function Sidebar() {
             <Link to={'/top-product'} style={{textDecoration:'none'}}> <ListItemText sx={{color:'black'}}>Top Products</ListItemText></Link>
             <Link to={'/product-grid'} style={{textDecoration:'none'}}> <ListItemText sx={{color:'black'}}>Products Grid</ListItemText></Link> 
             <Link to={'/product-management'} style={{textDecoration:'none'}}> <ListItemText sx={{color:'black'}}>Products Management</ListItemText></Link>
-            <Link to={'/edit-product'} style={{textDecoration:'none'}}><ListItemText sx={{color:'black'}}>Product Editor</ListItemText></Link> 
+            <Link to={'/add-product'} style={{textDecoration:'none'}}><ListItemText sx={{color:'black'}}>Add Product</ListItemText></Link> 
             <Link to={'/banners'} style={{textDecoration:'none'}}><ListItemText sx={{color:'black'}}>Banners</ListItemText></Link> 
             </Stack>
           </ListItemButton>

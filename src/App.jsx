@@ -41,6 +41,7 @@ function App() {
           <Route path='/customers' element={<Customers />} />
           <Route path='/customers-table' element={<CustomersTable />} />
           <Route path='/edit-product' element={<EditProducts />} />
+          <Route path='/edit-product/:id' element={<EditProducts />} />
           <Route path='/orders' element={<Orders />} />
           <Route path='/product-management' element={<ProductManagement />} />
           <Route path='/revenew-by-period' element={<RevenewByPeriod />} />
@@ -53,7 +54,7 @@ function App() {
           <Route path='/add-seller' element={<AddSeller />} />
           <Route path='*' element={<PageNotFound />} />
         </Routes>
-        <Footer />
+        {/* <Footer /> */}
       </Container>
     </>
   );
