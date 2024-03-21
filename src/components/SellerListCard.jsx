@@ -6,6 +6,7 @@ import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
 import QrCodeScannerIcon from '@mui/icons-material/QrCodeScanner';
 import { formatNumberToK } from '../formatPriceToK';
 import { Link } from 'react-router-dom';
+import { BASE_URL } from '../redux/baseUrl';
 
 const SellerListCard = ({ sellerDetails }) => {
     return (
@@ -16,7 +17,7 @@ const SellerListCard = ({ sellerDetails }) => {
                         <Box
                             component={'img'}
                             alt='company icon'
-                            src={`http://localhost:4000/uploadedFiles/${sellerDetails?.seller?.company_icon}`}
+                            src={`${BASE_URL}/uploadedFiles/${sellerDetails?.seller?.company_icon}`}
                             sx={{ width: '100%', height: '170px', objectFit: 'contain' }}
                         />
                         <Link to={'/seller-profile/' + sellerDetails._id}><Button sx={{ width: '100%' }} size='small' variant='contained' color='primary'>Profile</Button></Link>
