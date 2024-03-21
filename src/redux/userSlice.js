@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 //login
 export const adminLogin = createAsyncThunk(
   "admin/login",
-  async (data, { rejectWithValue }) => {
+  async ({data,navigate}, { rejectWithValue }) => {
     return await axios
       .post(`${BASE_URL}/api/auth/login`, data)
       .then((res) => {
@@ -15,6 +15,7 @@ export const adminLogin = createAsyncThunk(
           localStorage.setItem("adminId", res.data.user._id);
         }
         toast.success('Login successsfull')
+        navigate('/sales-analytics')
         return res.data;
       })
       .catch((err) => rejectWithValue(err.response.data));

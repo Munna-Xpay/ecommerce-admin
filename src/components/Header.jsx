@@ -63,7 +63,7 @@ export default function PrimarySearchAppBar() {
             dispatch(adminById(adminId))
         }
         else if (!token) {
-            navigate('/login')
+            navigate('/')
         }
     }, [admin.admin])
 
@@ -162,7 +162,7 @@ export default function PrimarySearchAppBar() {
                     }
                     <Stack direction={'row'} spacing={1}>
                         <img width={40} height={40} src="https://shop-point.merku.love/assets/logo_light-33bb10d5.svg" alt="" />
-                        <Link to={'/'} style={{ textDecoration: 'none' }}> <Typography fontSize={30} fontWeight={'bold'} color={'white'}>Shop Point</Typography></Link>
+                         <Typography fontSize={30} fontWeight={'bold'} color={'white'}>Shop Point</Typography>
                     </Stack>
                     <Box sx={{ flexGrow: 1 }} />
                     <Box sx={{ display: { xs: 'none', md: 'flex' } }}>

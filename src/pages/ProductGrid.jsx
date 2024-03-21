@@ -7,6 +7,7 @@ import { deleteProduct, getProducts, productById } from '../redux/productSlice';
 import PageHead from '../components/PageHead'
 import { useNavigate } from 'react-router-dom';
 import { BASE_URL } from '../redux/baseUrl';
+import { Toaster } from 'react-hot-toast';
 
 function ProductGrid() {
 
@@ -37,7 +38,6 @@ const navigate=useNavigate()
 
   //handle edit
   const handleEdit=(id)=>{
-    
     navigate(`/edit-product/${id}`)
   }
 
@@ -96,6 +96,14 @@ const navigate=useNavigate()
         }
       </Grid>
       <Pagination count={Math.ceil(products.length / itemsPerPage)} onChange={(e, pageNumber) => setCurrentPage(pageNumber)} sx={{ margin: '30px 0px' }} color="primary" />
+      <Toaster position="top-center"
+        reverseOrder={false}
+        containerStyle={{
+          padding: '10px',
+          fontSize: '17px',
+          fontFamily: 'sans-serif',
+        }}
+      />
     </>
   )
 }

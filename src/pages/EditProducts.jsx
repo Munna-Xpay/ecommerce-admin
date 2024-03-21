@@ -3,28 +3,27 @@ import React, { useEffect, useState } from 'react'
 import PhotoLibraryIcon from '@mui/icons-material/PhotoLibrary';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAllSellersWithSalesDetails } from '../redux/sellerSlice';
-import { addProduct, editProduct, getProducts, productById } from '../redux/productSlice';
+import { editProduct, getProductInProductsManagement, getProducts, productImageEdit } from '../redux/productSlice';
 import JoditEditor from 'jodit-react';
-import { productValidationSchema } from '../validations/ProductValidation';
-import  { Toaster } from 'react-hot-toast';
+
+import { Toaster } from 'react-hot-toast';
 import { useNavigate, useParams } from 'react-router-dom';
 import { BASE_URL } from '../redux/baseUrl';
 
 function AddProduct() {
 
-  const {id}=useParams()
- // console.log(id);
-  const productDetails=useSelector(state=>state.productReducer.products.find(item=>item._id==id))
- // console.log(productDetails);
-  
- 
+  const { id } = useParams()
+  // console.log(id);
+  const productDetails = useSelector(state => state.productReducer.productsManagement.find((item) => item._id === id))
+  //console.log(productDetails);
+
   const sellerData = useSelector(state => state.sellerReducer.allSellers)
   //console.log(sellerData);
- 
+
   const [errors, setErrors] = useState(false)
   const dispatch = useDispatch()
   const navigate = useNavigate()
-//productdata
+  //productdata
   const [productData, setProductData] = useState({})
 
   //state for storing images
@@ -32,7 +31,7 @@ function AddProduct() {
   const [image2, setImage2] = useState('')
   const [image3, setImage3] = useState('')
   const [image4, setImage4] = useState('')
-  const [thumbnailImage,setThumbnailImage]=useState('')
+  const [thumbnailImage, setThumbnailImage] = useState('')
 
   //preview states
   const [thumbnailPreview, setThumbnailPreview] = useState('')
@@ -42,11 +41,11 @@ function AddProduct() {
   const [image4Preview, setImage4Preview] = useState('')
 
 
-//select field states
-  const [category,setCategory]=useState('')
-  const [stockStatus,setStockStatus]=useState('')
-  const [sellerSelect,setSellerSelect]=useState('')
-  const [productType,setProductType]=useState('')
+  //select field states
+  const [category, setCategory] = useState('')
+  const [stockStatus, setStockStatus] = useState('')
+  const [sellerSelect, setSellerSelect] = useState('')
+  const [productType, setProductType] = useState('')
 
   //onchange
   const setInput = (e) => {
@@ -63,11 +62,11 @@ function AddProduct() {
     });
   }
 
-  useEffect(()=>{
-    if(productDetails){
-        setProductData(productDetails)
+  useEffect(() => {
+    if (productDetails) {
+      setProductData(productDetails)
     }
-  },[productDetails])
+  }, [productDetails])
 
 
   //images preview
@@ -84,26 +83,40 @@ function AddProduct() {
     if (image4) {
       setImage4Preview(URL.createObjectURL(image4))
     }
-    if(thumbnailImage){
+    if (thumbnailImage) {
       setThumbnailPreview(URL.createObjectURL(thumbnailImage))
     }
-  }, [image1, image2, image3, image4,thumbnailImage]);
+  }, [image1, image2, image3, image4, thumbnailImage]);
 
 
   const handleEdit = async (e) => {
     e.preventDefault();
-    dispatch(editProduct({data:productData,id}))
+    dispatch(editProduct({ data: productData, id }))
   }
+
+  //handle product image edit
+  const handleProductImageEdit = () => {
+    const imageData = new FormData();
+    imageData.append("thumbnail", thumbnailImage ? thumbnailImage : productData.thumbnail);
+    imageData.append("images", image1 ? image1 : productData.images[0]);
+    imageData.append("images", image2 ? image2 : productData.images[1]);
+    imageData.append("images", image3 ? image3 : productData.images[2]);
+    imageData.append("images", image4 ? image4 : productData.images[3]);
+    dispatch(productImageEdit({ data: imageData, id }));
+  };
+
+
 
   useEffect(() => {
     dispatch(fetchAllSellersWithSalesDetails())
     dispatch(getProducts())
+    dispatch(getProductInProductsManagement({ query: {}, searchData: '' }));
   }, [])
 
   const sellers = sellerData.map((i) => i.seller)
   //console.log(sellers);
 
-  
+
   return (
     <Box mt={2} marginLeft={{ xs: 0, md: 7 }}>
       <Typography fontSize={16} fontWeight={'bold'}>Product Settings</Typography>
@@ -117,7 +130,7 @@ function AddProduct() {
                 <input onChange={(e) => setImage1(e.target.files[0])} id='img1' style={{ display: 'none' }} type="file" />
                 <Box textAlign={'center'} display="flex" flexDirection="column" justifyContent="center" alignItems="center" height="100%">
                   {productData.images ? (
-                    <img width={200} height={235} src={image1Preview?image1Preview:`${BASE_URL}/uploadedFiles/${productData.images[0]}`} alt="" />) :
+                    <img width={200} height={235} src={image1Preview ? image1Preview : `${BASE_URL}/uploadedFiles/${productData.images[0]}`} alt="" />) :
                     <>    <PhotoLibraryIcon />
                       <Typography>Browse Image</Typography>
                     </>
@@ -131,7 +144,7 @@ function AddProduct() {
                 <input onChange={(e) => setImage2(e.target.files[0])} id='img2' style={{ display: 'none' }} type="file" />
                 <Box textAlign={'center'} display="flex" flexDirection="column" justifyContent="center" alignItems="center" height="100%">
                   {productData.images ? (
-                    <img width={200} height={235} src={image2Preview?image2Preview:`${BASE_URL}/uploadedFiles/${productData.images[1]}`} alt="" />) :
+                    <img width={200} height={235} src={image2Preview ? image2Preview : `${BASE_URL}/uploadedFiles/${productData.images[1]}`} alt="" />) :
                     <>    <PhotoLibraryIcon />
                       <Typography>Browse Image</Typography>
                     </>
@@ -145,7 +158,7 @@ function AddProduct() {
                 <input onChange={(e) => setImage3(e.target.files[0])} id='img3' style={{ display: 'none' }} type="file" />
                 <Box textAlign={'center'} display="flex" flexDirection="column" justifyContent="center" alignItems="center" height="100%">
                   {productData.images ? (
-                    <img width={200} height={235} src={image3Preview?image3Preview:`${BASE_URL}/uploadedFiles/${productData.images[2]}`} alt="" />) :
+                    <img width={200} height={235} src={image3Preview ? image3Preview : `${BASE_URL}/uploadedFiles/${productData.images[2]}`} alt="" />) :
                     <>    <PhotoLibraryIcon />
                       <Typography>Browse Image</Typography>
                     </>
@@ -159,7 +172,7 @@ function AddProduct() {
                 <input onChange={(e) => setImage4(e.target.files[0])} id='img4' style={{ display: 'none' }} type="file" />
                 <Box textAlign={'center'} display="flex" flexDirection="column" justifyContent="center" alignItems="center" height="100%">
                   {productData.images ? (
-                    <img width={200} height={235} src={image4Preview?image4Preview:`${BASE_URL}/uploadedFiles/${productData.images[3]}`} alt="" />) :
+                    <img width={200} height={235} src={image4Preview ? image4Preview : `${BASE_URL}/uploadedFiles/${productData.images[3]}`} alt="" />) :
                     <>    <PhotoLibraryIcon />
                       <Typography>Browse Image</Typography>
                     </>
@@ -176,7 +189,7 @@ function AddProduct() {
                 <input onChange={(e) => setThumbnailImage(e.target.files[0])} name='thumbnail' id='thumbnailInput' style={{ display: 'none' }} type="file" />
                 <Box textAlign={'center'} display="flex" flexDirection="column" justifyContent="center" alignItems="center" height="100%">
                   {productData.thumbnail ? (
-                    <img width={200} height={235} src={thumbnailPreview?thumbnailPreview:`${BASE_URL}/uploadedFiles/${productData.thumbnail}`} alt="" />) :
+                    <img width={200} height={235} src={thumbnailPreview ? thumbnailPreview : `${BASE_URL}/uploadedFiles/${productData.thumbnail}`} alt="" />) :
                     <>    <PhotoLibraryIcon />
                       <Typography>Browse Image</Typography>
                     </>
@@ -186,13 +199,13 @@ function AddProduct() {
             </label>
             <FormHelperText sx={{ color: 'red' }}>{errors.thumbnail}</FormHelperText>
           </Stack>
-          <Button sx={{ marginTop: '15px', backgroundColor: '#0384fc', color: 'white', '&:hover': { backgroundColor: '#0384fc' }, width: '150px', borderRadius: '10px', padding: '10px' }}>
-               Save Images
-              </Button>
+          <Button onClick={handleProductImageEdit} sx={{ marginTop: '15px', backgroundColor: '#0384fc', color: 'white', '&:hover': { backgroundColor: '#0384fc' }, width: '150px', borderRadius: '10px', padding: '10px' }}>
+            Save Images
+          </Button>
           <Box>
             <Typography mt={1} fontSize={12} color={'gray'} fontWeight={'bold'}>Product description</Typography>
             <JoditEditor
-            value={productData.description}
+              value={productData.description}
               onChange={handleDescriptionChange}
             />
             <FormHelperText sx={{ color: 'red' }}>{errors.description}</FormHelperText>
@@ -225,7 +238,7 @@ function AddProduct() {
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
                   name='category'
-                  value={productData?.category||category}
+                  value={productData?.category || category}
                   onChange={(e) => setProductData({ ...productData, ["category"]: e.target.value })}
                   InputProps={{ style: { borderRadius: '7px' } }}
                 >
@@ -259,14 +272,14 @@ function AddProduct() {
 
             </Box>
             <Box>
-              <Typography fontSize={12} color={'gray'}  fontWeight={'bold'}>Stock status</Typography>
+              <Typography fontSize={12} color={'gray'} fontWeight={'bold'}>Stock status</Typography>
               <FormControl sx={{ width: '399px' }}>
                 <Select
 
                   sx={{ height: '50px' }}
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
-                  value={productData?.stock||stockStatus}
+                  value={productData?.stock || stockStatus}
                   onChange={(e) => setProductData({ ...productData, ["stock"]: e.target.value })}
                   InputProps={{ style: { borderRadius: '7px' } }}
                 >
@@ -285,9 +298,9 @@ function AddProduct() {
             <Box>
               <Typography fontSize={12} color={'gray'} fontWeight={'bold'}>Seller</Typography>
               <FormControl sx={{ width: '399px' }}>
-              
+
                 <Select
-                  value={productData.seller||sellerSelect}
+                  value={productData.seller || sellerSelect}
                   name='seller'
                   sx={{ height: '50px' }}
                   labelId="demo-simple-select-label"
@@ -318,7 +331,7 @@ function AddProduct() {
                   sx={{ height: '50px' }}
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
-                  value={productData?.product_type||productType}
+                  value={productData?.product_type || productType}
                   onChange={(e) => setProductData({ ...productData, ["product_type"]: e.target.value })} InputProps={{ style: { borderRadius: '7px' } }}
                 >
                   <MenuItem value={'Simple Product'}>Simple Product</MenuItem>
@@ -332,13 +345,13 @@ function AddProduct() {
             </Box>
             <Box>
               <Typography fontSize={12} color={'gray'} fontWeight={'bold'}>Memory</Typography>
-              <TextField onChange={(e) => setInput(e)} value={productData?.memory} name='memory' InputProps={{ style: { borderRadius: '7px', height: '50px' } }} type='text' sx={{ width: '399px' }} label="" id="fullWidth" />
+              <TextField onChange={(e) => setInput(e)} value={productData?.memory} placeholder='128 GB,256 GB...' name='memory' InputProps={{ style: { borderRadius: '7px', height: '50px' } }} type='text' sx={{ width: '399px' }} label="" id="fullWidth" />
             </Box>
           </Stack>
           <Stack direction={{ xs: 'column', md: 'row' }} spacing={1} mt={2}>
             <Box>
               <Typography fontSize={12} color={'gray'} fontWeight={'bold'}>Colour</Typography>
-              <TextField onChange={(e) => setInput(e)} value={productData?.colors} name='colors' InputProps={{ style: { borderRadius: '7px', height: '50px' } }} type='text' sx={{ width: '399px' }} label="" id="fullWidth" />
+              <TextField onChange={(e) => setInput(e)} value={productData?.colors} placeholder='Black,Blue..' name='colors' InputProps={{ style: { borderRadius: '7px', height: '50px' } }} type='text' sx={{ width: '399px' }} label="" id="fullWidth" />
             </Box>
             <Box>
               <Typography fontSize={12} color={'gray'} fontWeight={'bold'}>Ships From</Typography>
@@ -348,7 +361,7 @@ function AddProduct() {
           </Stack>
           <Stack direction={{ xs: 'column', md: 'row' }} textAlign={'center'} spacing={1} mt={2}>
             <Box>
-              <Button onClick={(e)=>handleEdit(e)} sx={{ marginTop: '15px', backgroundColor: 'green', color: 'white', '&:hover': { backgroundColor: 'green' }, width: '300px', borderRadius: '20px', padding: '10px' }}>
+              <Button onClick={(e) => handleEdit(e)} sx={{ marginTop: '15px', backgroundColor: 'green', color: 'white', '&:hover': { backgroundColor: 'green' }, width: '300px', borderRadius: '20px', padding: '10px' }}>
                 Save Changes
               </Button>
             </Box>

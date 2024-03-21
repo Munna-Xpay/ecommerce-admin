@@ -81,7 +81,10 @@ export const deleteProduct = createAsyncThunk(
           user_token: `Bearer ${token}`,
         },
       })
-      .then((res) => id)
+      .then((res) => 
+        id,
+        toast.success('Product deleted')
+      )
       .catch((err) => rejectWithValue(err.response.data));
   }
 );
@@ -89,7 +92,7 @@ export const deleteProduct = createAsyncThunk(
 //product edit
 export const editProduct = createAsyncThunk(
   "edit/product",
-  async ({ data,id }, { rejectWithValue }) => {
+  async ({ data, id }, { rejectWithValue }) => {
     const token = localStorage.getItem("token");
     return await axios
       .put(`${BASE_URL}/api/product/update/${id}`, data, {
@@ -99,7 +102,7 @@ export const editProduct = createAsyncThunk(
         },
       })
       .then((res) => {
-       // console.log(res.data);
+        // console.log(res.data);
         toast.success("Product updated");
         return res.data;
       })
@@ -111,6 +114,30 @@ export const editProduct = createAsyncThunk(
   }
 );
 
+//product image update
+export const productImageEdit = createAsyncThunk(
+  "product/image",
+  async ({ data, id }, { rejectWithValue }) => {
+    const token = localStorage.getItem("token");
+    return await axios
+      .put(`${BASE_URL}/api/product/product-image-update/${id}`, data, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          user_token: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+        toast.success("Product image updated");
+        return res.data;
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error('Something went wrong!');
+        return rejectWithValue(err.response.data);
+      });
+  }
+);
 
 const initialState = {
   products: [],
@@ -189,6 +216,17 @@ const productSlice = createSlice({
       return { ...state, error: action.payload, loading: false };
     });
 
+    //product image edit
+    builder.addCase(productImageEdit.pending, (state) => {
+      return { ...state, loading: true };
+    });
+    builder.addCase(productImageEdit.fulfilled, (state, action) => {
+      // console.log(action.payload);
+      return { ...state, productsManagement: action.payload, loading: false };
+    });
+    builder.addCase(productImageEdit.rejected, (state, action) => {
+      return { ...state, error: action.payload, loading: false };
+    });
   },
 });
 
