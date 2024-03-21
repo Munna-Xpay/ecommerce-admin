@@ -18,12 +18,11 @@ function TopProductsElectronics() {
   return (
     <>
     <Swiper
-    style={{padding:'5px'}}
+    sx={{padding:'5px'}}
       slidesPerView={3}
       spaceBetween={10}
       freeMode={true}
       width={600}
-      
       pagination={{
         clickable: true,
       }}

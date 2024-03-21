@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 
 const PageNotFound = () => {
   return (
-    <Box style={{ width: '100vw', height: '100vh', overflow: 'hidden' }}>
+    <Box style={{ width: '100%', height: '100vh', overflow: 'hidden' }}>
       <Stack sx={{ position: 'relative', width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <img
           sx={{ width: '750px', height: '600px', objectFit: 'cover' }}
@@ -14,7 +14,7 @@ const PageNotFound = () => {
         <Box sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', textAlign: 'center', color: 'white', width: '100%' }}>
           <Typography fontSize={90} color={'black'} fontWeight={'bold'}>404</Typography>
           <Typography fontSize={45} color={'black'} fontWeight={'bold'}>Page Not Found</Typography>
-          <Link to={'/'}><Button
+          <Link to={'/sales-analytics'}><Button
             sx={{ marginTop: '15px', backgroundColor: '#00ba9d', color: 'white', '&:hover': { backgroundColor: '#00ba9d' }, width: '300px', borderRadius: '20px', padding: '10px' }}
           >
             Back To Home

@@ -24,11 +24,13 @@ import PageNotFound from './pages/PageNotFound';
 import AddSeller from './pages/AddSeller';
 import { Container } from '@mui/material';
 
+
 function App() {
   return (
     <>
       <Header />
       <Container maxWidth>
+      
         <Routes>
           <Route path='/' element={<Login />} />
           <Route path='/sales-analytics' element={<SalesAnalytics />} />

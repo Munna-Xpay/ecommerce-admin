@@ -63,6 +63,8 @@ function Sidebar() {
               <Link to={'/seller-list'} style={{ textDecoration: 'none' }}> <ListItemText sx={{ color: 'black' }}><Typography sx={{ ":hover": { color: 'black' } }} fontWeight={'bold'} color={'#6E757f'} fontSize={15}>Sellers List</Typography></ListItemText></Link>
               <Link to={'/seller-table'} style={{ textDecoration: 'none' }}> <ListItemText sx={{ color: 'black' }}><Typography sx={{ ":hover": { color: 'black' } }} fontWeight={'bold'} color={'#6E757f'} fontSize={15}>Sellers Table</Typography></ListItemText></Link>
               <Link to={'/seller-grid'} style={{ textDecoration: 'none' }}><ListItemText sx={{ color: 'black' }}><Typography sx={{ ":hover": { color: 'black' } }} fontWeight={'bold'} color={'#6E757f'} fontSize={15}>Sellers Grid</Typography></ListItemText></Link>
+              <Link to={'/add-seller'} style={{ textDecoration: 'none' }}><ListItemText sx={{ color: 'black' }}><Typography sx={{ ":hover": { color: 'black' } }} fontWeight={'bold'} color={'#6E757f'} fontSize={15}>Add Seller</Typography></ListItemText></Link>
+
             </Stack>
           </ListItemButton>
         </List>
