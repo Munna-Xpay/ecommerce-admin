@@ -4,6 +4,7 @@ import { Button, FormControl, Grid, InputLabel, MenuItem, Pagination, Paper, Sel
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAllUsers } from '../redux/userSlice';
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import { Link } from 'react-router-dom';
 
 const CustomersTable = () => {
 
@@ -36,7 +37,7 @@ const CustomersTable = () => {
                 <TableCell align="left">{item.email}</TableCell>
                 <TableCell align="left">{new Date(item.registeredAt).toDateString()}</TableCell>
                 <TableCell align="center">{item.ordersCount}</TableCell>
-                <TableCell align="left"><Button startIcon={<VisibilityIcon />} size='small'>Show User</Button></TableCell>
+                <TableCell align="left"><Link to={'/customer-profile/' + item._id}><Button startIcon={<VisibilityIcon />} size='small'>Show User</Button></Link></TableCell>
             </TableRow>
         )
     })
