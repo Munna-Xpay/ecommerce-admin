@@ -20,6 +20,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { adminById } from '../redux/userSlice';
 import { Link, useNavigate } from 'react-router-dom';
 import Notifications from './Notifications';
+import { fetchAllNotifications } from '../redux/notificationSlice';
 
 
 
@@ -28,10 +29,11 @@ export default function PrimarySearchAppBar() {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const admin = useSelector(state => state.userReducer)
+    const notifications = useSelector(state => state.notificationReducer.allNotifications)
     const [drawer, setDrawer] = useState(false)
     const [anchorEl, setAnchorEl] = useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
-
+    console.log(notifications)
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
     const [open, setOpen] = useState(false);
@@ -66,6 +68,10 @@ export default function PrimarySearchAppBar() {
             navigate('/login')
         }
     }, [admin.admin])
+
+    useEffect(() => {
+        dispatch(fetchAllNotifications())
+    }, [])
 
     const menuId = 'primary-search-account-menu';
     const renderMenu = (
@@ -121,7 +127,7 @@ export default function PrimarySearchAppBar() {
                     aria-label="show 17 new notifications"
                     color="inherit"
                 >
-                    <Badge badgeContent={17} color="error">
+                    <Badge badgeContent={notifications.length} color="error">
                         <NotificationsIcon />
                     </Badge>
                 </IconButton>
@@ -179,7 +185,7 @@ export default function PrimarySearchAppBar() {
                                     aria-label="show 17 new notifications"
                                     color="inherit"
                                 >
-                                    <Badge badgeContent={17} color="error">
+                                    <Badge badgeContent={notifications.length} color="error">
                                         <NotificationsIcon />
                                     </Badge>
                                 </IconButton>
