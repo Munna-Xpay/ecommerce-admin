@@ -121,13 +121,13 @@ function Orders() {
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell sx={{ fontSize: '17px', color: '#035ECF' }}>Product</TableCell>
-              <TableCell sx={{ fontSize: '17px', color: '#035ECF' }}>Category</TableCell>
-              <TableCell sx={{ fontSize: '17px', color: '#035ECF' }}>Price</TableCell>
-              <TableCell sx={{ fontSize: '17px', color: '#035ECF' }}>Order Delivery</TableCell>
-              <TableCell sx={{ fontSize: '17px', color: '#035ECF' }}>Order Status</TableCell>
-              <TableCell sx={{ fontSize: '17px', color: '#035ECF' }}>Rating</TableCell>
-              <TableCell sx={{ fontSize: '17px', color: '#035ECF' }}>Actions</TableCell>
+              <TableCell sx={{ fontSize: '14px', color: '#035ECF' }}>PRODUCT</TableCell>
+              <TableCell sx={{ fontSize: '14px', color: '#035ECF' }}>CATEGORY</TableCell>
+              <TableCell sx={{ fontSize: '14px', color: '#035ECF' }}>PRICE</TableCell>
+              <TableCell sx={{ fontSize: '14px', color: '#035ECF' }}>ORDER DELIVERY</TableCell>
+              <TableCell sx={{ fontSize: '14px', color: '#035ECF' }}>ORDER STATUS</TableCell>
+              <TableCell sx={{ fontSize: '14px', color: '#035ECF' }}>RATING</TableCell>
+              <TableCell sx={{ fontSize: '14px', color: '#035ECF' }}>ACTIONS</TableCell>
 
             </TableRow>
           </TableHead>
