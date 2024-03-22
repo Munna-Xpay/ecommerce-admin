@@ -11,12 +11,12 @@ const CustomerSegmentaion = () => {
 
     return (
         <Paper sx={{ height: '100%' }}>
-            <Stack p={2} spacing={3}>
-                <Stack spacing={3}>
+            <Stack p={2} spacing={2}>
+                <Stack spacing={2}>
                     <Typography variant='h6' sx={{ fontWeight: 'bold' }} >Demographic Segmention By Age</Typography>
                     {
                         userStat?.usersAgeRange?.map(item => (
-                            <Stack spacing={2}>
+                            <Stack spacing={1}>
                                 <Stack direction={'row'} justifyContent={'space-between'} alignItems={'center'}>
                                     <Typography variant='body1' sx={{ fontWeight: 'bold', opacity: '.8' }}>Age {item?.ageRange}</Typography>
                                     <Typography variant='body1' sx={{ fontWeight: 'bold' }}>{item?.count}</Typography>
