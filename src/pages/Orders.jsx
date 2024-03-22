@@ -1,53 +1,53 @@
 import React, { useEffect, useState } from 'react'
-import { Pagination, FormControl, Table, TableBody, TableCell, TableContainer, TableHead, Paper, TableRow, Grid, LinearProgress, MenuItem, Select, Stack, TextField, Typography, Rating, Menu, IconButton, } from '@mui/material'
+import { Pagination, FormControl, Table, TableBody, TableCell, TableContainer, TableHead, Paper, TableRow, Grid, LinearProgress, MenuItem, Select, Stack, TextField, Typography, Rating, Menu, IconButton, InputLabel, } from '@mui/material'
 import FactCheckIcon from '@mui/icons-material/FactCheck';
 import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
 import DoDisturbIcon from '@mui/icons-material/DoDisturb';
 import ReplayIcon from '@mui/icons-material/Replay';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllOrders, orderByCategory } from '../redux/orderSlice';
-import EditIcon from '@mui/icons-material/Edit';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
+import {  orderByCategory, updateOrder } from '../redux/orderSlice';
 import PageHead from '../components/PageHead'
 import { BASE_URL } from '../redux/baseUrl';
 import CountUp from 'react-countup';
-
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 function Orders() {
-
+  
   const dispatch = useDispatch('')
   const orders = useSelector(state => state.orderReducer.orderCategory)
   // console.log(orders);
-  const allOrders = useSelector(state => state.orderReducer.allOrders)
-  // console.log(allOrders);
   const [sortData, setSortData] = useState({
     categoryFilter: "All",
     sort_option: "A-Z"
   })
 
+  const [status, setStatus] = useState('')
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
 
-  useEffect(() => {
-    dispatch(getAllOrders())
-  }, [])
+
 
   useEffect(() => {
     dispatch(orderByCategory(sortData))
-  }, [sortData])
+    dispatch(updateOrder())
+  }, [orders])
 
-  const orderStatus1 = allOrders.filter((i) => i.orderStatus === 'ordered')
-  const orderStatus2 = allOrders.filter((i) => i.orderStatus === 'confirmed')
-  const orderStatus3 = allOrders.filter((i) => i.orderStatus === 'canceled')
-  const orderStatus4 = allOrders.filter((i) => i.orderStatus === 'refunded')
+  const orderStatus1 = orders.filter((i) => i.orderStatus === 'Ordered')
+  const orderStatus2 = orders.filter((i) => i.orderStatus === 'Confirmed')
+  const orderStatus3 = orders.filter((i) => i.orderStatus === 'Canceled')
+  const orderStatus4 = orders.filter((i) => i.orderStatus === 'Completed')
   const ordered = orderStatus1.length
+  console.log(ordered);
   const confirmed = orderStatus2.length
   const canceled = orderStatus3.length
-  const refunded = orderStatus4.length
+  const completed = orderStatus4.length
 
   const lastIndexOfItemInAPage = itemsPerPage * currentPage;
   const firstIndexOfItemInAPage = lastIndexOfItemInAPage - itemsPerPage;
 
-
+  const handleOrderUpdate = (e, id) => {
+    const orderStatus = e.target.value
+    dispatch(updateOrder({ data: { orderStatus }, id }))
+  }
   return (
     <>
       <PageHead heading={'Orders'} />
@@ -78,15 +78,6 @@ function Orders() {
         </Stack>
       </Stack>
       <Grid container mt={2}>
-        {/* <Grid item md={3} xs={12} boxShadow={5} >
-          <Stack p={2}>
-            <Typography fontSize={20} fontWeight={'bold'}>Average Rate(%)</Typography>
-            <Box>
-              <Stack direction={'row'} justifyContent={'space-between'} alignItems={'center'}><Typography fontSize={15} fontWeight={'bold'}></Typography><Typography fontSize={15} fontWeight={'bold'}>17%</Typography></Stack>
-              <LinearProgress sx={{ height: '13px', borderRadius: '5px', flexGrow: 1 }} variant="determinate" />
-            </Box>
-          </Stack>
-        </Grid> */}
         <Grid item xs={12} md={2} boxShadow={5} p={2} mt={{ xs: 2, md: 0 }} borderRadius={2}>
           <FactCheckIcon sx={{ backgroundColor: 'blue', borderRadius: '4px', color: 'white', padding: '7px' }} />
           <Stack mt={3}>
@@ -111,10 +102,10 @@ function Orders() {
           </Stack>
         </Grid>
         <Grid item xs={12} md={2} boxShadow={5} marginLeft={{ xs: 0, md: 2 }} p={2} mt={{ xs: 2, md: 0 }} borderRadius={2}>
-          <ReplayIcon sx={{ backgroundColor: 'black', borderRadius: '4px', color: 'white', padding: '7px' }} />
+          <CheckCircleIcon sx={{ backgroundColor: '#035ecf', borderRadius: '4px', color: 'white', padding: '7px' }} />
           <Stack mt={3}>
-            <Typography fontSize={20} fontWeight={'bold'}>Orders Refunded</Typography>
-            <Typography fontSize={30} fontWeight={'bold'}><CountUp end={refunded} /></Typography>
+            <Typography fontSize={20} fontWeight={'bold'}>Orders Completed</Typography>
+            <Typography fontSize={30} fontWeight={'bold'}><CountUp end={completed} /></Typography>
           </Stack>
         </Grid>
       </Grid>
@@ -122,7 +113,7 @@ function Orders() {
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
-            {/* <TableCell sx={{ fontSize: '14px', color: '#035ECF' }}># ORDER</TableCell> */}
+              {/* <TableCell sx={{ fontSize: '14px', color: '#035ECF' }}># ORDER</TableCell> */}
               <TableCell sx={{ fontSize: '14px', color: '#035ECF' }}>PRODUCT</TableCell>
               <TableCell sx={{ fontSize: '14px', color: '#035ECF' }}>CATEGORY</TableCell>
               <TableCell sx={{ fontSize: '14px', color: '#035ECF' }}>PRICE</TableCell>
@@ -139,7 +130,7 @@ function Orders() {
                 key={index}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
-                 {/* <Typography fontWeight={'bold'}>{order._id}</Typography> */}
+                {/* <Typography fontWeight={'bold'}>{order._id}</Typography> */}
                 <TableCell component="th" scope="row">
                   <Stack direction={'row'}><img width={70} height={55} src={`${BASE_URL}/uploadedFiles/${order?.products.product.thumbnail}`} alt="" /> <Stack marginLeft={1}>
                     <Typography fontWeight={'bold'}>{order.products.product.title}</Typography>
@@ -154,16 +145,18 @@ function Orders() {
                 <TableCell sx={{ fontWeight: 'bold' }}><Typography sx={{
                   backgroundColor: (() => {
                     switch (order.orderStatus) {
-                      case 'ordered':
-                        return '#f0ad4e'; // Yellow
-                      case 'confirmed':
-                        return '#00ba9d'; // Green
-                      case 'canceled':
-                        return 'red'; // Red
-                      case 'completed':
-                        return '#035ecf'; // Blue
+                      case 'Ordered':
+                        return '#f0ad4e';
+                      case 'Confirmed':
+                        return '#00ba9d';
+                      case 'Canceled':
+                        return 'red';
+                      case 'Completed':
+                        return '#035ecf';
+                      case 'Shipped':
+                        return '#f55505';
                       default:
-                        return 'transparent'; // Default background color
+                        return 'black'; 
                     }
                   })(),
                   borderRadius: '20px',
@@ -171,7 +164,21 @@ function Orders() {
                   width: '100px'
                 }} p={1} textAlign={'center'}>{order.orderStatus}</Typography></TableCell>
                 <TableCell sx={{ fontWeight: 'bold' }}><Rating name="read-only" value={order.products.product.review_star} readOnly /></TableCell>
-                <TableCell sx={{ fontWeight: 'bold' }}> <Stack direction={'row'}> <IconButton><EditIcon sx={{ color: 'black' }} /></IconButton> </Stack>
+                <TableCell sx={{ fontWeight: 'bold' }}>
+                  <FormControl size='small' sx={{ width: { xs: 380, md: 160 } }}>
+                    <InputLabel id="demo-simple-select-label">Order Status</InputLabel>
+
+                    <Select
+                      value={status}
+                      onChange={(e) => handleOrderUpdate(e,order._id)}
+                    >
+                      <MenuItem value={'Confirmed'}>Order confirmed</MenuItem>
+                      <MenuItem value={'Canceled'}>Order canceled</MenuItem>
+                      <MenuItem value={'Shipped'}>Order shipped</MenuItem>
+                      <MenuItem value={'Completed'}>Order Completed</MenuItem>
+                      <MenuItem value={'Refunded'}>Order refunded</MenuItem>
+                    </Select>
+                  </FormControl>
                 </TableCell>
               </TableRow>
             ))}

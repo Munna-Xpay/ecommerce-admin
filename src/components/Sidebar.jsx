@@ -59,7 +59,7 @@ function Sidebar() {
             pl: 10
           }}>
             <Stack direction={'column'} spacing={4}>
-              <Link to={'/'} style={{ textDecoration: 'none' }}> <ListItemText sx={{ color: 'black' }}><Typography sx={{ ":hover": { color: 'black' } }} fontWeight={'bold'} color={'#6E757f'} fontSize={15}>Sales Analytics</Typography></ListItemText></Link>
+              <Link to={'/sales-analytics'} style={{ textDecoration: 'none' }}> <ListItemText sx={{ color: 'black' }}><Typography sx={{ ":hover": { color: 'black' } }} fontWeight={'bold'} color={'#6E757f'} fontSize={15}>Sales Analytics</Typography></ListItemText></Link>
               <Link to={'/seller-list'} style={{ textDecoration: 'none' }}> <ListItemText sx={{ color: 'black' }}><Typography sx={{ ":hover": { color: 'black' } }} fontWeight={'bold'} color={'#6E757f'} fontSize={15}>Sellers List</Typography></ListItemText></Link>
               <Link to={'/seller-table'} style={{ textDecoration: 'none' }}> <ListItemText sx={{ color: 'black' }}><Typography sx={{ ":hover": { color: 'black' } }} fontWeight={'bold'} color={'#6E757f'} fontSize={15}>Sellers Table</Typography></ListItemText></Link>
               <Link to={'/seller-grid'} style={{ textDecoration: 'none' }}><ListItemText sx={{ color: 'black' }}><Typography sx={{ ":hover": { color: 'black' } }} fontWeight={'bold'} color={'#6E757f'} fontSize={15}>Sellers Grid</Typography></ListItemText></Link>
