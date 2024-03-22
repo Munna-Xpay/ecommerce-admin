@@ -10,6 +10,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import PageHead from '../components/PageHead'
 import { BASE_URL } from '../redux/baseUrl';
+import CountUp from 'react-countup';
 
 function Orders() {
 
@@ -91,7 +92,7 @@ function Orders() {
           <Stack mt={3}>
             <Typography fontSize={20} fontWeight={'bold'}>Ordered</Typography>
 
-            <Typography fontSize={30} fontWeight={'bold'}>{ordered}</Typography>
+            <Typography fontSize={30} fontWeight={'bold'}><CountUp end={ordered} /></Typography>
 
           </Stack>
         </Grid>
@@ -99,21 +100,21 @@ function Orders() {
           <AssignmentTurnedInIcon sx={{ backgroundColor: 'green', borderRadius: '4px', color: 'white', padding: '7px' }} />
           <Stack mt={3}>
             <Typography fontSize={20} fontWeight={'bold'}>Orders Confirmed</Typography>
-            <Typography fontSize={30} fontWeight={'bold'}>{confirmed}</Typography>
+            <Typography fontSize={30} fontWeight={'bold'}><CountUp end={confirmed} /></Typography>
           </Stack>
         </Grid>
         <Grid item xs={12} md={2} boxShadow={5} marginLeft={{ xs: 0, md: 2 }} p={2} mt={{ xs: 2, md: 0 }} borderRadius={2}>
           <DoDisturbIcon sx={{ backgroundColor: 'red', borderRadius: '4px', color: 'white', padding: '7px' }} />
           <Stack mt={3}>
             <Typography fontSize={20} fontWeight={'bold'}>Orders Canceled</Typography>
-            <Typography fontSize={30} fontWeight={'bold'}>{canceled}</Typography>
+            <Typography fontSize={30} fontWeight={'bold'}><CountUp end={canceled} /></Typography>
           </Stack>
         </Grid>
         <Grid item xs={12} md={2} boxShadow={5} marginLeft={{ xs: 0, md: 2 }} p={2} mt={{ xs: 2, md: 0 }} borderRadius={2}>
           <ReplayIcon sx={{ backgroundColor: 'black', borderRadius: '4px', color: 'white', padding: '7px' }} />
           <Stack mt={3}>
             <Typography fontSize={20} fontWeight={'bold'}>Orders Refunded</Typography>
-            <Typography fontSize={30} fontWeight={'bold'}>{refunded}</Typography>
+            <Typography fontSize={30} fontWeight={'bold'}><CountUp end={refunded} /></Typography>
           </Stack>
         </Grid>
       </Grid>
@@ -121,6 +122,7 @@ function Orders() {
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
+            {/* <TableCell sx={{ fontSize: '14px', color: '#035ECF' }}># ORDER</TableCell> */}
               <TableCell sx={{ fontSize: '14px', color: '#035ECF' }}>PRODUCT</TableCell>
               <TableCell sx={{ fontSize: '14px', color: '#035ECF' }}>CATEGORY</TableCell>
               <TableCell sx={{ fontSize: '14px', color: '#035ECF' }}>PRICE</TableCell>
@@ -137,6 +139,7 @@ function Orders() {
                 key={index}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
+                 {/* <Typography fontWeight={'bold'}>{order._id}</Typography> */}
                 <TableCell component="th" scope="row">
                   <Stack direction={'row'}><img width={70} height={55} src={`${BASE_URL}/uploadedFiles/${order?.products.product.thumbnail}`} alt="" /> <Stack marginLeft={1}>
                     <Typography fontWeight={'bold'}>{order.products.product.title}</Typography>
@@ -168,8 +171,7 @@ function Orders() {
                   width: '100px'
                 }} p={1} textAlign={'center'}>{order.orderStatus}</Typography></TableCell>
                 <TableCell sx={{ fontWeight: 'bold' }}><Rating name="read-only" value={order.products.product.review_star} readOnly /></TableCell>
-                <TableCell sx={{ fontWeight: 'bold' }}> <Stack direction={'row'}> <IconButton><EditIcon sx={{ color: 'black' }} /></IconButton>  <IconButton> <MoreVertIcon sx={{ color: 'black' }} />
-                </IconButton></Stack>
+                <TableCell sx={{ fontWeight: 'bold' }}> <Stack direction={'row'}> <IconButton><EditIcon sx={{ color: 'black' }} /></IconButton> </Stack>
                 </TableCell>
               </TableRow>
             ))}

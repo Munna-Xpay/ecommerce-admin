@@ -9,6 +9,8 @@ import { useNavigate } from 'react-router-dom';
 
 
 function Login() {
+
+  const admin=useSelector(state=>state.userReducer.admin)
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const [errors, setErrors] = useState(false)
@@ -61,6 +63,13 @@ function Login() {
         toast.error(error)
       }
     }, [error])
+
+
+    useEffect(()=>{
+ if(admin){
+  navigate('/sales-analytics')
+ }
+    },[admin])
   
   return (
     <>

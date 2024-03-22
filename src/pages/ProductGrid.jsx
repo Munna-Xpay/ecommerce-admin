@@ -8,6 +8,8 @@ import PageHead from '../components/PageHead'
 import { useNavigate } from 'react-router-dom';
 import { BASE_URL } from '../redux/baseUrl';
 import { Toaster } from 'react-hot-toast';
+import RestaurantIcon from '@mui/icons-material/Restaurant';
+import CheckroomIcon from '@mui/icons-material/Checkroom';
 
 function ProductGrid() {
 
@@ -46,7 +48,9 @@ const navigate=useNavigate()
       <PageHead heading={'Products Grid'} />
       <Box marginTop={2} sx={{ display: { xs: 'block', md: 'flex' } }} justifyContent={'space-between'}>
         <Stack sx={{ width: { xs: 350, md: 170 } }} direction={'row'} spacing={1} boxShadow={4} p={2} borderRadius={2} >
-          <LaptopMacIcon sx={{ backgroundColor: 'blue', color: 'white', padding: '5px', borderRadius: '3px', height: '20px', width: '20px' }} />
+        {sortData.categoryFilter === 'Electronics' ? <LaptopMacIcon sx={{ backgroundColor: '#035ECF', color: 'white', padding: '5px', borderRadius: '3px', height: '20px', width: '20px' }} /> : null}
+        {sortData.categoryFilter === 'Fashion' ? <CheckroomIcon sx={{ backgroundColor: '#ff5470', color: 'white', padding: '5px', borderRadius: '3px', height: '20px', width: '20px' }} /> : null}
+          {sortData.categoryFilter === 'Groceries' ? <RestaurantIcon sx={{ backgroundColor: 'orange', color: 'white', padding: '5px', borderRadius: '3px', height: '20px', width: '20px' }} /> : null}
           {products.slice(0, 1).map((i) => (<Typography fontSize={20} fontWeight={'bold'} >{i.category}</Typography>))}
         </Stack>
         <Stack direction={{ xs: 'column', md: 'row' }} spacing={3} sx={{ marginTop: { xs: 5, md: 0 } }}>

@@ -3,6 +3,8 @@ import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgr
 import LaptopMacIcon from '@mui/icons-material/LaptopMac';
 import { Box, Container, Grid, Stack, Typography } from '@mui/material'
 import { useSelector } from 'react-redux';
+import { BASE_URL } from '../redux/baseUrl';
+import { formatNumberToK } from '../formatPriceToK';
 
 function TopProductsCategory() {
     const categoryTotalPrice=useSelector(state=>state.categoryReducer.categoryPrice)
@@ -23,7 +25,7 @@ function TopProductsCategory() {
                 <Typography fontSize={20} fontWeight={'bold'}>Top Sales By Category</Typography>
                     {  sortedCategoryData?.map((category)=>(
                     <Box>
-                    <Stack direction={'row'} justifyContent={'space-between'} alignItems={'center'}><Typography fontSize={15} fontWeight={'bold'}>{category._id}</Typography><Typography fontSize={15} fontWeight={'bold'}>${category.total_price}</Typography></Stack>
+                    <Stack direction={'row'} justifyContent={'space-between'} alignItems={'center'}><Typography fontSize={15} fontWeight={'bold'}>{category._id}</Typography><Typography fontSize={15} fontWeight={'bold'}>₹ {formatNumberToK(category.total_price)}</Typography></Stack>
                     <LinearProgress sx={{ height: '13px', borderRadius: '5px', flexGrow: 1 }} variant="determinate"  value={(category.total_price /highestTotalPrice)* 100} />
                    </Box>
                     )) }
@@ -39,9 +41,9 @@ function TopProductsCategory() {
             }}}  p={2} boxShadow={4} borderRadius={2} xs={12} md={2.5}>
                 
                     
-                <Box border={1} borderColor={'#f1f1f1'} textAlign={'center'}><img width={90} height={90} src={product.sellerLogo.company_icon} alt="" /></Box>
+                <Box border={1} borderColor={'#f1f1f1'} textAlign={'center'}><img width={90} height={90} src={`${BASE_URL}/uploadedFiles/${product.sellerLogo.company_icon}`} alt="" /></Box>
                 <Stack spacing={2} direction={'row'} mt={3}>
-                    <Box><Typography fontSize={16} fontWeight={'bold'} color={'gray'}>{product.category}</Typography><Typography fontSize={18} fontWeight={'bold'} >${product.totalPrice}</Typography></Box>
+                    <Box><Typography fontSize={16} fontWeight={'bold'} color={'gray'}>{product.category}</Typography><Typography fontSize={18} fontWeight={'bold'} >₹ {formatNumberToK(product.totalPrice)}</Typography></Box>
                 </Stack>
             </Grid>
                ))

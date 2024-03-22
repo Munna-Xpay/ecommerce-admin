@@ -26,11 +26,13 @@ import { Container } from '@mui/material';
 import CustomersTable from './pages/CustomersTable';
 import CustomerProfile from './pages/CustomerProfile';
 
+
 function App() {
   return (
     <>
       <Header />
       <Container maxWidth>
+      
         <Routes>
           <Route path='/' element={<Login />} />
           <Route path='/sales-analytics' element={<SalesAnalytics />} />
