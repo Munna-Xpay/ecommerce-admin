@@ -9,9 +9,10 @@ import { useSelector } from 'react-redux';
 const ReviewsAndUsers = () => {
 
     const reviewStat = useSelector(state => state.reviewReducer.allReviewStat)
+    const userStat = useSelector(state => state.userReducer.userStat)
 
     const rating = reviewStat?.avg_review?.toFixed(1)
-    console.log(rating)
+    console.log(userStat)
 
     return (
         <Grid container spacing={2} mt={2}>
@@ -37,7 +38,7 @@ const ReviewsAndUsers = () => {
                 <Paper>
                     <Stack p={2} spacing={1} height={'170px'} justifyContent={'center'} alignItems={'center'}>
                         <Avatar sx={{ bgcolor: '#035ecf' }} variant='rounded'><PersonAddIcon /></Avatar>
-                        <Typography variant='h4' sx={{ fontWeight: 'bold' }} >25%</Typography>
+                        <Typography variant='h4' sx={{ fontWeight: 'bold' }} >{Math.ceil((userStat?.newUsersCount / userStat?.allUsers?.length) * 100)}%</Typography>
                         <Typography variant='h6' sx={{ fontWeight: 'bold' }} >New</Typography>
                     </Stack>
                 </Paper>
@@ -46,7 +47,7 @@ const ReviewsAndUsers = () => {
                 <Paper>
                     <Stack p={2} spacing={1} height={'170px'} justifyContent={'center'} alignItems={'center'}>
                         <Avatar sx={{ bgcolor: '#ff5470' }} variant='rounded'><Diversity3Icon /></Avatar>
-                        <Typography variant='h4' sx={{ fontWeight: 'bold' }} >75%</Typography>
+                        <Typography variant='h4' sx={{ fontWeight: 'bold' }} >{Math.ceil((userStat?.allUsers?.filter(item => item.ordersCount > 1)?.length / userStat?.allUsers?.length) * 100)}%</Typography>
                         <Typography variant='h6' sx={{ fontWeight: 'bold' }} >Regular </Typography>
                     </Stack>
                 </Paper>

@@ -4,12 +4,14 @@ import ReviewsAndUsers from '../components/ReviewsAndUsers'
 import AllReviews from '../components/AllReviews'
 import { useDispatch } from 'react-redux'
 import { fetchAllReviewStat } from '../redux/reviewSlice'
+import {fetchUsersStat } from '../redux/userSlice'
 
 const Reviews = () => {
 
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(fetchAllReviewStat(''))
+    dispatch(fetchUsersStat(''))
   }, [])
 
   return (
