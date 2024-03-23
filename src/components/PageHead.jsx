@@ -4,7 +4,7 @@ import CachedIcon from '@mui/icons-material/Cached';
 
 const PageHead = ({ heading }) => {
     return (
-        <Paper sx={{ marginTop: '20px' }}>
+        <Paper sx={{ marginTop: '10px' }}>
             <Stack direction={{ xs: "column", md: 'row' }} spacing={2} justifyContent={'space-between'} p={2}>
                 <Typography variant='h4' sx={{ fontWeight: 'bold', opacity: '.9' }} >{heading}</Typography>
                 <Stack spacing={2} direction={'row'}>

@@ -45,13 +45,13 @@ const CustomerOrders = () => {
             <TableCell sx={{ fontWeight: 'bold' }}><Typography sx={{
                 backgroundColor: (() => {
                     switch (order.orderStatus) {
-                        case 'ordered':
+                        case 'Ordered':
                             return '#f0ad4e'; // Yellow
-                        case 'confirmed':
+                        case 'Confirmed':
                             return '#00ba9d'; // Green
-                        case 'canceled':
+                        case 'Canceled':
                             return 'red'; // Red
-                        case 'completed':
+                        case 'Completed':
                             return '#035ecf'; // Blue
                         default:
                             return 'transparent'; // Default background color

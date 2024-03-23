@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 //login
 export const adminLogin = createAsyncThunk(
   "admin/login",
-  async ({data,navigate}, { rejectWithValue }) => {
+  async ({ data, navigate }, { rejectWithValue }) => {
     return await axios
       .post(`${BASE_URL}/api/auth/login`, data)
       .then((res) => {
@@ -94,8 +94,8 @@ export const fetchAllUsers = createAsyncThunk(
 );
 
 //profile edit
-export const profileEdit = createAsyncThunk(
-  "user/profile",
+export const profileEditAdmin = createAsyncThunk(
+  "admin/profile",
   async (userData, { rejectWithValue }) => {
     const id = localStorage.getItem("adminId");
     const token = localStorage.getItem("token");
@@ -109,6 +109,30 @@ export const profileEdit = createAsyncThunk(
       }).then(res => {
         console.log(res)
         toast.success("Admin profile updated successfully")
+        return res.data
+      })
+      .catch((err) => {
+        toast.error("Somthing went wrong !, Failed to update")
+        return rejectWithValue(err.response.data)
+      });
+  }
+);
+
+//profile edit (customer)
+export const profileEditCustomer = createAsyncThunk(
+  "customer/profile",
+  async ({ userData, id }, { rejectWithValue }) => {
+    const token = localStorage.getItem("token");
+    //console.log(token);
+    return await axios
+      .put(`${BASE_URL}/api/auth/update-profile/${id}`, userData, {
+        headers: {
+          "Content-Type": "application/json",
+          user_token: `Bearer ${token}`,
+        },
+      }).then(res => {
+        console.log(res)
+        toast.success("Customer profile updated successfully")
         return res.data
       })
       .catch((err) => {
@@ -188,14 +212,14 @@ const userSlice = createSlice({
     });
 
 
-    builder.addCase(profileEdit.pending, (state) => {
+    builder.addCase(profileEditAdmin.pending, (state) => {
       return { ...state, loading: true };
     });
-    builder.addCase(profileEdit.fulfilled, (state, action) => {
+    builder.addCase(profileEditAdmin.fulfilled, (state, action) => {
       // console.log(action.payload);
       return { ...state, admin: action.payload, loading: false };
     });
-    builder.addCase(profileEdit.rejected, (state, action) => {
+    builder.addCase(profileEditAdmin.rejected, (state, action) => {
       return { ...state, error: action.payload, loading: false };
     });
 
@@ -241,6 +265,23 @@ const userSlice = createSlice({
       return { ...state, userConversionRate: action.payload, loading: false };
     });
     builder.addCase(fetchUserConversionRate.rejected, (state, action) => {
+      return { ...state, error: action.payload, loading: false };
+    });
+
+
+    builder.addCase(profileEditCustomer.pending, (state) => {
+      return { ...state, loading: true };
+    });
+    builder.addCase(profileEditCustomer.fulfilled, (state, action) => {
+      state.allUsers = state.allUsers.map((item) => {
+        if (item._id == action.payload._id) {
+          return action.payload
+        } else {
+          return item
+        }
+      })
+    });
+    builder.addCase(profileEditCustomer.rejected, (state, action) => {
       return { ...state, error: action.payload, loading: false };
     });
 

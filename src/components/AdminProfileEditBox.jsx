@@ -2,7 +2,7 @@ import { Autocomplete, Button, FormControl, Grid, InputLabel, MenuItem, Paper, S
 import React, { useEffect, useState } from 'react'
 import { countries } from '../countryDatas'
 import { useDispatch, useSelector } from 'react-redux'
-import { profileEdit } from '../redux/userSlice'
+import { profileEditAdmin } from '../redux/userSlice'
 import { userSchema } from '../formValidation/profileEditValidation'
 import toast, { Toaster } from 'react-hot-toast';
 
@@ -26,7 +26,7 @@ const AdminProfileEditBox = () => {
             await userSchema.validate(adminData, { abortEarly: false })
             const { _id, __v, ...others } = adminData
             console.log(others)
-            dispatch(profileEdit(others))
+            dispatch(profileEditAdmin(others))
             setErrors({})
             setAdminData(admin)
         } catch (err) {
