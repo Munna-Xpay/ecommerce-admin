@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import PageHead from '../components/PageHead'
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import { Autocomplete, Box, Button, Grid, Paper, Stack, TextField, Typography } from '@mui/material'
+import { Autocomplete, Box, Button, FormControlLabel, Grid, Paper, Stack, Switch, TextField, Typography } from '@mui/material'
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
@@ -83,7 +83,7 @@ const EditSeller = () => {
                         </Stack>
                     </Grid>
                     <Grid item xs={12} md={4} >
-                        <Stack spacing={4} alignItems={'start'}>
+                        <Stack spacing={1} alignItems={'start'}>
                             <Autocomplete
                                 onChange={(e, newVal) => setSellerData({ ...sellerData, country: newVal })}
                                 value={sellerData?.country}
@@ -95,7 +95,6 @@ const EditSeller = () => {
                                 autoHighlight
                                 renderInput={(params) => (
                                     <TextField
-
                                         {...params}
                                         label="Choose a country"
                                         inputProps={{
@@ -104,6 +103,10 @@ const EditSeller = () => {
                                         }}
                                     />
                                 )}
+                            />
+                            <FormControlLabel
+                                control={<Switch checked={sellerData?.isBlocked} onChange={(e) => setSellerData({ ...sellerData, isBlocked: e.target.checked })} />}
+                                label={sellerData?.isBlocked ? "Unblock Seller" : "Block Seller"}
                             />
                             <Stack spacing={1}>
                                 <Box

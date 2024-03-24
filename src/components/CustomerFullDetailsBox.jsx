@@ -118,7 +118,7 @@ const CustomerFullDetailsBox = () => {
                 <Stack justifyContent={'flex-end'} spacing={5} alignItems={'center'} direction={{ md: 'row', xs: 'column' }}>
                     <FormControlLabel
                         control={<Switch checked={customerData?.isBlocked} onChange={(e) => setCustomerData({ ...customerData, isBlocked: e.target.checked })} />}
-                        label="Block User"
+                        label={customerData?.isBlocked ? "Unblock Customer" : "Block Customer"}
                     />
                     <Button onClick={updateCustomerProfile} variant='contained' color='success' size='small' >Update Informations</Button>
                 </Stack>

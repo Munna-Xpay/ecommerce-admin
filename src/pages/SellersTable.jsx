@@ -7,6 +7,7 @@ import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import { formatNumberToK } from '../formatPriceToK'
 import EditNoteIcon from '@mui/icons-material/EditNote';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { BASE_URL } from '../redux/baseUrl'
 import { Link } from 'react-router-dom'
 import { Toaster } from 'react-hot-toast'
@@ -91,7 +92,7 @@ const SellersTable = () => {
         <TableCell align="center">
           <Stack direction={'row'} justifyContent={'flex-end'}>
             <Link to={'/edit-seller/' + item?.seller?._id}><IconButton color='primary'><EditNoteIcon /></IconButton></Link>
-            <IconButton color='primary'><MoreVertIcon /></IconButton>
+            {/* <IconButton color='primary'><DeleteIcon /></IconButton> */}
           </Stack>
         </TableCell>
       </TableRow>
