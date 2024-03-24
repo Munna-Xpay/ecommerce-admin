@@ -29,7 +29,7 @@ export const fetchAllSellersWithSalesDetails = createAsyncThunk('/fetch/all/sell
         }
     })
         .then(res => {
-          // console.log(res)
+            // console.log(res)
             return res.data
         })
         .catch((err) => rejectWithValue("Something went wrong ! network error"))
@@ -63,6 +63,50 @@ export const addSeller = createAsyncThunk('/add/seller', async ({ data, navigate
             // console.log(res)
             toast.success("Seller added successfully")
             navigate("/seller-grid")
+            return res.data
+        })
+        .catch((err) => {
+            toast.error("Something went wrong !")
+            return rejectWithValue("Something went wrong ! network error")
+        })
+})
+
+//update seller 
+export const updateSeller = createAsyncThunk('/update/seller', async ({ data, navigate, id }, { rejectWithValue }) => {
+    const token = localStorage.getItem('token')
+    // console.log(data)
+    return await axios.put(`${BASE_URL}/api/admin/update-seller/${id}`, data, {
+        headers: {
+            "Content-Type": "application/json",
+            "user_token": `Bearer ${token}`
+        }
+    })
+        .then(res => {
+            console.log(res)
+            navigate("/seller-table")
+            toast.success("Seller updated successfully")
+            return res.data
+        })
+        .catch((err) => {
+            toast.error("Something went wrong !")
+            return rejectWithValue("Something went wrong ! network error")
+        })
+})
+
+//update seller company icon
+export const updateSellerCompanyIcon = createAsyncThunk('/update/seller/company-icon', async ({ data, setFile, id }, { rejectWithValue }) => {
+    const token = localStorage.getItem('token')
+    // console.log(data)
+    return await axios.put(`${BASE_URL}/api/admin/update-seller-company-icon/${id}`, data, {
+        headers: {
+            "Content-Type": "multipart/form-data",
+            "user_token": `Bearer ${token}`
+        }
+    })
+        .then(res => {
+            console.log(res)
+            setFile(null)
+            toast.success("Company icon updated successfully")
             return res.data
         })
         .catch((err) => {
@@ -134,6 +178,46 @@ const sellerSlice = createSlice({
         })
 
         builder.addCase(fetchAllSellersWithDailySalesDetails.rejected, (state, action) => {
+            return { ...state, error: action.payload, loading: false }
+        })
+
+
+
+        builder.addCase(updateSeller.pending, (state) => {
+            return { ...state, loading: true }
+        })
+
+        builder.addCase(updateSeller.fulfilled, (state, action) => {
+            state.allSellers = state.allSellers.map((item) => {
+                if (item.seller._id == action.payload._id) {
+                    return { ...item, seller: action.payload }
+                } else {
+                    return item
+                }
+            })
+        })
+
+        builder.addCase(updateSeller.rejected, (state, action) => {
+            return { ...state, error: action.payload, loading: false }
+        })
+
+
+
+        builder.addCase(updateSellerCompanyIcon.pending, (state) => {
+            return { ...state, loading: true }
+        })
+
+        builder.addCase(updateSellerCompanyIcon.fulfilled, (state, action) => {
+            state.allSellers = state.allSellers.map((item) => {
+                if (item.seller._id == action.payload._id) {
+                    return { ...item, seller: action.payload }
+                } else {
+                    return item
+                }
+            })
+        })
+
+        builder.addCase(updateSellerCompanyIcon.rejected, (state, action) => {
             return { ...state, error: action.payload, loading: false }
         })
     }

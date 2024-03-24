@@ -10,3 +10,9 @@ export const sellerSchema = yup.object({
     website: yup.string().required("Website is required"),
     company_icon: yup.string().required("Company icon is required")
 })
+
+export const sellerSchemaForEdit = yup.object({
+    email: yup.string().email("Invalid email address").required("Email is required"),
+    password: yup.string().required("Password is required"),
+    phoneNum: yup.number().min(1000000000).max(9999999999)
+})

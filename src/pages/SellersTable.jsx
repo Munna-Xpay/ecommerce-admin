@@ -8,6 +8,8 @@ import { formatNumberToK } from '../formatPriceToK'
 import EditNoteIcon from '@mui/icons-material/EditNote';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { BASE_URL } from '../redux/baseUrl'
+import { Link } from 'react-router-dom'
+import { Toaster } from 'react-hot-toast'
 
 
 const SellersTable = () => {
@@ -88,7 +90,7 @@ const SellersTable = () => {
         </TableCell>
         <TableCell align="center">
           <Stack direction={'row'} justifyContent={'flex-end'}>
-            <IconButton color='primary'><EditNoteIcon /></IconButton>
+            <Link to={'/edit-seller/' + item?.seller?._id}><IconButton color='primary'><EditNoteIcon /></IconButton></Link>
             <IconButton color='primary'><MoreVertIcon /></IconButton>
           </Stack>
         </TableCell>
@@ -154,6 +156,8 @@ const SellersTable = () => {
       </TableContainer>
 
       <Pagination sx={{ margin: '30px 0px' }} count={Math.ceil(sellers.length / itemsPerPage)} onChange={(e, pageNumber) => setCurrentPage(pageNumber)} color="primary" />
+
+      <Toaster/>
     </>
   )
 }
