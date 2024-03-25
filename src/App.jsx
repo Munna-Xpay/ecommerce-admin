@@ -60,7 +60,7 @@ function App() {
           <Route path='/edit-seller/:id' element={<EditSeller />} />
           <Route path='*' element={<PageNotFound />} />
         </Routes>
-        {/* <Footer /> */}
+        <Footer />
       </Container>
     </>
   );
