@@ -6,12 +6,12 @@ import { fetchAllSellersWithSalesDetails } from '../redux/sellerSlice';
 import { addProduct } from '../redux/productSlice';
 import JoditEditor from 'jodit-react';
 import { productValidationSchema } from '../validations/ProductValidation';
-import  { Toaster } from 'react-hot-toast';
+import { Toaster } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 
 function AddProduct() {
 
- const sellerData=useSelector(state=>state.sellerReducer.allSellers)
+  const sellerData = useSelector(state => state.sellerReducer.allSellers)
   console.log(sellerData);
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -53,40 +53,40 @@ function AddProduct() {
     e.preventDefault();
     // Validate productData
     try {
-    await productValidationSchema.validate(productData, { abortEarly: false })
-        const { title, about, stock, stockQuantity, product_type, discounted_price, original_price, memory, colors,
-          category, manufacturer, ships_from, description, seller, thumbnail } = productData
-        const formData = new FormData()
-        formData.append("title", title)
-        formData.append("about", about)
-        formData.append("stock", stock)
-        formData.append("stockQuantity", stockQuantity)
-        formData.append("product_type", product_type)
-        formData.append("discounted_price", discounted_price)
-        formData.append("original_price", original_price)
-        formData.append("memory", memory)
-        formData.append("colors", colors)
-        formData.append("category", category)
-        formData.append("manufacturer", manufacturer)
-        formData.append("ships_from", ships_from)
-        formData.append("description", description)
-        formData.append("seller", seller)
-        formData.append("thumbnail", thumbnail)
-        formData.append("images", image1)
-        formData.append("images", image2)
-        formData.append("images", image3)
-        formData.append("images", image4)
-        dispatch(addProduct({ data: formData, navigate }))
-        setErrors({})
-      }
-      catch(err) {
-        console.log(err);
-        const newErrors = {};
-        err.inner.map((validationError) => {
-          newErrors[validationError.path] = validationError.message;
-        });
-        setErrors(newErrors);
-      }
+      await productValidationSchema.validate(productData, { abortEarly: false })
+      const { title, about, stock, stockQuantity, product_type, discounted_price, original_price, memory, colors,
+        category, manufacturer, ships_from, description, seller, thumbnail } = productData
+      const formData = new FormData()
+      formData.append("title", title)
+      formData.append("about", about)
+      formData.append("stock", stock)
+      formData.append("stockQuantity", stockQuantity)
+      formData.append("product_type", product_type)
+      formData.append("discounted_price", discounted_price)
+      formData.append("original_price", original_price)
+      formData.append("memory", memory)
+      formData.append("colors", colors)
+      formData.append("category", category)
+      formData.append("manufacturer", manufacturer)
+      formData.append("ships_from", ships_from)
+      formData.append("description", description)
+      formData.append("seller", seller)
+      formData.append("thumbnail", thumbnail)
+      formData.append("images", image1)
+      formData.append("images", image2)
+      formData.append("images", image3)
+      formData.append("images", image4)
+      dispatch(addProduct({ data: formData, navigate }))
+      setErrors({})
+    }
+    catch (err) {
+      console.log(err);
+      const newErrors = {};
+      err.inner.map((validationError) => {
+        newErrors[validationError.path] = validationError.message;
+      });
+      setErrors(newErrors);
+    }
   }
 
   //thumbnail preview
@@ -117,14 +117,14 @@ function AddProduct() {
   useEffect(() => {
     dispatch(fetchAllSellersWithSalesDetails())
   }, [])
-const sellers=sellerData.map((i)=>i.seller)
-//console.log(sellers);
+  const sellers = sellerData.map((i) => i.seller)
+  //console.log(sellers);
 
   return (
-    <Box mt={2} marginLeft={{ xs: 0, md: 7 }}>
+    <Box mt={2} boxShadow={{ xs: 0, md: 3 }} bgcolor={'white'} p={{ xs: 0, md: 1 }} borderRadius={2}>
       <Typography fontSize={16} fontWeight={'bold'}>Product Settings</Typography>
       <Typography mt={3} fontSize={12} color={'gray'} fontWeight={'bold'}>Product Images</Typography>
-      <Grid container spacing={{ xs: 0, md: 10 }}>
+      <Grid container spacing={{ xs: 0, md: 35 }}>
         <Grid item xs={12} md={6} direction={'row'}>
           <Stack direction={{ xs: 'column', md: 'row' }} spacing={3}>
 
@@ -189,7 +189,7 @@ const sellers=sellerData.map((i)=>i.seller)
 
             <label htmlFor='thumbnailInput'  >
               <Stack bgcolor={'#dedede'} sx={{ width: { xs: 378, md: 200 }, height: '235px' }} borderRadius={1}>
-                <input onChange={(e) => setProductData({ ...productData,["thumbnail"]: e.target.files[0]})} name='thumbnail' id='thumbnailInput' style={{ display: 'none' }} type="file" />
+                <input onChange={(e) => setProductData({ ...productData, ["thumbnail"]: e.target.files[0] })} name='thumbnail' id='thumbnailInput' style={{ display: 'none' }} type="file" />
                 <Box textAlign={'center'} display="flex" flexDirection="column" justifyContent="center" alignItems="center" height="100%">
                   {thumbnailPreview ? (
                     <img width={200} height={235} src={thumbnailPreview} alt="" />) :
@@ -226,13 +226,13 @@ const sellers=sellerData.map((i)=>i.seller)
           <Stack direction={{ xs: 'column', md: 'row' }} spacing={1} mt={2}>
             <Box>
               <Typography fontSize={12} color={'gray'} fontWeight={'bold'}>Brand name</Typography>
-              <TextField onChange={(e) => setInput(e)} name='manufacturer' InputProps={{ style: { borderRadius: '7px', height: '50px' } }} sx={{ width: '399px' }} label="" id="fullWidth" />
+              <TextField onChange={(e) => setInput(e)} name='manufacturer' InputProps={{ style: { borderRadius: '7px', height: '50px' } }} sx={{ width: { xs: 380, md: 295 } }} label="" id="fullWidth" />
               <FormHelperText sx={{ color: 'red' }}>{errors.manufacturer}</FormHelperText>
 
             </Box>
             <Box>
               <Typography fontSize={12} color={'gray'} fontWeight={'bold'}>Category</Typography>
-              <FormControl sx={{ width: '399px' }}>
+              <FormControl sx={{ width: { xs: 380, md: 295 } }}>
                 <Select
                   sx={{ height: '50px' }}
                   labelId="demo-simple-select-label"
@@ -254,13 +254,13 @@ const sellers=sellerData.map((i)=>i.seller)
           <Stack direction={{ xs: 'column', md: 'row' }} spacing={1} mt={2}>
             <Box>
               <Typography fontSize={12} color={'gray'} fontWeight={'bold'}>Regular price</Typography>
-              <TextField onChange={(e) => setInput(e)} name='original_price' InputProps={{ style: { borderRadius: '7px', height: '50px' } }} sx={{ width: '399px' }} label="" id="fullWidth" />
+              <TextField onChange={(e) => setInput(e)} name='original_price' InputProps={{ style: { borderRadius: '7px', height: '50px' } }} sx={{ width: { xs: 380, md: 295 } }} label="" id="fullWidth" />
               <FormHelperText sx={{ color: 'red' }}>{errors.original_price}</FormHelperText>
 
             </Box>
             <Box>
               <Typography fontSize={12} color={'gray'} fontWeight={'bold'}>Sale price</Typography>
-              <TextField onChange={(e) => setInput(e)} name='discounted_price' InputProps={{ style: { borderRadius: '7px', height: '50px' } }} sx={{ width: '399px' }} label="" id="fullWidth" />
+              <TextField onChange={(e) => setInput(e)} name='discounted_price' InputProps={{ style: { borderRadius: '7px', height: '50px' } }} sx={{ width: { xs: 380, md: 295 } }} label="" id="fullWidth" />
               <FormHelperText sx={{ color: 'red' }}>{errors.discounted_price}</FormHelperText>
 
             </Box>
@@ -268,13 +268,13 @@ const sellers=sellerData.map((i)=>i.seller)
           <Stack direction={{ xs: 'column', md: 'row' }} spacing={1} mt={2}>
             <Box>
               <Typography fontSize={12} color={'gray'} fontWeight={'bold'}>About</Typography>
-              <TextField onChange={(e) => setInput(e)} name='about' InputProps={{ style: { borderRadius: '7px', height: '50px' } }} type='text' sx={{ width: '399px' }} label="" id="fullWidth" />
+              <TextField onChange={(e) => setInput(e)} name='about' InputProps={{ style: { borderRadius: '7px', height: '50px' } }} type='text' sx={{ width: { xs: 380, md: 295 } }} label="" id="fullWidth" />
               <FormHelperText sx={{ color: 'red' }}>{errors.about}</FormHelperText>
 
             </Box>
             <Box>
               <Typography fontSize={12} color={'gray'} fontWeight={'bold'}>Stock status</Typography>
-              <FormControl sx={{ width: '399px' }}>
+              <FormControl sx={{ width: { xs: 380, md: 295 } }}>
                 <Select
 
 
@@ -299,7 +299,7 @@ const sellers=sellerData.map((i)=>i.seller)
           <Stack direction={{ xs: 'column', md: 'row' }} spacing={1} mt={2}>
             <Box>
               <Typography fontSize={12} color={'gray'} fontWeight={'bold'}>Seller</Typography>
-              <FormControl sx={{ width: '399px' }}>
+              <FormControl sx={{ width: { xs: 380, md: 295 } }}>
                 <Select
 
                   name='seller'
@@ -318,7 +318,7 @@ const sellers=sellerData.map((i)=>i.seller)
             </Box>
             <Box>
               <Typography fontSize={12} color={'gray'} fontWeight={'bold'}>Stock Quantity</Typography>
-              <TextField onChange={(e) => setInput(e)} name='stockQuantity' InputProps={{ style: { borderRadius: '7px', height: '50px' } }} type='text' sx={{ width: '399px' }} label="" id="fullWidth" />
+              <TextField onChange={(e) => setInput(e)} name='stockQuantity' InputProps={{ style: { borderRadius: '7px', height: '50px' } }} type='text' sx={{ width: { xs: 380, md: 295 } }} label="" id="fullWidth" />
               <FormHelperText sx={{ color: 'red' }}>{errors.stockQuantity}</FormHelperText>
 
             </Box>
@@ -326,7 +326,7 @@ const sellers=sellerData.map((i)=>i.seller)
           <Stack direction={{ xs: 'column', md: 'row' }} spacing={1} mt={2}>
             <Box>
               <Typography fontSize={12} color={'gray'} fontWeight={'bold'}>Product Type</Typography>
-              <FormControl sx={{ width: '399px' }}>
+              <FormControl sx={{ width: { xs: 380, md: 295 } }}>
                 <Select
 
                   name='product_type'
@@ -347,26 +347,21 @@ const sellers=sellerData.map((i)=>i.seller)
             </Box>
             <Box>
               <Typography fontSize={12} color={'gray'} fontWeight={'bold'}>Memory</Typography>
-              <TextField onChange={(e) => setProductData({...productData,["memory"]:e.target.value.split(",")})} placeholder='256 GB,128 GB...' name='memory' InputProps={{ style: { borderRadius: '7px', height: '50px' } }} type='text' sx={{ width: '399px' }} label="" id="fullWidth" />
+              <TextField onChange={(e) => setProductData({ ...productData, ["memory"]: e.target.value.split(",") })} placeholder='256 GB,128 GB...' name='memory' InputProps={{ style: { borderRadius: '7px', height: '50px' } }} type='text' sx={{ width: { xs: 380, md: 295 } }} label="" id="fullWidth" />
             </Box>
           </Stack>
           <Stack direction={{ xs: 'column', md: 'row' }} spacing={1} mt={2}>
             <Box>
               <Typography fontSize={12} color={'gray'} fontWeight={'bold'}>Colour</Typography>
-              <TextField onChange={(e) => setProductData({...productData,["colors"]:e.target.value.split(",")})} placeholder='Blue,Black...' name='colors' InputProps={{ style: { borderRadius: '7px', height: '50px' } }} type='text' sx={{ width: '399px' }} label="" id="fullWidth" />
+              <TextField onChange={(e) => setProductData({ ...productData, ["colors"]: e.target.value.split(",") })} placeholder='Blue,Black...' name='colors' InputProps={{ style: { borderRadius: '7px', height: '50px' } }} type='text' sx={{ width: { xs: 380, md: 295 } }} label="" id="fullWidth" />
             </Box>
             <Box>
               <Typography fontSize={12} color={'gray'} fontWeight={'bold'}>Ships From</Typography>
-              <TextField onChange={(e) => setInput(e)} name='ships_from' InputProps={{ style: { borderRadius: '7px', height: '50px' } }} type='text' sx={{ width: '399px' }} label="" id="fullWidth" />
+              <TextField onChange={(e) => setInput(e)} name='ships_from' InputProps={{ style: { borderRadius: '7px', height: '50px' } }} type='text' sx={{ width: { xs: 380, md: 295 } }} label="" id="fullWidth" />
               <FormHelperText sx={{ color: 'red' }}>{errors.ships_from}</FormHelperText>
             </Box>
           </Stack>
           <Stack direction={{ xs: 'column', md: 'row' }} textAlign={'center'} spacing={1} mt={2}>
-            {/* <Box>
-            <Button sx={{ marginTop: '15px', backgroundColor: '#035ecf', color: 'white', '&:hover': { backgroundColor: '#035ecf' }, width: '300px',borderRadius:'20px', padding:'10px' }}>
-                Save to Drafts
-              </Button>                 
-              </Box>    */}
             <Box>
               <Button onClick={(e) => handleAdd(e)} sx={{ marginTop: '15px', backgroundColor: 'green', color: 'white', '&:hover': { backgroundColor: 'green' }, width: '300px', borderRadius: '20px', padding: '10px' }}>
                 Publish Product

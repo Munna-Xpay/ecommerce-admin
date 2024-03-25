@@ -55,6 +55,7 @@ function Orders() {
         <Stack direction={{ xs: 'column', md: 'row' }} justifyContent={{ xs: 'center', md: 'end' }} spacing={3} sx={{ marginTop: { xs: 5, md: 0 } }}>
           <FormControl size='small' sx={{ width: { xs: 380, md: 160 } }}>
             <Select
+             sx={{  bgcolor:'white'}}
               value={sortData.categoryFilter}
               onChange={(e) => setSortData({ ...sortData, ["categoryFilter"]: e.target.value })}
             >
@@ -66,6 +67,7 @@ function Orders() {
           </FormControl>
           <FormControl size='small' sx={{ width: { xs: 380, md: 160 } }}>
             <Select
+             sx={{  bgcolor:'white'}}
               value={sortData.sort_option}
               onChange={(e) => setSortData({ ...sortData, ["sort_option"]: e.target.value })}
             >
@@ -78,7 +80,7 @@ function Orders() {
         </Stack>
       </Stack>
       <Grid container mt={2}>
-        <Grid item xs={12} md={2} boxShadow={5} p={2} mt={{ xs: 2, md: 0 }} borderRadius={2}>
+        <Grid item xs={12} md={2} boxShadow={5} p={2} mt={{ xs: 2, md: 0 }} bgcolor={'white'} borderRadius={2}>
           <FactCheckIcon sx={{ backgroundColor: 'blue', borderRadius: '4px', color: 'white', padding: '7px' }} />
           <Stack mt={3}>
             <Typography fontSize={20} fontWeight={'bold'}>Ordered</Typography>
@@ -87,21 +89,21 @@ function Orders() {
 
           </Stack>
         </Grid>
-        <Grid item xs={12} md={2} boxShadow={5} marginLeft={{ xs: 0, md: 2 }} p={2} mt={{ xs: 2, md: 0 }} borderRadius={2}>
+        <Grid item xs={12} md={2} boxShadow={5} marginLeft={{ xs: 0, md: 2 }} bgcolor={'white'} p={2} mt={{ xs: 2, md: 0 }} borderRadius={2}>
           <AssignmentTurnedInIcon sx={{ backgroundColor: 'green', borderRadius: '4px', color: 'white', padding: '7px' }} />
           <Stack mt={3}>
             <Typography fontSize={20} fontWeight={'bold'}>Orders Confirmed</Typography>
             <Typography fontSize={30} fontWeight={'bold'}><CountUp end={confirmed} /></Typography>
           </Stack>
         </Grid>
-        <Grid item xs={12} md={2} boxShadow={5} marginLeft={{ xs: 0, md: 2 }} p={2} mt={{ xs: 2, md: 0 }} borderRadius={2}>
+        <Grid item xs={12} md={2} boxShadow={5} marginLeft={{ xs: 0, md: 2 }} bgcolor={'white'} p={2} mt={{ xs: 2, md: 0 }} borderRadius={2}>
           <DoDisturbIcon sx={{ backgroundColor: 'red', borderRadius: '4px', color: 'white', padding: '7px' }} />
           <Stack mt={3}>
             <Typography fontSize={20} fontWeight={'bold'}>Orders Canceled</Typography>
             <Typography fontSize={30} fontWeight={'bold'}><CountUp end={canceled} /></Typography>
           </Stack>
         </Grid>
-        <Grid item xs={12} md={2} boxShadow={5} marginLeft={{ xs: 0, md: 2 }} p={2} mt={{ xs: 2, md: 0 }} borderRadius={2}>
+        <Grid item xs={12} md={2} boxShadow={5} marginLeft={{ xs: 0, md: 2 }} bgcolor={'white'} p={2} mt={{ xs: 2, md: 0 }} borderRadius={2}>
           <CheckCircleIcon sx={{ backgroundColor: '#035ecf', borderRadius: '4px', color: 'white', padding: '7px' }} />
           <Stack mt={3}>
             <Typography fontSize={20} fontWeight={'bold'}>Orders Completed</Typography>

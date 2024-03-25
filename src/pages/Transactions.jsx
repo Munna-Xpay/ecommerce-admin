@@ -6,13 +6,13 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime';
 function Transactions() {
   const [sort, setSort] = useState('recent')
   return (
-    <>
+    <Stack minHeight={'100vh'}>
       <Stack direction={{ xs: 'column', md: 'row' }} justifyContent={{ xs: 'center', md: 'end' }} sx={{ marginTop: { xs: 5, md: 2 } }}>
         <FormControl size='small' sx={{ width: { xs: 379, md: 200 } }}>
           <Typography>View transactions : 6/12</Typography>
           <Select
             value={sort}
-            sx={{ height: '50px' }}
+            sx={{ bgcolor:'white'}}
             labelId="demo-simple-select-label"
             id="demo-simple-select"
             InputProps={{ style: { borderRadius: '7px' } }}
@@ -62,7 +62,7 @@ function Transactions() {
           </TableBody>
         </Table>
       </TableContainer>
-    </>
+      </Stack>
   )
 }
 

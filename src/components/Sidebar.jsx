@@ -28,15 +28,11 @@ function Sidebar() {
 
 
     <List
-      sx={{ width: '700px', maxWidth: 360, bgcolor: 'background.paper' }}
+      sx={{ width: '700px',height:'100%', maxWidth: 360, bgcolor: 'background.paper' }}
       component="nav"
       aria-labelledby="nested-list-subheader"
       subheader={
-        <ListSubheader component="div" id="nested-list-subheader">
-          <Stack direction={'row'}>
-            <img width={40} height={40} src="https://shop-point.merku.love/assets/logo_light-33bb10d5.svg" alt="" />
-            <Typography fontSize={30} fontWeight={'bold'} color={'black'}>Shop Point</Typography>
-          </Stack>
+        <ListSubheader component="div" id="nested-list-subheader" >
         </ListSubheader>
       }
     >
@@ -51,10 +47,10 @@ function Sidebar() {
         <List component="div" disablePadding>
           <ListItemButton sx={{
             '&:hover': {
-              bgcolor: 'transparent', // Change to whatever color you want on hover
+              bgcolor: 'transparent',
             },
             '&:hover .MuiTouchRipple-root': {
-              display: 'none', // Disable the ripple effect on hover
+              display: 'none', 
             },
             pl: 10
           }}>

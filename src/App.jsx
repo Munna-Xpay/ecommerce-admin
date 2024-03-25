@@ -22,44 +22,54 @@ import SellersTable from './pages/SellersTable';
 import Transactions from './pages/Transactions';
 import PageNotFound from './pages/PageNotFound';
 import AddSeller from './pages/AddSeller';
-import { Container } from '@mui/material';
+import { Box, Container, Divider, Grid, Stack } from '@mui/material';
 import CustomersTable from './pages/CustomersTable';
 import CustomerProfile from './pages/CustomerProfile';
-
+import Sidebar from './components/Sidebar';
+import { useSelector } from 'react-redux';
 
 function App() {
+  const admin = useSelector(state => state.userReducer)
+
   return (
     <>
       <Header />
-      <Container maxWidth>
-      
-        <Routes>
-          <Route path='/' element={<Login />} />
-          <Route path='/sales-analytics' element={<SalesAnalytics />} />
-          <Route path='/top-product' element={<TopProducts />} />
-          <Route path='/product-grid' element={<ProductGrid />} />
-          <Route path='/add-product' element={<AddProduct />} />
-          <Route path='/admin-profile' element={<AdminProfile />} />
-          <Route path='/banners' element={<Banners />} />
-          <Route path='/customers' element={<Customers />} />
-          <Route path='/customer-profile/:id' element={<CustomerProfile />} />
-          <Route path='/customers-table' element={<CustomersTable />} />
-          <Route path='/edit-product' element={<EditProducts />} />
-          <Route path='/edit-product/:id' element={<EditProducts />} />
-          <Route path='/orders' element={<Orders />} />
-          <Route path='/product-management' element={<ProductManagement />} />
-          <Route path='/revenew-by-period' element={<RevenewByPeriod />} />
-          <Route path='/reviews' element={<Reviews />} />
-          <Route path='/seller-grid' element={<SellersGrid />} />
-          <Route path='/seller-list' element={<SellersList />} />
-          <Route path='/seller-profile/:id' element={<SellersProfile />} />
-          <Route path='/seller-table' element={<SellersTable />} />
-          <Route path='/transactions' element={<Transactions />} />
-          <Route path='/add-seller' element={<AddSeller />} />
-          <Route path='*' element={<PageNotFound />} />
-        </Routes>
-        {/* <Footer /> */}
-      </Container>
+      <Stack direction={'row'}>
+        {admin.admin &&
+          <Box sx={{ display: { xs: 'none', md: 'block' } }}>
+            <Sidebar />
+          </Box>
+        }
+        <Container maxWidth>
+          <Routes>
+            <Route path='/' element={<Login />} />
+            <Route path='/sales-analytics' element={<SalesAnalytics />} />
+            <Route path='/top-product' element={<TopProducts />} />
+            <Route path='/product-grid' element={<ProductGrid />} />
+            <Route path='/add-product' element={<AddProduct />} />
+            <Route path='/admin-profile' element={<AdminProfile />} />
+            <Route path='/banners' element={<Banners />} />
+            <Route path='/customers' element={<Customers />} />
+            <Route path='/customer-profile/:id' element={<CustomerProfile />} />
+            <Route path='/customers-table' element={<CustomersTable />} />
+            <Route path='/edit-product' element={<EditProducts />} />
+            <Route path='/edit-product/:id' element={<EditProducts />} />
+            <Route path='/orders' element={<Orders />} />
+            <Route path='/product-management' element={<ProductManagement />} />
+            <Route path='/revenew-by-period' element={<RevenewByPeriod />} />
+            <Route path='/reviews' element={<Reviews />} />
+            <Route path='/seller-grid' element={<SellersGrid />} />
+            <Route path='/seller-list' element={<SellersList />} />
+            <Route path='/seller-profile/:id' element={<SellersProfile />} />
+            <Route path='/seller-table' element={<SellersTable />} />
+            <Route path='/transactions' element={<Transactions />} />
+            <Route path='/add-seller' element={<AddSeller />} />
+            <Route path='*' element={<PageNotFound />} />
+          </Routes>
+          <Divider sx={{ marginBottom: '25px',marginTop:'30px' }} />
+          <Footer />
+        </Container>
+      </Stack>
     </>
   );
 }

@@ -153,16 +153,19 @@ export default function PrimarySearchAppBar() {
             <AppBar position="static">
                 <Toolbar sx={{ height: '80px' }}>
                     {admin.admin &&
+                    <Box display={{ xs: 'block', md: 'none' }}>
                         <IconButton
+                        
                             size="large"
                             edge="start"
                             color="inherit"
                             aria-label="open drawer"
-                            sx={{ mr: { xs: 0, md: 5 } }}
+                            sx={{ mr: { xs: 0, md: 5 }}}
                             onClick={() => setDrawer(true)}
                         >
                             <MenuIcon />
                         </IconButton>
+                        </Box>
                     }
                     <Stack direction={'row'} spacing={1}>
                         <img width={40} height={40} src="https://shop-point.merku.love/assets/logo_light-33bb10d5.svg" alt="" />
