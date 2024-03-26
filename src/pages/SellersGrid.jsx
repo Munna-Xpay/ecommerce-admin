@@ -11,7 +11,7 @@ const SellersGrid = () => {
   const dispatch = useDispatch()
   const sellers = useSelector(state => state.sellerReducer.allSellers)
   console.log(sellers)
-  const [sort, setSort] = useState('bestSelling');
+  const [sort, setSort] = useState('latest');
   const [itemsPerPage, setItemsPerPage] = useState(24);
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -59,6 +59,7 @@ const SellersGrid = () => {
                 label="Age"
                 onChange={handleChange}
               >
+                <MenuItem value='latest'>Latest</MenuItem>
                 <MenuItem value='bestSelling'>Best Selling</MenuItem>
                 <MenuItem value='highest_rating'>Rating: High to Low</MenuItem>
                 <MenuItem value='lowest_rating'>Rating: Low to High</MenuItem>

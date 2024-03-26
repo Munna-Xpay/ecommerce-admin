@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchAllUsers } from '../redux/userSlice';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { Link } from 'react-router-dom';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+
 
 const CustomersTable = () => {
 
@@ -44,6 +46,7 @@ const CustomersTable = () => {
 
     return (
         <>
+            <Link to={'/customers'}><Button sx={{ marginTop: '10px' }} startIcon={<ArrowBackIosIcon />} size='small' >Back</Button></Link>
             <PageHead heading='Customers Table' />
             <Grid mt={1} container spacing={2}>
                 <Grid item xs={12} md={6}>

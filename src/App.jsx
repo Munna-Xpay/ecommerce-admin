@@ -25,6 +25,7 @@ import AddSeller from './pages/AddSeller';
 import { Container } from '@mui/material';
 import CustomersTable from './pages/CustomersTable';
 import CustomerProfile from './pages/CustomerProfile';
+import EditSeller from './pages/EditSeller';
 
 
 function App() {
@@ -32,7 +33,7 @@ function App() {
     <>
       <Header />
       <Container maxWidth>
-      
+
         <Routes>
           <Route path='/' element={<Login />} />
           <Route path='/sales-analytics' element={<SalesAnalytics />} />
@@ -56,9 +57,10 @@ function App() {
           <Route path='/seller-table' element={<SellersTable />} />
           <Route path='/transactions' element={<Transactions />} />
           <Route path='/add-seller' element={<AddSeller />} />
+          <Route path='/edit-seller/:id' element={<EditSeller />} />
           <Route path='*' element={<PageNotFound />} />
         </Routes>
-        {/* <Footer /> */}
+        <Footer />
       </Container>
     </>
   );

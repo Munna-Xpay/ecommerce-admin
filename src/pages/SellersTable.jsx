@@ -7,7 +7,10 @@ import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import { formatNumberToK } from '../formatPriceToK'
 import EditNoteIcon from '@mui/icons-material/EditNote';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { BASE_URL } from '../redux/baseUrl'
+import { Link } from 'react-router-dom'
+import { Toaster } from 'react-hot-toast'
 
 
 const SellersTable = () => {
@@ -15,7 +18,7 @@ const SellersTable = () => {
   const dispatch = useDispatch()
   const sellers = useSelector(state => state.sellerReducer.allSellers)
   console.log(sellers)
-  const [sort, setSort] = useState('bestSelling');
+  const [sort, setSort] = useState('latest');
   const [itemsPerPage, setItemsPerPage] = useState(3);
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -88,8 +91,8 @@ const SellersTable = () => {
         </TableCell>
         <TableCell align="center">
           <Stack direction={'row'} justifyContent={'flex-end'}>
-            <IconButton color='primary'><EditNoteIcon /></IconButton>
-            <IconButton color='primary'><MoreVertIcon /></IconButton>
+            <Link to={'/edit-seller/' + item?.seller?._id}><IconButton color='primary'><EditNoteIcon /></IconButton></Link>
+            {/* <IconButton color='primary'><DeleteIcon /></IconButton> */}
           </Stack>
         </TableCell>
       </TableRow>
@@ -124,6 +127,7 @@ const SellersTable = () => {
                 label="Age"
                 onChange={handleChange}
               >
+                <MenuItem value='latest'>Latest</MenuItem>
                 <MenuItem value='bestSelling'>Best Selling</MenuItem>
                 <MenuItem value='highest_rating'>Rating: High to Low</MenuItem>
                 <MenuItem value='lowest_rating'>Rating: Low to High</MenuItem>
@@ -154,6 +158,8 @@ const SellersTable = () => {
       </TableContainer>
 
       <Pagination sx={{ margin: '30px 0px' }} count={Math.ceil(sellers.length / itemsPerPage)} onChange={(e, pageNumber) => setCurrentPage(pageNumber)} color="primary" />
+
+      <Toaster />
     </>
   )
 }

@@ -18,8 +18,8 @@ const CustomerProfileBox = () => {
     console.log(customer)
 
     return (
-        <Stack spacing={2}>
-            <Paper sx={{ width: '100%' }}>
+        <Stack spacing={2} sx={{ width: '100%' }}>
+            <Paper >
                 <Stack spacing={2} alignItems={'center'} p={2} justifyContent={'center'}>
                     <Avatar src={customer?.profileImage && `${BASE_URL}/uploadedFiles/${customer?.profileImage}`} sx={{ width: '130px', height: '130px' }} />
                     <Typography variant='h5' sx={{ fontWeight: 'bold' }}>{customer && customer.fullName}</Typography>
@@ -27,8 +27,8 @@ const CustomerProfileBox = () => {
                     <Typography sx={{ fontWeight: 'bold' }} color={'primary'}>Registered at {new Date(customer?.registeredAt).toLocaleDateString()}</Typography>
                 </Stack>
             </Paper>
-            <Paper sx={{ width: '100%' }}>
-                <Stack spacing={2} p={2} justifyContent={'center'}>
+            <Paper sx={{ width: '100%',flex:'1' }}>
+                <Stack spacing={3} p={2} justifyContent={'center'}>
                     <Stack direction={'row'} spacing={2} alignItems={'center'}>
                         <MailIcon color='primary' />
                         <Typography>{customer?.email && customer.email}</Typography>
