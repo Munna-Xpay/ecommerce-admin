@@ -60,7 +60,7 @@ const AddSeller = () => {
     }
 
     return (
-        <>
+        <Stack minHeight={'100vh'}>
             <PageHead heading='Add Seller' />
             <Paper sx={{ width: '100%', marginTop: '50px' }}>
                 <Grid container spacing={4} p={3}>
@@ -138,7 +138,7 @@ const AddSeller = () => {
             </Paper>
 
             <Toaster />
-        </>
+        </Stack>
     )
 }
 

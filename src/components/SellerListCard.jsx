@@ -26,7 +26,7 @@ const SellerListCard = ({ sellerDetails }) => {
                 <Grid item xs={12} md={3}>
                     <Stack height={'100%'} justifyContent={'center'}>
                         <Typography variant='h4' sx={{ fontWeight: 'bold' }}>{sellerDetails?.seller?.company_name}</Typography>
-                        <a href='#' style={{ textDecoration: 'none', opacity: '.8' }}><Typography gutterBottom variant='body1' sx={{ fontWeight: 'bold' }}>www.something.com</Typography></a>
+                        <a href='#' style={{ textDecoration: 'none', opacity: '.8' }}><Typography gutterBottom variant='body1' sx={{ fontWeight: 'bold' }}>{sellerDetails?.seller?.website}</Typography></a>
                         <Typography sx={{ opacity: '.8' }} gutterBottom variant='body1'>{sellerDetails?.seller?.phoneNum}</Typography>
                         <Typography sx={{ opacity: '.8' }} gutterBottom>{sellerDetails?.seller?.country}</Typography>
                         <Typography sx={{ opacity: '.8' }} gutterBottom>{sellerDetails?.seller?.address}</Typography>
