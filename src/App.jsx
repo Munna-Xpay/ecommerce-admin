@@ -27,6 +27,7 @@ import CustomersTable from './pages/CustomersTable';
 import CustomerProfile from './pages/CustomerProfile';
 import Sidebar from './components/Sidebar';
 import { useSelector } from 'react-redux';
+import EditSeller from './pages/EditSeller';
 
 function App() {
   const admin = useSelector(state => state.userReducer)
@@ -64,9 +65,10 @@ function App() {
             <Route path='/seller-table' element={<SellersTable />} />
             <Route path='/transactions' element={<Transactions />} />
             <Route path='/add-seller' element={<AddSeller />} />
+            <Route path='/edit-seller/:id' element={<EditSeller />} />
             <Route path='*' element={<PageNotFound />} />
           </Routes>
-          <Divider sx={{ marginBottom: '25px',marginTop:'30px' }} />
+          <Divider sx={{ marginBottom: '25px', marginTop: '30px' }} />
           <Footer />
         </Container>
       </Stack>

@@ -75,7 +75,7 @@ const EditSeller = () => {
                     <Grid item xs={12} md={4}>
                         <Stack spacing={3}>
                             <TextField error={errors.email} helperText={errors.email} onChange={(e) => setSellerData({ ...sellerData, email: e.target.value })} value={sellerData.email} label="Email" type='email' variant='filled' color="secondary" />
-                            <TextField onChange={(e) => setSellerData({ ...sellerData, password: e.target.value })} value={sellerData.password} label="Password" type='password' variant='filled' color="secondary" />
+                            <TextField disabled onChange={(e) => setSellerData({ ...sellerData, password: e.target.value })} value={sellerData.password} label="Password" type='password' variant='filled' color="secondary" />
                             <TextField error={errors.phoneNum} helperText={errors.phoneNum} onChange={(e) => setSellerData({ ...sellerData, phoneNum: e.target.value })} value={sellerData.phoneNum} label="Mobile Number" type='number' variant='filled' color="secondary" />
                             <TextField onChange={(e) => setSellerData({ ...sellerData, address: e.target.value })} value={sellerData.address} label="Address" color="secondary" variant='filled' />
                             <TextField onChange={(e) => setSellerData({ ...sellerData, company_name: e.target.value })} value={sellerData.company_name} label="Company name" variant='filled' color="secondary" fullWidth />
