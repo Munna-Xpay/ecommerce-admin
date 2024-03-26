@@ -95,10 +95,10 @@ function ProductManagement() {
           <Select
             value={filter.stockFilter}
             onChange={(e) => setFilter({ ...filter, ["stockFilter"]: e.target.value })}
-            sx={{ height: '50px' }}
+            sx={{  bgcolor:'white'}}
             labelId="demo-simple-select-label"
             id="demo-simple-select"
-            InputProps={{ style: { borderRadius: '7px' } }}
+         
           >
             <MenuItem value={'In stock'}>In stock</MenuItem>
             <MenuItem value={'Low inventory'}>Low Inventory</MenuItem>
@@ -113,7 +113,7 @@ function ProductManagement() {
           <Select
             value={filter.categoryFilter}
             onChange={(e) => setFilter({ ...filter, ["categoryFilter"]: e.target.value })}
-            sx={{ height: '50px' }}
+            sx={{  bgcolor:'white' }}
             InputProps={{ style: { borderRadius: '7px' } }}
           >
             <MenuItem value={'Electronics'}>Electronics</MenuItem>
@@ -126,8 +126,8 @@ function ProductManagement() {
           <InputLabel id="demo-simple-select-label">Product Type</InputLabel>
 
           <Select
-            name='product_type'
-            sx={{ height: '50px' }}
+          
+            sx={{  bgcolor:'white' }}
             labelId="demo-simple-select-label"
             id="demo-simple-select"
             value={filter.productTypeFilter}
@@ -139,12 +139,12 @@ function ProductManagement() {
           </Select>
         </FormControl>
 
-        <FormControl sx={{ width: { xs: 379, md: 200 } }}>
+        <FormControl size='small' sx={{ width: { xs: 379, md: 200 } }}>
           <InputLabel id="demo-simple-select-label">Additional Options</InputLabel>
           <Select
             value={filter.additionalOption}
             onChange={(e) => setFilter({ ...filter, ["additionalOption"]: e.target.value })}
-            sx={{ height: '50px' }}
+            sx={{  bgcolor:'white' }}
             labelId="demo-simple-select-label"
             id="demo-simple-select"
             InputProps={{ style: { borderRadius: '7px' } }}

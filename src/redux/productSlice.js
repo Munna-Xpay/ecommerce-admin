@@ -92,7 +92,7 @@ export const deleteProduct = createAsyncThunk(
 //product edit
 export const editProduct = createAsyncThunk(
   "edit/product",
-  async ({ data, id }, { rejectWithValue }) => {
+  async ({ data, id,navigate }, { rejectWithValue }) => {
     const token = localStorage.getItem("token");
     return await axios
       .put(`${BASE_URL}/api/product/update/${id}`, data, {
@@ -104,6 +104,7 @@ export const editProduct = createAsyncThunk(
       .then((res) => {
         // console.log(res.data);
         toast.success("Product updated");
+        navigate(window.history.back())
         return res.data;
       })
       .catch((err) => {
@@ -117,7 +118,7 @@ export const editProduct = createAsyncThunk(
 //product image update
 export const productImageEdit = createAsyncThunk(
   "product/image",
-  async ({ data, id }, { rejectWithValue }) => {
+  async ({ data, id,navigate }, { rejectWithValue }) => {
     const token = localStorage.getItem("token");
     return await axios
       .put(`${BASE_URL}/api/product/product-image-update/${id}`, data, {
@@ -129,6 +130,7 @@ export const productImageEdit = createAsyncThunk(
       .then((res) => {
         console.log(res.data);
         toast.success("Product image updated");
+        navigate(window.history.back())
         return res.data;
       })
       .catch((err) => {

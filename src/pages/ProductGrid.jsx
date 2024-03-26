@@ -46,8 +46,8 @@ const navigate=useNavigate()
   return (
     <>
       <PageHead heading={'Products Grid'} />
-      <Box marginTop={2} sx={{ display: { xs: 'block', md: 'flex' } }} justifyContent={'space-between'}>
-        <Stack sx={{ width: { xs: 350, md: 170 } }} direction={'row'} spacing={1} boxShadow={4} p={2} borderRadius={2} >
+      <Stack marginTop={2} direction={{xs:'column',md:'row'}} justifyContent={'space-between'}>
+        <Stack sx={{ width: { xs: 350, md: 170 } }} bgcolor={'white'} direction={'row'} spacing={1} boxShadow={4} p={2} borderRadius={2} >
         {sortData.categoryFilter === 'Electronics' ? <LaptopMacIcon sx={{ backgroundColor: '#035ECF', color: 'white', padding: '5px', borderRadius: '3px', height: '20px', width: '20px' }} /> : null}
         {sortData.categoryFilter === 'Fashion' ? <CheckroomIcon sx={{ backgroundColor: '#ff5470', color: 'white', padding: '5px', borderRadius: '3px', height: '20px', width: '20px' }} /> : null}
           {sortData.categoryFilter === 'Groceries' ? <RestaurantIcon sx={{ backgroundColor: 'orange', color: 'white', padding: '5px', borderRadius: '3px', height: '20px', width: '20px' }} /> : null}
@@ -57,6 +57,7 @@ const navigate=useNavigate()
 
           <FormControl size='small' sx={{ width: { xs: '300', md: 150 } }}>
             <Select
+             sx={{bgcolor:'white'}}
               value={sortData.categoryFilter}
               onChange={(e) => setSortData({ ...sortData, ["categoryFilter"]: e.target.value })}
             >
@@ -65,8 +66,9 @@ const navigate=useNavigate()
               <MenuItem value={'Groceries'}>Groceries</MenuItem>
             </Select>
           </FormControl>
-          <FormControl size='small' sx={{ width: { xs: '300', md: 150 } }}>
+          <FormControl size='small' sx={{ width: { xs: '300', md: 150 } }} >
             <Select
+            sx={{bgcolor:'white'}}
               value={sortData.sort_option}
               onChange={(e) => setSortData({ ...sortData, ["sort_option"]: e.target.value })}
             >
@@ -77,13 +79,13 @@ const navigate=useNavigate()
             </Select>
           </FormControl>
         </Stack>
-      </Box>
+      </Stack>
       <Typography gutterBottom sx={{ opacity: '.9' }} fontSize={16} textAlign={{ xs: 'start', md: 'end' }}>View Products {products.length > 24 ? 24 : products.length}/{products.length}</Typography>
 
       <Grid container mt={4} spacing={2}>
         {products.slice(firstIndexOfItemInAPage, lastIndexOfItemInAPage).map((product) => (
-          <Grid item xs={12} md={2}>
-            <Stack spacing={1} boxShadow={4} borderRadius={2} padding={3} sx={{ width: { xs: 350, md: 190 } }}>
+          <Grid item xs={12} md={2.5}>
+            <Stack spacing={1} boxShadow={4} borderRadius={2} bgcolor={'white'} padding={3} sx={{ width: { xs: 350, md: 190 } }}>
               <Box border={1} borderColor={'#f1f1f1'} marginBottom={2} textAlign={'center'}> <img width={170} height={130}  src={`${BASE_URL}/uploadedFiles/${product?.thumbnail}`} alt="" /></Box>
               <Typography fontWeight={'bold'} fontSize={16} >{product.title}</Typography>
               <Typography fontWeight={'bold'} fontSize={15} color={'#0dd1b0'}>Available :<span>{product.stockQuantity}</span></Typography>
