@@ -33,7 +33,7 @@ const SellersList = () => {
   })
 
   return (
-    <>
+    <Stack minHeight={'100vh'}>
       <PageHead heading='Sellers List' />
       <Grid mt={2} container spacing={2}>
         <Grid item xs={12} md={6}>
@@ -71,7 +71,7 @@ const SellersList = () => {
         {showAllSellers}
       </Stack>
       <Pagination sx={{ margin: '30px 0px' }} count={Math.ceil(sellers.length / itemsPerPage)} onChange={(e, pageNumber) => setCurrentPage(pageNumber)} color="primary" />
-    </>
+    </Stack>
   )
 }
 

@@ -118,14 +118,14 @@ function AddProduct() {
     dispatch(fetchAllSellersWithSalesDetails())
   }, [])
   const sellers = sellerData.map((i) => i.seller)
-  //console.log(sellers);
+  console.log(sellers);
 
   return (
     <Box mt={2} boxShadow={{ xs: 0, md: 3 }} bgcolor={'white'} p={{ xs: 0, md: 1 }} borderRadius={2}>
       <Typography fontSize={16} fontWeight={'bold'}>Product Settings</Typography>
       <Typography mt={3} fontSize={12} color={'gray'} fontWeight={'bold'}>Product Images</Typography>
-      <Grid container spacing={{ xs: 0, md: 35 }}>
-        <Grid item xs={12} md={6} direction={'row'}>
+      <Grid container spacing={{ xs: 0, md: 5 }}>
+        <Grid item xs={12} md={7} direction={'row'}>
           <Stack direction={{ xs: 'column', md: 'row' }} spacing={3}>
 
             <label htmlFor='img1'>
@@ -212,7 +212,7 @@ function AddProduct() {
 
           </Box>
         </Grid>
-        <Grid item md={6} xs={12} >
+        <Grid item md={5} xs={12}>
           <Box
             sx={{
               width: 804,
@@ -226,13 +226,13 @@ function AddProduct() {
           <Stack direction={{ xs: 'column', md: 'row' }} spacing={1} mt={2}>
             <Box>
               <Typography fontSize={12} color={'gray'} fontWeight={'bold'}>Brand name</Typography>
-              <TextField onChange={(e) => setInput(e)} name='manufacturer' InputProps={{ style: { borderRadius: '7px', height: '50px' } }} sx={{ width: { xs: 380, md: 295 } }} label="" id="fullWidth" />
+              <TextField onChange={(e) => setInput(e)} name='manufacturer' InputProps={{ style: { borderRadius: '7px', height: '50px' } }} sx={{ width: { xs: 380, md: 292 } }} label="" id="fullWidth" />
               <FormHelperText sx={{ color: 'red' }}>{errors.manufacturer}</FormHelperText>
 
             </Box>
             <Box>
               <Typography fontSize={12} color={'gray'} fontWeight={'bold'}>Category</Typography>
-              <FormControl sx={{ width: { xs: 380, md: 295 } }}>
+              <FormControl sx={{ width: { xs: 380, md: 292 } }}>
                 <Select
                   sx={{ height: '50px' }}
                   labelId="demo-simple-select-label"
@@ -254,13 +254,13 @@ function AddProduct() {
           <Stack direction={{ xs: 'column', md: 'row' }} spacing={1} mt={2}>
             <Box>
               <Typography fontSize={12} color={'gray'} fontWeight={'bold'}>Regular price</Typography>
-              <TextField onChange={(e) => setInput(e)} name='original_price' InputProps={{ style: { borderRadius: '7px', height: '50px' } }} sx={{ width: { xs: 380, md: 295 } }} label="" id="fullWidth" />
+              <TextField onChange={(e) => setInput(e)} name='original_price' InputProps={{ style: { borderRadius: '7px', height: '50px' } }} sx={{ width: { xs: 380, md: 292 } }} label="" id="fullWidth" />
               <FormHelperText sx={{ color: 'red' }}>{errors.original_price}</FormHelperText>
 
             </Box>
             <Box>
               <Typography fontSize={12} color={'gray'} fontWeight={'bold'}>Sale price</Typography>
-              <TextField onChange={(e) => setInput(e)} name='discounted_price' InputProps={{ style: { borderRadius: '7px', height: '50px' } }} sx={{ width: { xs: 380, md: 295 } }} label="" id="fullWidth" />
+              <TextField onChange={(e) => setInput(e)} name='discounted_price' InputProps={{ style: { borderRadius: '7px', height: '50px' } }} sx={{ width: { xs: 380, md: 292 } }} label="" id="fullWidth" />
               <FormHelperText sx={{ color: 'red' }}>{errors.discounted_price}</FormHelperText>
 
             </Box>
@@ -268,13 +268,13 @@ function AddProduct() {
           <Stack direction={{ xs: 'column', md: 'row' }} spacing={1} mt={2}>
             <Box>
               <Typography fontSize={12} color={'gray'} fontWeight={'bold'}>About</Typography>
-              <TextField onChange={(e) => setInput(e)} name='about' InputProps={{ style: { borderRadius: '7px', height: '50px' } }} type='text' sx={{ width: { xs: 380, md: 295 } }} label="" id="fullWidth" />
+              <TextField onChange={(e) => setInput(e)} name='about' InputProps={{ style: { borderRadius: '7px', height: '50px' } }} type='text' sx={{ width: { xs: 380, md: 292 } }} label="" id="fullWidth" />
               <FormHelperText sx={{ color: 'red' }}>{errors.about}</FormHelperText>
 
             </Box>
             <Box>
               <Typography fontSize={12} color={'gray'} fontWeight={'bold'}>Stock status</Typography>
-              <FormControl sx={{ width: { xs: 380, md: 295 } }}>
+              <FormControl sx={{ width: { xs: 380, md: 292 } }}>
                 <Select
 
 
@@ -299,7 +299,7 @@ function AddProduct() {
           <Stack direction={{ xs: 'column', md: 'row' }} spacing={1} mt={2}>
             <Box>
               <Typography fontSize={12} color={'gray'} fontWeight={'bold'}>Seller</Typography>
-              <FormControl sx={{ width: { xs: 380, md: 295 } }}>
+              <FormControl sx={{ width: { xs: 380, md: 292 } }}>
                 <Select
 
                   name='seller'
@@ -309,7 +309,7 @@ function AddProduct() {
                   value={productData.seller}
                   onChange={(e) => setProductData({ ...productData, ["seller"]: e.target.value })} InputProps={{ style: { borderRadius: '7px' } }}
                 >{sellers.map((i) => (
-                  <MenuItem value={i._id}>{i.fullName}</MenuItem>
+                  <MenuItem value={i._id}>{i.company_name}</MenuItem>
                 ))}
                 </Select>
                 <FormHelperText sx={{ color: 'red', marginX: '0px' }}>{errors.seller}</FormHelperText>
@@ -318,7 +318,7 @@ function AddProduct() {
             </Box>
             <Box>
               <Typography fontSize={12} color={'gray'} fontWeight={'bold'}>Stock Quantity</Typography>
-              <TextField onChange={(e) => setInput(e)} name='stockQuantity' InputProps={{ style: { borderRadius: '7px', height: '50px' } }} type='text' sx={{ width: { xs: 380, md: 295 } }} label="" id="fullWidth" />
+              <TextField onChange={(e) => setInput(e)} name='stockQuantity' InputProps={{ style: { borderRadius: '7px', height: '50px' } }} type='text' sx={{ width: { xs: 380, md: 292 } }} label="" id="fullWidth" />
               <FormHelperText sx={{ color: 'red' }}>{errors.stockQuantity}</FormHelperText>
 
             </Box>
@@ -326,7 +326,7 @@ function AddProduct() {
           <Stack direction={{ xs: 'column', md: 'row' }} spacing={1} mt={2}>
             <Box>
               <Typography fontSize={12} color={'gray'} fontWeight={'bold'}>Product Type</Typography>
-              <FormControl sx={{ width: { xs: 380, md: 295 } }}>
+              <FormControl sx={{ width: { xs: 380, md: 292 } }}>
                 <Select
 
                   name='product_type'
@@ -347,17 +347,17 @@ function AddProduct() {
             </Box>
             <Box>
               <Typography fontSize={12} color={'gray'} fontWeight={'bold'}>Memory</Typography>
-              <TextField onChange={(e) => setProductData({ ...productData, ["memory"]: e.target.value.split(",") })} placeholder='256 GB,128 GB...' name='memory' InputProps={{ style: { borderRadius: '7px', height: '50px' } }} type='text' sx={{ width: { xs: 380, md: 295 } }} label="" id="fullWidth" />
+              <TextField onChange={(e) => setProductData({ ...productData, ["memory"]: e.target.value.split(",") })} placeholder='256 GB,128 GB...' name='memory' InputProps={{ style: { borderRadius: '7px', height: '50px' } }} type='text' sx={{ width: { xs: 380, md: 292 } }} label="" id="fullWidth" />
             </Box>
           </Stack>
           <Stack direction={{ xs: 'column', md: 'row' }} spacing={1} mt={2}>
             <Box>
               <Typography fontSize={12} color={'gray'} fontWeight={'bold'}>Colour</Typography>
-              <TextField onChange={(e) => setProductData({ ...productData, ["colors"]: e.target.value.split(",") })} placeholder='Blue,Black...' name='colors' InputProps={{ style: { borderRadius: '7px', height: '50px' } }} type='text' sx={{ width: { xs: 380, md: 295 } }} label="" id="fullWidth" />
+              <TextField onChange={(e) => setProductData({ ...productData, ["colors"]: e.target.value.split(",") })} placeholder='Blue,Black...' name='colors' InputProps={{ style: { borderRadius: '7px', height: '50px' } }} type='text' sx={{ width: { xs: 380, md: 292 } }} label="" id="fullWidth" />
             </Box>
             <Box>
               <Typography fontSize={12} color={'gray'} fontWeight={'bold'}>Ships From</Typography>
-              <TextField onChange={(e) => setInput(e)} name='ships_from' InputProps={{ style: { borderRadius: '7px', height: '50px' } }} type='text' sx={{ width: { xs: 380, md: 295 } }} label="" id="fullWidth" />
+              <TextField onChange={(e) => setInput(e)} name='ships_from' InputProps={{ style: { borderRadius: '7px', height: '50px' } }} type='text' sx={{ width: { xs: 380, md: 292 } }} label="" id="fullWidth" />
               <FormHelperText sx={{ color: 'red' }}>{errors.ships_from}</FormHelperText>
             </Box>
           </Stack>

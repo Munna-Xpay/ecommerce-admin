@@ -49,7 +49,7 @@ function Orders() {
     dispatch(updateOrder({ data: { orderStatus }, id }))
   }
   return (
-    <>
+    <Stack minHeight={'100vh'}>
       <PageHead heading={'Orders'} />
       <Stack mt={2}>
         <Stack direction={{ xs: 'column', md: 'row' }} justifyContent={{ xs: 'center', md: 'end' }} spacing={3} sx={{ marginTop: { xs: 5, md: 0 } }}>
@@ -189,7 +189,7 @@ function Orders() {
       </TableContainer>
       <Pagination count={Math.ceil(orders.length / itemsPerPage)} onChange={(e, pageNumber) => setCurrentPage(pageNumber)} sx={{ margin: '30px 0px' }} color="primary" />
 
-    </>
+    </Stack>
   )
 }
 
