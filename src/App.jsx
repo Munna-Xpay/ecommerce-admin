@@ -35,13 +35,13 @@ function App() {
   return (
     <>
       <Header />
-      <Stack direction={'row'}>
+      <Stack direction={'row'} >
         {admin.admin &&
           <Box sx={{ display: { xs: 'none', md: 'block' } }}>
             <Sidebar />
           </Box>
         }
-        <Container maxWidth>
+        <Container maxWidth sx={{height:'90vh', overflow:'scroll'}}>
           <Routes>
             <Route path='/' element={<Login />} />
             <Route path='/sales-analytics' element={<SalesAnalytics />} />
