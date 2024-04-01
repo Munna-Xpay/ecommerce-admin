@@ -9,8 +9,12 @@ export const productValidationSchema=Yup.object({
     about:Yup.string().required('About is required'),
     stock:Yup.string().required('Stock status is required'),
     stockQuantity:Yup.number().required('Stock Quantity is required').typeError('Stock Quantity must be a number'),
-    memory:Yup.array(),
-    colors:Yup.array(),
+    features: Yup.array().of(
+        Yup.object().shape({
+          key: Yup.string().required('Feature name is required'),
+          value: Yup.string().required('Feature details is required')
+        })
+      ).required('Features are required'),
     product_type:Yup.string().required('Product type is required'),
     discounted_price:Yup.number().required('Sale price is required').typeError('Sale price must be a number'),
     original_price:Yup.number().required('Regular price is required').typeError('Regular price must be a number'),
