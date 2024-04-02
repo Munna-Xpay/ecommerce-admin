@@ -27,17 +27,36 @@ function AddProduct() {
   const [image4Preview, setImage4Preview] = useState('')
 
   const [productData, setProductData] = useState({
-    title: '', about: '', stock: '', stockQuantity: '', product_type: '', discounted_price: '', original_price: '', memory: [], colors: [],
+    title: '', about: '', stock: '', stockQuantity: '', product_type: '', discounted_price: '', original_price: '',features:[],
     category: '', manufacturer: '', ships_from: '', description: '', seller: '', thumbnail: '', images: []
   })
+  const [features, setFeatures] = useState([{ key: '', value: '' }]);
+  
+  //feature add  func
+  const handleAddFeature = () => {
+    setFeatures([...features, { key: '', value: '' }]);
+  };
 
+  // feature field remove func
+  const handleRemoveFeature = (index) => {
+    const updatedFeatures = [...features];
+    updatedFeatures.splice(index, 1);
+    setFeatures(updatedFeatures);
+  };
+
+  //handle input change for feature key or value
+  const handleFeatureInputChange = (index, key, value) => {
+    const updatedFeatures = [...features];
+    updatedFeatures[index][key] = value;
+    setFeatures(updatedFeatures);
+  };
 
   //onchange
   const setInput = (e) => {
     const { value, name } = e.target
     setProductData({ ...productData, [name]: value })
   }
-  console.log(productData);
+  //console.log(productData);
 
   // Handler for Jodit content change
   const handleDescriptionChange = (content) => {
@@ -51,43 +70,50 @@ function AddProduct() {
   //add funct
   const handleAdd = async (e) => {
     e.preventDefault();
-    // Validate productData
     try {
-      await productValidationSchema.validate(productData, { abortEarly: false })
-      const { title, about, stock, stockQuantity, product_type, discounted_price, original_price, memory, colors,
-        category, manufacturer, ships_from, description, seller, thumbnail } = productData
-      const formData = new FormData()
-      formData.append("title", title)
-      formData.append("about", about)
-      formData.append("stock", stock)
-      formData.append("stockQuantity", stockQuantity)
-      formData.append("product_type", product_type)
-      formData.append("discounted_price", discounted_price)
-      formData.append("original_price", original_price)
-      formData.append("memory", memory)
-      formData.append("colors", colors)
-      formData.append("category", category)
-      formData.append("manufacturer", manufacturer)
-      formData.append("ships_from", ships_from)
-      formData.append("description", description)
-      formData.append("seller", seller)
-      formData.append("thumbnail", thumbnail)
-      formData.append("images", image1)
-      formData.append("images", image2)
-      formData.append("images", image3)
-      formData.append("images", image4)
-      dispatch(addProduct({ data: formData, navigate }))
-      setErrors({})
-    }
-    catch (err) {
-      console.log(err);
+      // Validate productData
+      await productValidationSchema.validate(productData, { abortEarly: false });
+  
+    // Format features array
+    const formattedFeatures = features.map(feature => ({
+      key: feature.key,
+      value: feature.value
+  }));
+ 
+      const formData = new FormData();
+      formData.append('title', productData.title);
+      formData.append('about', productData.about);
+      formData.append('stock', productData.stock);
+      formData.append('stockQuantity', productData.stockQuantity);
+      formData.append('product_type', productData.product_type);
+      formData.append('discounted_price', productData.discounted_price);
+      formData.append('original_price', productData.original_price);
+      formData.append('memory', JSON.stringify(productData.memory));
+      formData.append('colors', JSON.stringify(productData.colors));
+      formData.append('category', productData.category);
+      formData.append('manufacturer', productData.manufacturer);
+      formData.append('ships_from', productData.ships_from);
+      formData.append('description', productData.description);
+      formData.append('seller', productData.seller);
+      formData.append('thumbnail', productData.thumbnail);
+      formData.append('images', image1);
+      formData.append('images', image2);
+      formData.append('images', image3);
+      formData.append('images', image4);
+      formData.append('features', JSON.stringify(formattedFeatures));    
+  
+      // Dispatch addProduct 
+      dispatch(addProduct({ data: formData, navigate }));
+      setErrors({});
+    } catch (err) {
+      //console.log(err);
       const newErrors = {};
-      err.inner.map((validationError) => {
+      err.inner.forEach(validationError => {
         newErrors[validationError.path] = validationError.message;
       });
       setErrors(newErrors);
     }
-  }
+  };
 
   //thumbnail preview
   useEffect(() => {
@@ -141,7 +167,7 @@ function AddProduct() {
                 </Box>
               </Stack>
             </label>
-
+            
             <label htmlFor='img2'>
               <Stack bgcolor={'#dedede'} sx={{ width: { xs: 378, md: 200 }, height: '235px' }} borderRadius={1}>
                 <input onChange={(e) => setImage2(e.target.files[0])} id='img2' style={{ display: 'none' }} type="file" />
@@ -346,19 +372,41 @@ function AddProduct() {
               </FormControl>
             </Box>
             <Box>
-              <Typography fontSize={12} color={'gray'} fontWeight={'bold'}>Memory</Typography>
-              <TextField onChange={(e) => setProductData({ ...productData, ["memory"]: e.target.value.split(",") })} placeholder='256 GB,128 GB...' name='memory' InputProps={{ style: { borderRadius: '7px', height: '50px' } }} type='text' sx={{ width: { xs: 380, md: 292 } }} label="" id="fullWidth" />
+            <Typography fontSize={12} color={'gray'} fontWeight={'bold'}>Ships From</Typography>
+              <TextField onChange={(e) => setInput(e)} name='ships_from' InputProps={{ style: { borderRadius: '7px', height: '50px' } }} type='text' sx={{ width: { xs: 380, md: 292 } }} label="" id="fullWidth" />
+              <FormHelperText sx={{ color: 'red' }}>{errors.ships_from}</FormHelperText>
             </Box>
           </Stack>
           <Stack direction={{ xs: 'column', md: 'row' }} spacing={1} mt={2}>
+    
             <Box>
-              <Typography fontSize={12} color={'gray'} fontWeight={'bold'}>Colour</Typography>
-              <TextField onChange={(e) => setProductData({ ...productData, ["colors"]: e.target.value.split(",") })} placeholder='Blue,Black...' name='colors' InputProps={{ style: { borderRadius: '7px', height: '50px' } }} type='text' sx={{ width: { xs: 380, md: 292 } }} label="" id="fullWidth" />
-            </Box>
-            <Box>
-              <Typography fontSize={12} color={'gray'} fontWeight={'bold'}>Ships From</Typography>
-              <TextField onChange={(e) => setInput(e)} name='ships_from' InputProps={{ style: { borderRadius: '7px', height: '50px' } }} type='text' sx={{ width: { xs: 380, md: 292 } }} label="" id="fullWidth" />
-              <FormHelperText sx={{ color: 'red' }}>{errors.ships_from}</FormHelperText>
+            <Typography mt={1} fontSize={12} color={'gray'} fontWeight={'bold'}>
+            Features
+          </Typography>
+          {features.map((feature, index) => (
+            <Stack key={index} direction="row" spacing={1}>
+              <TextField
+                value={feature.key}
+                onChange={(e) => handleFeatureInputChange(index, 'key', e.target.value)}
+                placeholder="Feature name"
+                InputProps={{ style: { borderRadius: '7px', height: '50px' } }}
+                sx={{ width: { xs: 180, md: 140 } }}
+                label=""
+              />
+              
+              <TextField
+                value={feature.value}
+                onChange={(e) => handleFeatureInputChange(index, 'value', e.target.value)}
+                placeholder="Feature details"
+                InputProps={{ style: { borderRadius: '7px', height: '50px' } }}
+                sx={{ width: { xs: 180, md: 140 } }}
+                label=""
+              />
+              <Button onClick={() => handleRemoveFeature(index)}>Remove</Button>
+
+            </Stack>
+          ))}
+          <Button onClick={handleAddFeature}>Add Feature</Button>
             </Box>
           </Stack>
           <Stack direction={{ xs: 'column', md: 'row' }} textAlign={'center'} spacing={1} mt={2}>
