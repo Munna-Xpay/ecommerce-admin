@@ -114,7 +114,7 @@ function AddProduct() {
       setErrors(newErrors);
     }
   };
-
+//console.log(errors);
   //thumbnail preview
   useEffect(() => {
     if (productData.thumbnail) {
@@ -403,9 +403,9 @@ function AddProduct() {
                 label=""
               />
               <Button onClick={() => handleRemoveFeature(index)}>Remove</Button>
-
             </Stack>
           ))}
+     <FormHelperText sx={{ color: 'red' }}>{errors.features}</FormHelperText>
           <Button onClick={handleAddFeature}>Add Feature</Button>
             </Box>
           </Stack>

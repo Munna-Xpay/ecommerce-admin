@@ -8,6 +8,7 @@ import JoditEditor from 'jodit-react';
 import { Toaster } from 'react-hot-toast';
 import { useNavigate, useParams } from 'react-router-dom';
 import { BASE_URL } from '../redux/baseUrl';
+import { productValidationSchema } from '../validations/ProductValidation';
 
 function AddProduct() {
 
@@ -116,7 +117,18 @@ function AddProduct() {
 
   const handleEdit = async (e) => {
     e.preventDefault();
+  try{
+    await productValidationSchema.validate(productData,{abortEarly:false})
     dispatch(editProduct({ data: productData, id, navigate }))
+    setErrors({});
+
+  }catch(err){
+    const newErrors = {};
+      err.inner.forEach(validationError => {
+        newErrors[validationError.path] = validationError.message;
+      });
+      setErrors(newErrors);
+  }
   }
 
   //handle product image edit
