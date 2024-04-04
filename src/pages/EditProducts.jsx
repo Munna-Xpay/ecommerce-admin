@@ -434,6 +434,7 @@ function AddProduct() {
                   <Button onClick={() => handleRemoveFeature(index)}>Remove</Button>
                 </Stack>
               ))}
+              <FormHelperText sx={{ color: 'red' }}>{errors.features}</FormHelperText>
               <Button onClick={handleAddFeature}>Add Feature</Button>
             </Box>
 
