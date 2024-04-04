@@ -74,11 +74,6 @@ function AddProduct() {
     try {
       // Validate productData
       await productValidationSchema.validate(productData, { abortEarly: false });
-      // Validation for images
-      const imageErrors = {};
-      if (!image1 && !image2 && !image3 && !image4) {
-        imageErrors.images = 'At least one image is required';
-      }
       // Format features array
       const formattedFeatures = features.map(feature => ({
         key: feature.key,
@@ -157,9 +152,6 @@ function AddProduct() {
       <Box mt={2} boxShadow={{ xs: 0, md: 3 }} bgcolor={'white'} p={{ xs: 0, md: 1 }} borderRadius={2}>
         <Typography fontSize={16} fontWeight={'bold'}>Product Settings</Typography>
         <Typography mt={3} fontSize={12} color={'gray'} fontWeight={'bold'}>Product Images</Typography>
-        {(errors.images && !image1 && !image2 && !image3 && !image4) && (
-    <FormHelperText sx={{ color: 'red' }}>{errors.images}</FormHelperText>
-  )}
         <Grid container spacing={{ xs: 0, md: 5 }}>
           <Grid item xs={12} md={7} direction={'row'}>
             <Stack direction={{ xs: 'column', md: 'row' }} spacing={3}>
@@ -220,6 +212,9 @@ function AddProduct() {
                 </Stack>
               </label>
             </Stack>
+            {(errors.images && !image1 && !image2 && !image3 && !image4) && (
+    <FormHelperText sx={{ color: 'red' }}>{errors.images}</FormHelperText>
+  )}
             <Stack width={{ xs: 380, md: 210 }}>
               <Typography mt={3} fontSize={12} color={'gray'} fontWeight={'bold'}>Product Thumbnail</Typography>
 
