@@ -1,7 +1,7 @@
 import * as Yup from 'yup'
 
 export const productValidationSchema=Yup.object({
-    images:Yup.array().required('Images is required'),
+    images: Yup.array().min(1, 'At least one image is required').required('Images is required'),
     thumbnail:Yup.string().required('Thumbnail is required'),
     description:Yup.string().required('Description is required'),
     title:Yup.string().required('Product name is required'),
