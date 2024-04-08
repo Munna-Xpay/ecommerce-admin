@@ -71,9 +71,15 @@ function AddProduct() {
   //add funct
   const handleAdd = async (e) => {
     e.preventDefault();
+    const allImages = [image1, image2, image3, image4];
     try {
       // Validate productData
-      await productValidationSchema.validate(productData, { abortEarly: false });
+       // Validate productData
+       await productValidationSchema.validate({
+        ...productData,
+        images: allImages.filter(Boolean),
+        features: features
+      }, { abortEarly: false });
       // Format features array
       const formattedFeatures = features.map(feature => ({
         key: feature.key,
