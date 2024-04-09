@@ -24,7 +24,6 @@ useEffect(()=>{
      <PageHead heading={'Top Products'}/>
       <TopProductsCategory />
       <Grid container mt={4}>
-
         <Grid item xs={12} md={5.5}>
           <Stack direction={'row'} spacing={1}><LaptopMacIcon sx={{ backgroundColor: '#035ECF', color: 'white', padding: '5px', borderRadius: '3px', height: '20px', width: '20px' }} /> <Typography fontSize={20} fontWeight={'bold'} >Electronics</Typography></Stack>
           <TopProductsElectronics />
