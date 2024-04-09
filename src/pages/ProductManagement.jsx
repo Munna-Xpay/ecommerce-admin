@@ -8,7 +8,8 @@ import { getProductInProductsManagement } from '../redux/productSlice';
 import PageHead from '../components/PageHead'
 import StarIcon from '@mui/icons-material/Star';
 import EditIcon from '@mui/icons-material/Edit';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
+import CollectionsIcon from '@mui/icons-material/CollectionsRounded';
+import { BASE_URL } from '../redux/baseUrl';
 
 function ProductManagement() {
   
@@ -168,7 +169,7 @@ function ProductManagement() {
         <Table sx={{ minWidth: 650 }} aria-label="simple table" >
           <TableHead>
             <TableRow>
-              {/* <TableCell><CollectionsIcon/></TableCell> */}
+              <TableCell><CollectionsIcon/></TableCell>
               <TableCell sx={{ fontSize: '14px', color: '#035ECF' }}>PRODUCT NAME</TableCell>
               <TableCell sx={{ fontSize: '14px', color: '#035ECF' }} >STOCK</TableCell>
               <TableCell sx={{ fontSize: '14px', color: '#035ECF' }} >PRICE</TableCell>
@@ -185,7 +186,7 @@ function ProductManagement() {
                 key={index}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
-                {/* <TableCell align="right">{i.thumbnail}</TableCell> */}
+                <TableCell align="right"><img height={40} width={40} src={`${BASE_URL}/uploadedFiles/${i.thumbnail}`} alt="" /></TableCell>
                 <TableCell sx={{ fontWeight: 'bold',color:(i.isActive===false?'red':'black')}} component="th" scope="row">
                   {i.title}
                 </TableCell>
