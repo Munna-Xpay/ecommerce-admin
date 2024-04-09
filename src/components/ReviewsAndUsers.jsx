@@ -11,16 +11,16 @@ const ReviewsAndUsers = () => {
     const reviewStat = useSelector(state => state.reviewReducer.allReviewStat)
     const userStat = useSelector(state => state.userReducer.userStat)
 
-    const rating = reviewStat?.avg_review?.toFixed(1)
-    console.log(userStat)
+    let avg = reviewStat?.avg_review
+    console.log(reviewStat)
 
     return (
         <Grid container spacing={2} mt={2}>
             <Grid item xs={12} md={2}>
                 <Paper>
                     <Stack p={2} spacing={1} height={'170px'} justifyContent={'center'} alignItems={'center'}>
-                        <Rating precision={0.5} readOnly value={rating} />
-                        <Typography variant='h4' sx={{ fontWeight: 'bold' }} >{reviewStat?.avg_review?.toFixed(1)}</Typography>
+                        <Rating precision={0.5} readOnly value={avg ? avg?.toFixed(1) : 0} />
+                        <Typography variant='h4' sx={{ fontWeight: 'bold' }} >{avg ? avg?.toFixed(1) : 0}</Typography>
                         <Typography variant='h6' sx={{ fontWeight: 'bold' }} >Review Score</Typography>
                     </Stack>
                 </Paper>
