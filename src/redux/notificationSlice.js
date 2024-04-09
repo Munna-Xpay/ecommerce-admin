@@ -19,6 +19,21 @@ export const fetchAllNotifications = createAsyncThunk('/fetch/all/notifications'
         .catch((err) => rejectWithValue("Something went wrong ! network error"))
 })
 
+export const updateNotification = createAsyncThunk('/update/notifications', async ({ id, data }, { rejectWithValue }) => {
+    const token = localStorage.getItem('token')
+    return await axios.put(`${BASE_URL}/api/admin/update-notification/${id}`, data, {
+        headers: {
+            "Content-Type": "application/json",
+            "user_token": `Bearer ${token}`
+        }
+    })
+        .then(res => {
+            console.log(res)
+            return res.data
+        })
+        .catch((err) => rejectWithValue("Something went wrong ! network error"))
+})
+
 const initialState = {
     allNotifications: [],
     error: "",
@@ -38,6 +53,20 @@ const notificationSlice = createSlice({
         })
 
         builder.addCase(fetchAllNotifications.rejected, (state, action) => {
+            return { ...state, error: action.payload, loading: false }
+        })
+
+
+
+        builder.addCase(updateNotification.pending, (state) => {
+            return { ...state, loading: true }
+        })
+
+        builder.addCase(updateNotification.fulfilled, (state, action) => {
+            return { ...state, allNotifications: action.payload, loading: false }
+        })
+
+        builder.addCase(updateNotification.rejected, (state, action) => {
             return { ...state, error: action.payload, loading: false }
         })
     }

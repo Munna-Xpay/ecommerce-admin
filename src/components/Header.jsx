@@ -28,10 +28,11 @@ export default function PrimarySearchAppBar() {
     const navigate = useNavigate()
     const admin = useSelector(state => state.userReducer)
     const notifications = useSelector(state => state.notificationReducer.allNotifications)
+    let notifys = notifications.filter(item => item.response == "")
     const [drawer, setDrawer] = useState(false)
     const [anchorEl, setAnchorEl] = useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
-    console.log(notifications)
+    console.log(notifys)
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
     const [open, setOpen] = useState(false);
@@ -125,7 +126,7 @@ export default function PrimarySearchAppBar() {
                     aria-label="show 17 new notifications"
                     color="inherit"
                 >
-                    <Badge badgeContent={notifications.length} color="error">
+                    <Badge badgeContent={notifys.length} color="error">
                         <NotificationsIcon />
                     </Badge>
                 </IconButton>
@@ -153,23 +154,23 @@ export default function PrimarySearchAppBar() {
             <AppBar position="static">
                 <Toolbar sx={{ height: '80px' }}>
                     {admin.admin &&
-                    <Box display={{ xs: 'block', md: 'none' }}>
-                        <IconButton
-                        
-                            size="large"
-                            edge="start"
-                            color="inherit"
-                            aria-label="open drawer"
-                            sx={{ mr: { xs: 0, md: 5 }}}
-                            onClick={() => setDrawer(true)}
-                        >
-                            <MenuIcon />
-                        </IconButton>
+                        <Box display={{ xs: 'block', md: 'none' }}>
+                            <IconButton
+
+                                size="large"
+                                edge="start"
+                                color="inherit"
+                                aria-label="open drawer"
+                                sx={{ mr: { xs: 0, md: 5 } }}
+                                onClick={() => setDrawer(true)}
+                            >
+                                <MenuIcon />
+                            </IconButton>
                         </Box>
                     }
                     <Stack direction={'row'} spacing={1}>
                         <img width={40} height={40} src="https://shop-point.merku.love/assets/logo_light-33bb10d5.svg" alt="" />
-                         <Typography fontSize={30} fontWeight={'bold'} color={'white'}>Shop Point</Typography>
+                        <Typography fontSize={30} fontWeight={'bold'} color={'white'}>Shop Point</Typography>
                     </Stack>
                     <Box sx={{ flexGrow: 1 }} />
                     <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
@@ -186,7 +187,7 @@ export default function PrimarySearchAppBar() {
                                     aria-label="show 17 new notifications"
                                     color="inherit"
                                 >
-                                    <Badge badgeContent={notifications.length} color="error">
+                                    <Badge badgeContent={notifys.length} color="error">
                                         <NotificationsIcon />
                                     </Badge>
                                 </IconButton>
