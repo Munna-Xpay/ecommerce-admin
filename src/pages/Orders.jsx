@@ -171,9 +171,10 @@ function Orders() {
                     <InputLabel id="demo-simple-select-label">Order Status</InputLabel>
 
                     <Select
-                      value={status}
+                      value={order?.orderStatus}
                       onChange={(e) => handleOrderUpdate(e,order._id)}
                     >
+                       <MenuItem value={'Ordered'}>Ordered</MenuItem>
                       <MenuItem value={'Confirmed'}>Order confirmed</MenuItem>
                       <MenuItem value={'Canceled'}>Order canceled</MenuItem>
                       <MenuItem value={'Shipped'}>Order shipped</MenuItem>
