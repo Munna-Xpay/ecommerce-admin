@@ -30,8 +30,8 @@ const CustomerOrders = () => {
         >
             <TableCell component="th" scope="row">
                 <Stack direction={'row'}>
-                    <img width={70} style={{ objectFit: 'contain' }} height={55} src={`${order?.products.product.thumbnail}`} alt="" />
-                    {/* <img width={70} height={55} src={`${BASE_URL}/uploadedFiles/${order?.products.product.thumbnail}`} alt="" /> */}
+                    {/* <img width={70} style={{ objectFit: 'contain' }} height={55} src={`${order?.products.product.thumbnail}`} alt="" /> */}
+                    <img width={70} height={55} style={{ objectFit: 'contain' }} src={`${BASE_URL}/uploadedFiles/${order?.products.product.thumbnail}`} alt="" />
                     <Stack marginLeft={1}>
                         <Typography fontWeight={'bold'}>{order.products.product.title}</Typography>
                         <Typography fontSize={13} color={'gray'}>Regular Price: {order.products.product.original_price}</Typography>
@@ -46,15 +46,17 @@ const CustomerOrders = () => {
                 backgroundColor: (() => {
                     switch (order.orderStatus) {
                         case 'Ordered':
-                            return '#f0ad4e'; // Yellow
+                            return '#f0ad4e';
                         case 'Confirmed':
-                            return '#00ba9d'; // Green
+                            return '#00ba9d';
                         case 'Canceled':
-                            return 'red'; // Red
+                            return 'red';
                         case 'Completed':
-                            return '#035ecf'; // Blue
+                            return '#035ecf';
+                        case 'Shipped':
+                            return '#f55505';
                         default:
-                            return 'transparent'; // Default background color
+                            return 'black';
                     }
                 })(),
                 borderRadius: '20px',
