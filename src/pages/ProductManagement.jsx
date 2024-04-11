@@ -4,17 +4,19 @@ import SearchIcon from '@mui/icons-material/Search';
 import { Link, useNavigate } from 'react-router-dom';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import { useDispatch, useSelector } from 'react-redux';
-import { getProductInProductsManagement } from '../redux/productSlice';
+import { editProduct, getProductInProductsManagement } from '../redux/productSlice';
 import PageHead from '../components/PageHead'
 import StarIcon from '@mui/icons-material/Star';
 import EditIcon from '@mui/icons-material/Edit';
 import CollectionsIcon from '@mui/icons-material/CollectionsRounded';
 import { BASE_URL } from '../redux/baseUrl';
+import { updateNotification } from '../redux/notificationSlice';
 
 function ProductManagement() {
-  
+  const notifications = useSelector(state => state.notificationReducer.allNotifications)
+  console.log(notifications)
   const products = useSelector(state => state.productReducer.productsManagement)
-  console.log(products);
+  //console.log(products);
   const dispatch = useDispatch()
   const navigate=useNavigate()
   const [filter, setFilter] = useState({
@@ -60,7 +62,14 @@ function ProductManagement() {
     dispatch(getProductInProductsManagement({ query: filter, searchData }))
   }, [searchData])
 
-
+  //seller product accept&reject
+  const handleAccept = (id, item_id) => {
+    dispatch(editProduct({ id: item_id, data: { isActive: true }, navigate }))
+    dispatch(updateNotification({ id, data: { response: "Accepted" } }))
+}
+const handleReject = (id) => {
+  dispatch(updateNotification({ id, data: { response: "Rejected" } }))
+}
 
   return (
     <>
@@ -197,6 +206,17 @@ function ProductManagement() {
                 <TableCell sx={{ fontWeight: 'bold',color:(i.isActive===false?'red':'black')}} ><StarIcon />({i.review_star})</TableCell>
                 <TableCell sx={{ fontWeight: 'bold',color:(i.isActive===false?'red':'black')}} >{new Date(i.updatedAt).toLocaleDateString('en-US')}</TableCell>
                 <TableCell sx={{ fontWeight: 'bold',color:(i.isActive===false?'red':'black')}}> <Stack direction={'row'}> <IconButton onClick={()=>handleEdit(i._id)}><EditIcon sx={{ color: 'black' }} /></IconButton>
+                {
+                notifications.map((item)=>(
+                  <>{!item.response&&item.item_id===i._id&&
+                    <>
+                  <Button variant='outlined' size='small' color='success' onClick={() => handleAccept(item._id, i._id)}>Accept</Button>
+<Button variant='outlined' size='small' color='error' onClick={() => handleReject(item._id)}>Decline</Button>
+</>
+}
+                  </>
+                )) 
+              }
                 </Stack>
                 </TableCell>
               </TableRow>

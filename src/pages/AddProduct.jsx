@@ -78,7 +78,7 @@ function AddProduct() {
        await productValidationSchema.validate({
         ...productData,
         images: allImages.filter(Boolean),
-        features: features
+        features:features
       }, { abortEarly: false });
       // Format features array
       const formattedFeatures = features.map(feature => ({

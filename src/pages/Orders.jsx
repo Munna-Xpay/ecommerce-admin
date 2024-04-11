@@ -17,7 +17,7 @@ function Orders() {
   // console.log(orders);
   const [sortData, setSortData] = useState({
     categoryFilter: "All",
-    sort_option: "A-Z"
+    sort_option: "latest"
   })
 
   const [status, setStatus] = useState('')
@@ -71,6 +71,7 @@ function Orders() {
               value={sortData.sort_option}
               onChange={(e) => setSortData({ ...sortData, ["sort_option"]: e.target.value })}
             >
+              <MenuItem selected value={'latest'}>Date Ordered</MenuItem>
               <MenuItem selected value={'A-Z'}>By name: A-Z</MenuItem>
               <MenuItem value={'Z-A'}>By name: Z-A</MenuItem>
               <MenuItem value={'rating_low_to_high'}>Rating: Low to High</MenuItem>
@@ -120,6 +121,7 @@ function Orders() {
               <TableCell sx={{ fontSize: '14px', color: '#035ECF' }}>CATEGORY</TableCell>
               <TableCell sx={{ fontSize: '14px', color: '#035ECF' }}>PRICE</TableCell>
               <TableCell sx={{ fontSize: '14px', color: '#035ECF' }}>ORDER DELIVERY</TableCell>
+              <TableCell sx={{ fontSize: '14px', color: '#035ECF' }}>ORDER DATE</TableCell>
               <TableCell sx={{ fontSize: '14px', color: '#035ECF' }}>ORDER STATUS</TableCell>
               <TableCell sx={{ fontSize: '14px', color: '#035ECF' }}>RATING</TableCell>
               <TableCell sx={{ fontSize: '14px', color: '#035ECF' }}>ACTIONS</TableCell>
@@ -135,15 +137,16 @@ function Orders() {
                 {/* <Typography fontWeight={'bold'}>{order._id}</Typography> */}
                 <TableCell component="th" scope="row">
                   <Stack direction={'row'}><img width={70} height={55} src={`${BASE_URL}/uploadedFiles/${order?.products.product.thumbnail}`} alt="" /> <Stack marginLeft={1}>
-                    <Typography fontWeight={'bold'}>{order.products.product.title}</Typography>
-                    <Typography fontSize={13} color={'gray'}>Regular Price: {order.products.product.original_price}</Typography>
-                    <Typography fontSize={13} color={'gray'}>Sale Price{order.products.product.discounted_price}</Typography>
+                    <Typography fontWeight={'bold'}>{order?.products.product.title}</Typography>
+                    <Typography fontSize={13} color={'gray'}>Regular Price: {order?.products.product.original_price}</Typography>
+                    <Typography fontSize={13} color={'gray'}>Sale Price{order?.products.product.discounted_price}</Typography>
                   </Stack>
                   </Stack>
                 </TableCell>
-                <TableCell sx={{ fontWeight: 'bold' }}> {order.products.product.category}</TableCell>
-                <TableCell sx={{ fontWeight: 'bold' }}>{order.totalPrice}</TableCell>
-                <TableCell sx={{ fontWeight: 'bold' }}>{order.shippingMethod}</TableCell>
+                <TableCell sx={{ fontWeight: 'bold' }}> {order?.products.product.category}</TableCell>
+                <TableCell sx={{ fontWeight: 'bold' }}>{order?.totalPrice}</TableCell>
+                <TableCell sx={{ fontWeight: 'bold' }}>{order?.shippingMethod}</TableCell>
+                <TableCell sx={{ fontWeight: 'bold' }}>{new Date(order?.createdAt).toLocaleDateString('en-US')}</TableCell>
                 <TableCell sx={{ fontWeight: 'bold' }}><Typography sx={{
                   backgroundColor: (() => {
                     switch (order.orderStatus) {
@@ -164,8 +167,8 @@ function Orders() {
                   borderRadius: '20px',
                   color: 'white',
                   width: '100px'
-                }} p={1} textAlign={'center'}>{order.orderStatus}</Typography></TableCell>
-                <TableCell sx={{ fontWeight: 'bold' }}><Rating name="read-only" value={order.products.product.review_star} readOnly /></TableCell>
+                }} p={1} textAlign={'center'}>{order?.orderStatus}</Typography></TableCell>
+                <TableCell sx={{ fontWeight: 'bold' }}><Rating name="read-only" value={order?.products.product.review_star} readOnly /></TableCell>
                 <TableCell sx={{ fontWeight: 'bold' }}>
                   <FormControl size='small' sx={{ width: { xs: 380, md: 160 } }}>
                     <InputLabel id="demo-simple-select-label">Order Status</InputLabel>
@@ -188,7 +191,7 @@ function Orders() {
           </TableBody>
         </Table>
       </TableContainer>
-      <Pagination count={Math.ceil(orders.length / itemsPerPage)} onChange={(e, pageNumber) => setCurrentPage(pageNumber)} sx={{ margin: '30px 0px' }} color="primary" />
+      <Pagination count={Math.ceil(orders?.length / itemsPerPage)} onChange={(e, pageNumber) => setCurrentPage(pageNumber)} sx={{ margin: '30px 0px' }} color="primary" />
 
     </Stack>
   )
