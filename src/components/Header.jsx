@@ -19,6 +19,7 @@ import { adminById } from '../redux/userSlice';
 import { Link, useNavigate } from 'react-router-dom';
 import Notifications from './Notifications';
 import { fetchAllNotifications } from '../redux/notificationSlice';
+import toast, { Toaster } from 'react-hot-toast';
 
 
 
@@ -36,6 +37,11 @@ export default function PrimarySearchAppBar() {
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
     const [open, setOpen] = useState(false);
+    const socketConnection = useSelector(state => state.socketReducer.socket)
+    // console.log(socketConnection);
+    const [notifyMsg, setNotifyMsg] = useState("")
+    const [socket, setSocket] = useState(null)
+
 
     const toggleDrawer = (isOpen) => () => {
         setOpen(isOpen);
@@ -71,6 +77,26 @@ export default function PrimarySearchAppBar() {
     useEffect(() => {
         dispatch(fetchAllNotifications())
     }, [])
+
+    //socket io
+    useEffect(() => {
+        setSocket(socketConnection)
+    }, [])
+
+    useEffect(() => {
+        socket?.on("getNotify", (msg) => {
+            setNotifyMsg(msg)
+            // console.log(msg)
+        })
+        socket?.on("getNotifyCheckout", (msg) => {
+            //console.log(msg);
+            setNotifyMsg(msg)
+        })
+    }, [socket])
+
+    useEffect(() => {
+        notifyMsg && toast.success(notifyMsg, { duration: 5000 })
+    }, [notifyMsg])
 
     const menuId = 'primary-search-account-menu';
     const renderMenu = (
@@ -239,6 +265,7 @@ export default function PrimarySearchAppBar() {
             >
                 <Notifications />
             </Drawer>
+            <Toaster />
         </Box>
     );
 }
