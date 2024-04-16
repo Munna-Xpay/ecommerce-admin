@@ -25,7 +25,7 @@ function Banners() {
           </Button>
         </Stack>
       </Grid>
-      <Grid item mt={{xs:2,md:0}} marginLeft={{xs:0,md:2}} xs={12} md={4} boxShadow={5} bgcolor={'#00193B'} border={'2px dotted #ff5470'} p={1} borderRadius={2}>
+      <Grid item mt={{xs:2,md:0}} marginLeft={{xs:0,md:2}} xs={12} md={4} boxShadow={5} bgcolor={'#00193B'}  p={1} borderRadius={2}>
       <Stack   display={'flex'} justifyContent={'center'} alignItems={'center'}>
           <img width={190} height={170} src="https://shop-point.merku.love/assets/cards-f716d9f3.webp" alt="" />
         <Typography mt={2} fontSize={25} fontWeight={'bold'} color={'white'}>Security Payments</Typography>
