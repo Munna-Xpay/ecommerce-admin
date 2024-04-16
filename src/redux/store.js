@@ -7,6 +7,7 @@ import reviewSlice from './reviewSlice';
 import userSlice from './userSlice';
 import sellerSlice from './sellerSlice';
 import notificationSlice from './notificationSlice';
+import socketSlice from './socketSlice';
 
 export const store = configureStore({
     reducer: {
@@ -18,5 +19,6 @@ export const store = configureStore({
         userReducer: userSlice,
         sellerReducer: sellerSlice,
         notificationReducer: notificationSlice,
+        socketReducer:socketSlice
     }
 });

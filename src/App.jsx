@@ -28,10 +28,22 @@ import CustomerProfile from './pages/CustomerProfile';
 import Sidebar from './components/Sidebar';
 import { useSelector } from 'react-redux';
 import EditSeller from './pages/EditSeller';
+import { useEffect, useState } from 'react';
 
 function App() {
   const admin = useSelector(state => state.userReducer)
+  const socketConnection=useSelector(state=>state.socketReducer.socket)
+ // console.log(socketConnection);
+ const [socket, setSocket] = useState(null)
+  //socket io
+  useEffect(() => {
+    setSocket(socketConnection)
+  }, [])
 
+  useEffect(() => {
+    const adminId = localStorage.getItem('adminId')
+    socket && socket.emit("sendClient", adminId)
+  }, [socket])
   return (
     <>
       <Header />

@@ -65,7 +65,7 @@ export const fetchOrderStat = createAsyncThunk(
 
 export const updateOrder = createAsyncThunk(
   "/update-order",
-  async ({ data, id }, { rejectWithValue }) => {
+  async ({ data, id,socket,userId,title }, { rejectWithValue }) => {
     const token = localStorage.getItem("token");
     return await axios
       .put(`${BASE_URL}/api/admin/update-order/${id}`, data, {
@@ -75,9 +75,11 @@ export const updateOrder = createAsyncThunk(
         },
       })
       .then((res) => {
-        // console.log(res.data);
-        toast.success("Order status updated");
-        return res.data;
+        if(res.status===200){
+          socket.emit("sendUpdate", { receiverId: userId, msg: `${title} has ${data.orderStatus}` })
+          toast.success("Order status updated");
+          return res.data;
+        }
       })
       .catch((err) => {
         // console.log(err.response.data);

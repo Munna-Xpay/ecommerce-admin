@@ -24,7 +24,13 @@ function Orders() {
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
 
-
+  const socketConnection=useSelector(state=>state.socketReducer.socket)
+ // console.log(socketConnection);
+ const [socket, setSocket] = useState(null)
+      //socket io
+  useEffect(() => {
+    setSocket(socketConnection)
+  }, [])
 
   useEffect(() => {
     dispatch(orderByCategory(sortData))
@@ -44,9 +50,9 @@ function Orders() {
   const lastIndexOfItemInAPage = itemsPerPage * currentPage;
   const firstIndexOfItemInAPage = lastIndexOfItemInAPage - itemsPerPage;
 
-  const handleOrderUpdate = (e, id) => {
+  const handleOrderUpdate = (e, id,userId,title) => {
     const orderStatus = e.target.value
-    dispatch(updateOrder({ data: { orderStatus }, id }))
+    dispatch(updateOrder({ data: { orderStatus }, id,socket,userId,title }))
   }
   return (
     <Stack minHeight={'100vh'}>
@@ -175,7 +181,7 @@ function Orders() {
 
                     <Select
                       value={order?.orderStatus}
-                      onChange={(e) => handleOrderUpdate(e,order._id)}
+                      onChange={(e) => handleOrderUpdate(e,order._id,order.userId,order.products.product.title)}
                     >
                        <MenuItem value={'Ordered'}>Ordered</MenuItem>
                       <MenuItem value={'Confirmed'}>Order confirmed</MenuItem>
