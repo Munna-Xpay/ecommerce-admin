@@ -16,7 +16,7 @@ const SellerProfileBox = ({sellerProfile}) => {
                 />
                 <Stack spacing={1}>
                     <Typography variant='h4' sx={{ fontWeight: 'bold' }}>{sellerProfile?.seller?.company_name}</Typography>
-                    <a href='#' style={{ textDecoration: 'none', opacity: '.8' }}><Typography gutterBottom variant='body1' sx={{ fontWeight: 'bold' }}>www.something.com</Typography></a>
+                    <a href='#' style={{ textDecoration: 'none', opacity: '.8' }}><Typography gutterBottom variant='body1' sx={{ fontWeight: 'bold' }}>{sellerProfile?.seller?.website}</Typography></a>
                     <Typography gutterBottom variant='body1' sx={{}}>{sellerProfile?.seller?.phoneNum}</Typography>
                     <Typography variant='body1' sx={{}}>{sellerProfile?.seller?.email}</Typography>
                 </Stack>

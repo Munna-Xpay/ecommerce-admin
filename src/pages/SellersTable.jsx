@@ -45,7 +45,7 @@ const SellersTable = () => {
               sx={{ width: '80px', height: '80px', objectFit: 'contain', padding: '10px', borderRadius: '10px', border: '2px solid #f2f2f2' }}
             />
             <Stack>
-              <a href='#' style={{ textDecoration: 'none', opacity: '.8' }}><Typography gutterBottom variant='body1' sx={{ fontWeight: 'bold' }}>www.something.com</Typography></a>
+              <a href='#' style={{ textDecoration: 'none', opacity: '.8' }}><Typography gutterBottom variant='body1' sx={{ fontWeight: 'bold' }}>{item?.seller?.website}</Typography></a>
               <Typography sx={{ opacity: '.8' }} gutterBottom variant='body1'>{item?.seller?.phoneNum}</Typography>
               <Typography sx={{ opacity: '.8' }} variant='body1'>{item?.seller?.email}</Typography>
             </Stack>
