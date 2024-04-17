@@ -92,6 +92,10 @@ export default function PrimarySearchAppBar() {
             //console.log(msg);
             setNotifyMsg(msg)
         })
+        socket?.on("getCancelOrder", (msg) => {
+            //console.log(msg);
+            setNotifyMsg(msg)
+        })
     }, [socket])
 
     useEffect(() => {

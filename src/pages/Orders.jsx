@@ -35,7 +35,7 @@ function Orders() {
   useEffect(() => {
     dispatch(orderByCategory(sortData))
     dispatch(updateOrder())
-  }, [orders])
+  }, [sortData])
 
   const orderStatus1 = orders.filter((i) => i.orderStatus === 'Ordered')
   const orderStatus2 = orders.filter((i) => i.orderStatus === 'Confirmed')
