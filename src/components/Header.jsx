@@ -20,7 +20,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import Notifications from './Notifications';
 import { fetchAllNotifications } from '../redux/notificationSlice';
 import toast, { Toaster } from 'react-hot-toast';
-
+import { orderByCategory } from '../redux/orderSlice';
 
 
 export default function PrimarySearchAppBar() {
@@ -37,6 +37,10 @@ export default function PrimarySearchAppBar() {
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
     const [open, setOpen] = useState(false);
+    const [sortData, setSortData] = useState({
+        categoryFilter: "All",
+        sort_option: "latest"
+      })
     const socketConnection = useSelector(state => state.socketReducer.socket)
     // console.log(socketConnection);
     const [notifyMsg, setNotifyMsg] = useState("")
@@ -92,10 +96,15 @@ export default function PrimarySearchAppBar() {
             //console.log(msg);
             setNotifyMsg(msg)
         })
+        socket?.on("getCancelOrder", (msg) => {
+            //console.log(msg);
+            setNotifyMsg(msg)
+        })
     }, [socket])
 
     useEffect(() => {
         notifyMsg && toast.success(notifyMsg, { duration: 5000 })
+        dispatch(orderByCategory(sortData))
     }, [notifyMsg])
 
     const menuId = 'primary-search-account-menu';

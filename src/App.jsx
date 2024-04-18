@@ -32,9 +32,9 @@ import { useEffect, useState } from 'react';
 
 function App() {
   const admin = useSelector(state => state.userReducer)
-  const socketConnection=useSelector(state=>state.socketReducer.socket)
- // console.log(socketConnection);
- const [socket, setSocket] = useState(null)
+  const socketConnection = useSelector(state => state.socketReducer.socket)
+  // console.log(socketConnection);
+  const [socket, setSocket] = useState(null)
   //socket io
   useEffect(() => {
     setSocket(socketConnection)
@@ -42,8 +42,10 @@ function App() {
 
   useEffect(() => {
     const adminId = localStorage.getItem('adminId')
-    socket && socket.emit("sendClient", adminId)
-  }, [socket])
+    if (admin?.admin) {
+      socket && socket.emit("sendClient", admin?.admin?._id)
+    }
+  }, [socket, admin?.admin])
   return (
     <>
       <Header />
@@ -53,7 +55,7 @@ function App() {
             <Sidebar />
           </Box>
         }
-        <Container maxWidth sx={{height:'90vh', overflow:'scroll'}}>
+        <Container maxWidth sx={{ height: '90vh', overflow: 'scroll' }}>
           <Routes>
             <Route path='/' element={<Login />} />
             <Route path='/sales-analytics' element={<SalesAnalytics />} />
