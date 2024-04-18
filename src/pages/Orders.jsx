@@ -14,13 +14,12 @@ function Orders() {
   
   const dispatch = useDispatch('')
   const orders = useSelector(state => state.orderReducer.orderCategory)
-  // console.log(orders);
+  //console.log(orders);
   const [sortData, setSortData] = useState({
     categoryFilter: "All",
     sort_option: "latest"
   })
 
-  const [status, setStatus] = useState('')
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -35,14 +34,14 @@ function Orders() {
   useEffect(() => {
     dispatch(orderByCategory(sortData))
     dispatch(updateOrder())
-  }, [sortData])
+  }, [sortData,orders])
 
   const orderStatus1 = orders.filter((i) => i.orderStatus === 'Ordered')
   const orderStatus2 = orders.filter((i) => i.orderStatus === 'Confirmed')
   const orderStatus3 = orders.filter((i) => i.orderStatus === 'Canceled')
   const orderStatus4 = orders.filter((i) => i.orderStatus === 'Completed')
   const ordered = orderStatus1.length
-  console.log(ordered);
+  //console.log(ordered);
   const confirmed = orderStatus2.length
   const canceled = orderStatus3.length
   const completed = orderStatus4.length
