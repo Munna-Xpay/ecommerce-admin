@@ -95,17 +95,16 @@ export default function PrimarySearchAppBar() {
         socket?.on("getNotifyCheckout", (msg) => {
             //console.log(msg);
             setNotifyMsg(msg)
-            dispatch(orderByCategory(sortData))
         })
         socket?.on("getCancelOrder", (msg) => {
             //console.log(msg);
             setNotifyMsg(msg)
-            dispatch(orderByCategory(sortData))
         })
     }, [socket])
 
     useEffect(() => {
         notifyMsg && toast.success(notifyMsg, { duration: 5000 })
+        dispatch(orderByCategory(sortData))
     }, [notifyMsg])
 
     const menuId = 'primary-search-account-menu';
