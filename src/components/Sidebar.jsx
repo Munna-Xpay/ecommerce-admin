@@ -28,7 +28,8 @@ function Sidebar() {
 
     <List
     
-      sx={{ width: '700px',height:'100%', maxWidth: 360, bgcolor: 'background.paper'}}
+      sx={{height:'100%', maxWidth: '300px', bgcolor: 'background.paper'}}
+      // sx={{ width: '700px',height:'100%', maxWidth: 360, bgcolor: 'background.paper'}}
       component="nav"
       aria-labelledby="nested-list-subheader"
       subheader={
