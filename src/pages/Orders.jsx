@@ -5,13 +5,13 @@ import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
 import DoDisturbIcon from '@mui/icons-material/DoDisturb';
 import ReplayIcon from '@mui/icons-material/Replay';
 import { useDispatch, useSelector } from 'react-redux';
-import {  orderByCategory, updateOrder } from '../redux/orderSlice';
+import { orderByCategory, updateOrder } from '../redux/orderSlice';
 import PageHead from '../components/PageHead'
 import { BASE_URL } from '../redux/baseUrl';
 import CountUp from 'react-countup';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 function Orders() {
-  
+
   const dispatch = useDispatch('')
   const orders = useSelector(state => state.orderReducer.orderCategory)
   // console.log(orders);
@@ -24,10 +24,10 @@ function Orders() {
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const socketConnection=useSelector(state=>state.socketReducer.socket)
- // console.log(socketConnection);
- const [socket, setSocket] = useState(null)
-      //socket io
+  const socketConnection = useSelector(state => state.socketReducer.socket)
+  // console.log(socketConnection);
+  const [socket, setSocket] = useState(null)
+  //socket io
   useEffect(() => {
     setSocket(socketConnection)
   }, [])
@@ -50,9 +50,9 @@ function Orders() {
   const lastIndexOfItemInAPage = itemsPerPage * currentPage;
   const firstIndexOfItemInAPage = lastIndexOfItemInAPage - itemsPerPage;
 
-  const handleOrderUpdate = (e, id,userId,title) => {
+  const handleOrderUpdate = (e, id, userId, title) => {
     const orderStatus = e.target.value
-    dispatch(updateOrder({ data: { orderStatus }, id,socket,userId,title }))
+    dispatch(updateOrder({ data: { orderStatus }, id, socket, userId, title }))
   }
   return (
     <Stack minHeight={'100vh'}>
@@ -61,7 +61,7 @@ function Orders() {
         <Stack direction={{ xs: 'column', md: 'row' }} justifyContent={{ xs: 'center', md: 'end' }} spacing={3} sx={{ marginTop: { xs: 5, md: 0 } }}>
           <FormControl size='small' sx={{ width: { xs: 380, md: 160 } }}>
             <Select
-             sx={{  bgcolor:'white'}}
+              sx={{ bgcolor: 'white' }}
               value={sortData.categoryFilter}
               onChange={(e) => setSortData({ ...sortData, ["categoryFilter"]: e.target.value })}
             >
@@ -73,7 +73,7 @@ function Orders() {
           </FormControl>
           <FormControl size='small' sx={{ width: { xs: 380, md: 160 } }}>
             <Select
-             sx={{  bgcolor:'white'}}
+              sx={{ bgcolor: 'white' }}
               value={sortData.sort_option}
               onChange={(e) => setSortData({ ...sortData, ["sort_option"]: e.target.value })}
             >
@@ -153,27 +153,33 @@ function Orders() {
                 <TableCell sx={{ fontWeight: 'bold' }}>{order?.totalPrice}</TableCell>
                 <TableCell sx={{ fontWeight: 'bold' }}>{order?.shippingMethod}</TableCell>
                 <TableCell sx={{ fontWeight: 'bold' }}>{new Date(order?.createdAt).toLocaleDateString('en-US')}</TableCell>
-                <TableCell sx={{ fontWeight: 'bold' }}><Typography sx={{
-                  backgroundColor: (() => {
-                    switch (order.orderStatus) {
-                      case 'Ordered':
-                        return '#f0ad4e';
-                      case 'Confirmed':
-                        return '#00ba9d';
-                      case 'Canceled':
-                        return 'red';
-                      case 'Completed':
-                        return '#035ecf';
-                      case 'Shipped':
-                        return '#f55505';
-                      default:
-                        return 'black'; 
-                    }
-                  })(),
-                  borderRadius: '20px',
-                  color: 'white',
-                  width: '100px'
-                }} p={1} textAlign={'center'}>{order?.orderStatus}</Typography></TableCell>
+                <TableCell sx={{ fontWeight: 'bold' }}>
+                  <Stack spacing={1}>
+                    <Typography sx={{
+                      backgroundColor: (() => {
+                        switch (order.orderStatus) {
+                          case 'Ordered':
+                            return '#f0ad4e';
+                          case 'Confirmed':
+                            return '#00ba9d';
+                          case 'Canceled':
+                            return 'red';
+                          case 'Completed':
+                            return '#035ecf';
+                          case 'Shipped':
+                            return '#f55505';
+                          default:
+                            return 'black';
+                        }
+                      })(),
+                      borderRadius: '20px',
+                      color: 'white',
+                      width: '100px'
+                    }} p={1} textAlign={'center'}>{order.orderStatus}
+                    </Typography>
+                    {order.canceledReason && <Typography variant='body2' >(Reason : {order.canceledReason})</Typography>}
+                  </Stack>
+                </TableCell>
                 <TableCell sx={{ fontWeight: 'bold' }}><Rating name="read-only" value={order?.products.product.review_star} readOnly /></TableCell>
                 <TableCell sx={{ fontWeight: 'bold' }}>
                   <FormControl size='small' sx={{ width: { xs: 380, md: 160 } }}>
@@ -181,9 +187,9 @@ function Orders() {
 
                     <Select
                       value={order?.orderStatus}
-                      onChange={(e) => handleOrderUpdate(e,order._id,order.userId,order.products.product.title)}
+                      onChange={(e) => handleOrderUpdate(e, order._id, order.userId, order.products.product.title)}
                     >
-                       <MenuItem value={'Ordered'}>Ordered</MenuItem>
+                      <MenuItem value={'Ordered'}>Ordered</MenuItem>
                       <MenuItem value={'Confirmed'}>Order confirmed</MenuItem>
                       <MenuItem value={'Canceled'}>Order canceled</MenuItem>
                       <MenuItem value={'Shipped'}>Order shipped</MenuItem>
